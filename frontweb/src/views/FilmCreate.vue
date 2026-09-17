@@ -169,6 +169,18 @@
     </nav>
 
     <main class="main">
+      <section v-if="route.params.id" class="ai-return-guide" aria-label="AI 创作导航">
+        <div>
+          <strong>高级制作页 · 查看或手动调整内容</strong>
+          <p v-if="linkedAiRun">{{ linkedAiRun.dry_run ? '当前是 Mock 演练，不会生成真实视频。' : '' }}查看内容后，返回 AI 任务审核并继续；无需逐个点击下面的生成按钮。</p>
+          <p v-else-if="aiLinkError">AI 任务入口加载失败，请重试。当前页面内容仍可查看。</p>
+          <p v-else-if="aiLinkLoading">正在查找这个项目对应的 AI 任务…</p>
+          <p v-else>此项目没有关联的 AI 任务。下面是手动制作工具；也可以从一句话开始新的 AI 创作。</p>
+        </div>
+        <el-button v-if="linkedAiRun" type="primary" size="large" @click="router.push({ path: '/agent-workbench', query: { run: linkedAiRun.id } })">返回 AI 任务，审核并继续</el-button>
+        <el-button v-else-if="aiLinkError" @click="loadLinkedAiRun(route.params.id)">重试加载 AI 入口</el-button>
+        <el-button v-else :disabled="aiLinkLoading" @click="router.push('/create')">开始新的 AI 创作</el-button>
+      </section>
       <!-- 角色/道具/场景上传图片用，单例放在外层避免 v-for 导致 ref 为数组 -->
       <input
         ref="resourceImageFileInput"
@@ -2649,6 +2661,7 @@ import { useFilmStore } from '@/stores/film'
 import { useGenerationTaskStore, GEN_RESOURCE } from '@/stores/generationTaskStore'
 import { syncGeneratingSetsFromStore, buildEpisodeContext, buildExtractTaskMeta, isEpisodeExtractRunning } from '@/composables/useGenerationTaskSync'
 import { dramaAPI } from '@/api/drama'
+import { agentAPI } from '@/api/agent'
 import { generationAPI } from '@/api/generation'
 import { aiAPI } from '@/api/ai'
 import { characterAPI } from '@/api/characters'
@@ -2684,6 +2697,28 @@ import { useScenes } from '@/composables/filmCreate/useScenes'
 
 const route = useRoute()
 const router = useRouter()
+const linkedAiRun = ref(null)
+const aiLinkLoading = ref(false)
+const aiLinkError = ref(false)
+let aiLinkRequest = 0
+async function loadLinkedAiRun(projectId) {
+  const requestId = ++aiLinkRequest
+  linkedAiRun.value = null
+  aiLinkError.value = false
+  aiLinkLoading.value = Boolean(projectId)
+  if (!projectId) return
+  try {
+    const runs = await agentAPI.listRuns()
+    if (requestId !== aiLinkRequest) return
+    // The API returns newest first. Never fall back to another project's task.
+    linkedAiRun.value = runs.find(run => Number(run.project_id) === Number(projectId)) || null
+  } catch {
+    if (requestId === aiLinkRequest) aiLinkError.value = true
+  } finally {
+    if (requestId === aiLinkRequest) aiLinkLoading.value = false
+  }
+}
+watch(() => route.params.id, loadLinkedAiRun, { immediate: true })
 const store = useFilmStore()
 const genStore = useGenerationTaskStore()
 const { isDark, toggle: toggleTheme } = useTheme()
@@ -8383,6 +8418,21 @@ watch(
 </script>
 
 <style scoped>
+.ai-return-guide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--el-color-primary-light-5);
+  border-radius: 12px;
+  background: var(--el-color-primary-light-9);
+  color: var(--el-text-color-primary);
+}
+.ai-return-guide p { margin: 8px 0 0; line-height: 1.7; }
+
 .script-workbench-unified {
   margin-bottom: 0;
 }

@@ -72,3 +72,10 @@ sed -n '245,335p' backend-node/src/services/agentWorkbenchService.js
 - 下一单一子问题：让素材/视频修改意见形成可验证的局部修改计划，并用已有素材进行内容评审；不要将字段完整性当成视听质量。
 - 明确边界：前置问题为结构化向导，真实模型负责方案创作；尚未实现自由对话式追问、视觉内容自动判定/修复或直接长视频路由。Mock 可播放产物仍是后续待办。
 - 关键文件：`backend-node/src/services/directorService.js`、`backend-node/src/routes/director.js`、`frontweb/src/views/DirectorCreate.vue`、`frontweb/src/utils/qcSummary.js`、`scripts/smoke.cjs`、`docs/image-provider-notes.md`。
+
+## 高级制作页返回 AI（2026-09-17）
+- 已完成：制作页顶部增加 AI 导航提示及“返回 AI 任务，审核并继续”，按当前项目匹配任务；无关联任务时明确提供新创作入口，加载失败可重试，路由切换防止旧请求覆盖。
+- 验证：Node 22 下 npm run verify 全部通过（后端115、前端16、145文件语法检查、Vue构建、隔离HTTP启动/Mock冒烟）。浏览器实测 film/4?episode=8 返回对应任务 e0b919c2-0046-451c-8ab1-71bd9d572224，显示剧本审核且无浏览器错误；未点击审核或媒体生成，付费调用0。
+- 当前报错：首次误用系统Node导致SQLite ABI不符，完整日志确认后切回项目Node22解决；保留原Vite大包警告。无类型检查配置，不宣称类型检查通过。
+- 下一步命令：export PATH=/Users/shenzihao/.nvm/versions/node/v22.17.1/bin:$PATH；npm run verify。
+- 关键文件：frontweb/src/views/FilmCreate.vue。此修改解决返回入口与操作说明，尚未重构高级制作页全部控件。
