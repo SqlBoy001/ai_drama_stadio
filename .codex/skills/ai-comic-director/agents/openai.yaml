@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 漫剧编导"
+  short_description: "从授权故事到分集、分镜、提示词与质检"
+  default_prompt: "使用 $ai-comic-director 把我的故事制作成可审阅的 AI 漫剧文本与 Mock 媒体任务；先给制作计划预览，不调用付费 API。"
