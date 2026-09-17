@@ -2,13 +2,16 @@
   "name": "ai-drama-stadio",
   "version": "0.1.0",
   "private": true,
-  "engines": { "node": ">=20 <23" },
+  "engines": {
+    "node": ">=20 <23"
+  },
   "scripts": {
     "setup": "npm --prefix backend-node ci && npm --prefix frontweb ci",
     "test": "node scripts/check.cjs test",
     "check": "node scripts/check.cjs syntax",
     "build": "npm --prefix frontweb run build",
     "smoke": "node scripts/smoke.cjs",
-    "verify": "npm run check && npm test && npm run build && npm run smoke"
+    "verify": "npm run check && npm test && npm run build && npm run smoke",
+    "dev:mock": "node scripts/mock-server.cjs"
   }
 }

@@ -25,6 +25,7 @@ const agentRoutes = require('./agent');
 
 function setupRouter(cfg, db, log) {
   const r = express.Router();
+  r.use('/director', require('./director')(db, cfg, log));
   const drama = dramaRoutes(db, cfg, log);
   const task = taskRoutes(db, log);
   const settings = settingsRoutes(db, cfg, log);

@@ -20,7 +20,7 @@
         </div>
         <!-- 右侧操作区 -->
         <div class="header-actions">
-          <el-button class="btn-agent" type="primary" plain @click="$router.push('/agent-workbench')">
+          <el-button class="btn-agent" type="primary" plain @click="$router.push('/create')">
             <el-icon><MagicStick /></el-icon>AI 自动短剧
           </el-button>
           <!-- 暂时隐藏，功能待完善 -->
@@ -59,7 +59,7 @@
             <div class="action-card-inner">
               <h3 class="action-card-title">快速开始</h3>
               <div class="action-card-buttons">
-                <el-button type="success" size="large" class="action-btn" @click="$router.push('/agent-workbench')">
+                <el-button type="success" size="large" class="action-btn" @click="$router.push('/create')">
                   <el-icon><MagicStick /></el-icon>AI 一句话创作
                 </el-button>
                 <el-button type="primary" size="large" class="action-btn action-btn-new" @click="goNewProject">

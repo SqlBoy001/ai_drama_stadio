@@ -11,14 +11,23 @@ assert.equal(db.prepare('SELECT count(*) AS n FROM ai_service_configs').get().n,
 const server = app.listen(0,'127.0.0.1',async()=>{
  try {
   const base='http://127.0.0.1:'+server.address().port;
-  async function req(url,body){const r=await fetch(base+url,body?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{});assert.ok(r.ok,await r.clone().text());return r.json();}
+  async function req(url,body,method='POST'){const r=await fetch(base+url,body?{method,headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{});assert.ok(r.ok,await r.clone().text());return r.json();}
   assert.equal((await req('/health')).status,'ok');
   assert.equal((await fetch(base+'/agent-workbench')).status,200);
+  assert.equal((await fetch(base+'/create')).status,200);
+  let draft=(await req('/api/v1/director/sessions',{instruction:'女孩发现电梯里多了一层'})).data;
+  assert.equal(draft.questions.length,3);
+  draft=(await req('/api/v1/director/sessions/'+draft.id,{use_defaults:true},'PUT')).data;
+  draft=(await req('/api/v1/director/sessions/'+draft.id+'/plan',{})).data;
+  assert.equal(draft.plan.director.source,'mock');
+  const first=(await req('/api/v1/director/sessions/'+draft.id+'/start',{revision:draft.revision})).data;
+  const second=(await req('/api/v1/director/sessions/'+draft.id+'/start',{revision:draft.revision})).data;
+  assert.equal(first.id,second.id);
   let result=await req('/api/v1/agent/runs',{instruction:'做一个《扫描演练》的1集都市故事，每集30秒，预算100元',dry_run:true,episode_count:1,episode_duration_seconds:30,budget_limit:100});
   let run=result.data;assert.ok(run.dry_run);assert.equal(run.status,'SCRIPT_REVIEW');
   for(const state of ['ASSET_REVIEW','FINAL_REVIEW','EXPORTED']){const a=run.approvals.find(a=>a.status==='PENDING');run=(await req('/api/v1/approvals/'+a.id+'/approve',{comment:'isolated mock smoke'})).data;assert.equal(run.status,state);}
   assert.equal(run.usage.length,6);assert.equal(run.qc_reports.length,6);
-  console.log('SMOKE PASS: health, frontend route, 3 approvals, 6 mock usage/QC, EXPORTED (state only).');
+  console.log('SMOKE PASS: director draft/questions/plan/idempotent start, health, frontend route, 3 approvals, 6 mock usage/QC, EXPORTED (state only).');
  }catch(e){console.error(e);process.exitCode=1;}finally{server.close(()=>{db.close();fs.rmSync(storage,{recursive:true,force:true});});}
 });
 server.on('error',e=>{console.error(e);db.close();fs.rmSync(storage,{recursive:true,force:true});process.exitCode=1;});

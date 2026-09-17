@@ -2,13 +2,13 @@
   <div class="drama-detail">
     <header class="header">
       <div class="header-inner">
-        <h1 class="logo" @click="router.push('/')">
+        <h1 class="logo" @click="router.push('/projects')">
           <span class="logo-main">本地短剧助手</span>
           <span class="logo-sub">LocalMiniDrama</span>
         </h1>
         <span class="breadcrumb-sep">›</span>
         <span class="page-title">{{ drama?.title || '剧集管理' }}</span>
-        <el-button class="btn-back-list" @click="router.push('/')">
+        <el-button class="btn-back-list" @click="router.push('/projects')">
           <el-icon><ArrowLeft /></el-icon>返回列表
         </el-button>
         <div class="header-actions">

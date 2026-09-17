@@ -3,8 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/', redirect: '/create' },
+    { path: '/create', name: 'director-create', component: () => import('@/views/DirectorCreate.vue'), meta: { title: '一句话创作' } },
     {
-      path: '/',
+      path: '/projects',
       name: 'list',
       component: () => import('@/views/FilmList.vue'),
       meta: { title: '项目列表' }

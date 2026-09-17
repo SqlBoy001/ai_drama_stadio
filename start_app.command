@@ -126,11 +126,11 @@ if (( NEEDS_BUILD )); then
   (cd "$FRONTEND_DIR" && "$NODE_BIN" "$NPM_CLI" run build)
 fi
 
-print "\n应用即将启动：http://localhost:5679/agent-workbench"
+print "\n应用即将启动：http://localhost:5679/create"
 print "按 Ctrl+C 可停止。\n"
 
 if [[ "${AI_DRAMA_NO_OPEN:-0}" != "1" ]]; then
-  (sleep 2; open "http://localhost:5679/agent-workbench" >/dev/null 2>&1 || true) &
+  (sleep 2; open "http://localhost:5679/create" >/dev/null 2>&1 || true) &
 fi
 
 cd "$BACKEND_DIR"

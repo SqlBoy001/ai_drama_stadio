@@ -1,6 +1,12 @@
 # AI Drama Stadio
 
-面向新用户的一句话 AI 漫剧/短剧生产平台。基于 [LocalMiniDrama](https://github.com/xuanyustudio/LocalMiniDrama) 1.2.8（源码基线 adaecf7）增量开发，保留原项目 MIT 许可证与署名。
+面向新用户的一句话 AI 漫剧/短剧生产平台。
+
+`auto` 新入口：`/create`（首页自动跳转）。一句话 → 缺失方向问答/推荐默认 → AI 或 Mock 方案 → 确认后进入生产审核。草稿自动保存；模型设置和旧制作页仍可使用。
+
+零费用体验：`npm run build && npm run dev:mock`，打开 http://127.0.0.1:5681/create；使用内存数据库，退出后测试草稿不保留。正式服务的草稿保存在 SQLite 中。
+
+本轮已验证真实文本策划，未重新跑付费图片/视频整片；Mock 不生成可播放 MP4，内容质量仍需人工审核。GPT Image 2 与 Pro/代理说明见 [文档](docs/image-provider-notes.md)。基于 [LocalMiniDrama](https://github.com/xuanyustudio/LocalMiniDrama) 1.2.8（源码基线 adaecf7）增量开发，保留原项目 MIT 许可证与署名。
 
 - `main`：当前工作台基线；`auto`：引导式自动创作迭代。
 - Node.js 22（`nvm use`），运行 `npm run setup` 安装前后端依赖。

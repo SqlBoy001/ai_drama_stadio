@@ -1,7 +1,7 @@
 <template>
   <div class="workbench-shell">
     <header class="topbar">
-      <button class="brand" @click="router.push('/')">
+      <button class="brand" @click="router.push('/projects')">
         <span class="brand-mark"><el-icon><VideoCameraFilled /></el-icon></span>
         <span><b>DramaFlow</b><small>AI production studio</small></span>
       </button>
@@ -12,7 +12,7 @@
         {{ activeRun ? activeRun.plan?.project?.title : '新创作' }}
       </div>
       <div class="topbar-actions">
-        <el-button text @click="router.push('/')"><el-icon><House /></el-icon>项目库</el-button>
+        <el-button text @click="router.push('/projects')"><el-icon><House /></el-icon>项目库</el-button>
         <el-button text :aria-label="isDark ? '切换到亮色模式' : '切换到暗色模式'" @click="toggleTheme"><el-icon><Sunny v-if="isDark" /><Moon v-else /></el-icon></el-button>
         <span class="avatar">创</span>
       </div>
@@ -188,9 +188,9 @@
             </article>
 
             <article v-if="activeRun.qc_reports?.length" class="panel qc-panel">
-              <div class="panel-title compact"><div><span class="title-icon"><el-icon><Aim /></el-icon></span><span><b>自动质检</b><small>{{ activeRun.qc_reports.length }} 个素材已检查</small></span></div></div>
-              <div class="qc-score"><strong>100</strong><span>/ 100<br><b>全部通过</b></span></div>
-              <div class="qc-tags"><span>文件完整</span><span>9:16 比例</span><span>时长正常</span></div>
+              <div class="panel-title compact"><div><span class="title-icon"><el-icon><Aim /></el-icon></span><span><b>自动质检</b><small>{{ qc.total }} 个素材检查记录</small></span></div></div>
+              <div class="qc-score"><strong>{{ qc.passed }}/{{ qc.total }}</strong><span><b>{{ qc.label }}</b></span></div>
+              <div class="qc-tags"><span v-if="qc.issues">{{ qc.issues }} 项需处理</span><span>{{ qc.note }}</span></div>
             </article>
           </aside>
         </div>
@@ -221,13 +221,15 @@
 
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { agentAPI } from '@/api/agent'
+import { summarizeQc } from '@/utils/qcSummary'
 import { useTheme } from '@/composables/useTheme'
 import { SUSPENSE_MANHUA_STYLE_VALUE, SUSPENSE_REALISTIC_STYLE_VALUE, getStyleLabel, recommendWorkbenchStyle } from '@/constants/styleOptions'
 
 const router = useRouter()
+const route = useRoute()
 const { isDark, toggle: toggleTheme } = useTheme()
 const genres = ['都市轻喜剧', '悬疑反转', '恐怖惊悚', '古风奇幻', '甜宠爱情', '科幻冒险']
 const styles = [
@@ -249,9 +251,10 @@ const exampleSettings = {
   '悬疑': { genre: '悬疑反转', episode_count: 3, episode_duration_seconds: 60, budget_limit: 500 },
   '甜宠': { genre: '甜宠爱情', episode_count: 3, episode_duration_seconds: 45, budget_limit: 300 },
 }
-const form = reactive({ instruction: examples['逆袭'], genre: '都市轻喜剧', visual_style: '2.5D国漫', visual_style_auto: true, episode_count: 1, episode_duration_seconds: 30, budget_limit: 100, save_cost: true, dry_run: false })
+const form = reactive({ instruction: examples['逆袭'], genre: '都市轻喜剧', visual_style: '2.5D国漫', visual_style_auto: true, episode_count: 1, episode_duration_seconds: 30, budget_limit: 100, save_cost: true, dry_run: true })
 const runs = ref([])
 const activeRun = ref(null)
+const qc = computed(() => summarizeQc(activeRun.value?.qc_reports, activeRun.value?.dry_run))
 const providerStatus = ref(null)
 const plan = ref(null)
 const planning = ref(false)
@@ -282,11 +285,11 @@ const stages = computed(() => {
     { key: 'script', title: '故事圣经与分集剧本', description: '分集梗概、对白与结尾钩子', meta: `${activeRun.value?.plan?.estimated?.episodes || 0} 集`, state: done.has('script_generated') || done.has('real_script_generated') ? (status === 'SCRIPT_REVIEW' ? 'active' : 'done') : status === 'SCRIPT_GENERATING' ? 'active' : 'pending' },
     { key: 'assets', title: '视觉资产与结构化分镜', description: '角色锚点、场景与镜头提示词', meta: '角色一致性', state: done.has('assets_generated') || done.has('real_assets_generated') ? (status === 'ASSET_REVIEW' ? 'active' : 'done') : status === 'ASSET_GENERATING' ? 'active' : 'pending' },
     { key: 'media', title: '图片、视频与配音', description: activeRun.value?.dry_run ? 'Mock 素材生成与逐镜费用记录' : '真实关键帧、动态镜头与可选配音', meta: '托管生产', state: done.has('mock_media_generated') || done.has('real_media_generated') ? 'done' : status === 'MEDIA_GENERATING' ? 'active' : 'pending' },
-    { key: 'qc', title: '自动质检与成片', description: '完整性、比例、时长与导出检查', meta: activeRun.value?.qc_reports?.length ? `${activeRun.value.qc_reports.length} 项通过` : '待执行', state: status === 'EXPORTED' ? 'done' : status === 'FINAL_REVIEW' ? 'active' : 'pending' },
+    { key: 'qc', title: '自动质检与成片', description: '素材记录检查；内容质量需人工确认', meta: qc.value.label, state: status === 'EXPORTED' ? 'done' : status === 'FINAL_REVIEW' ? 'active' : 'pending' },
   ]
 })
 const approvalPreviewTitle = computed(() => pendingApproval.value?.approval_stage === 'script' ? `${activeRun.value?.plan?.estimated?.episodes} 集剧本提案` : pendingApproval.value?.approval_stage === 'assets' ? `角色定妆 · 场景 · ${activeRun.value?.plan?.estimated?.shots} 个分镜` : (activeRun.value?.dry_run ? 'Mock 成片与质检报告' : '真实镜头与自动质检报告'))
-const approvalPreviewMeta = computed(() => pendingApproval.value?.approval_stage === 'final_video' ? `${activeRun.value?.qc_reports?.length || 0} 项检查通过` : '点击进入现有制作页可查看完整内容')
+const approvalPreviewMeta = computed(() => pendingApproval.value?.approval_stage === 'final_video' ? qc.value.label : '点击进入现有制作页可查看完整内容')
 const approvalWarnings = computed(() => pendingApproval.value?.snapshot?.warnings || [])
 const revisionMessages = computed(() => (activeRun.value?.approvals || [])
   .filter((item) => item.status === 'REJECTED' && item.reviewer_comment)
@@ -393,8 +396,9 @@ async function sendRevision() {
     ElMessage.success(paused.dry_run ? '修改要求已记录' : '修改要求已发送，AI 正在重新生成当前阶段')
   } finally { acting.value = false }
 }
-function newCreation() { activeRun.value = null; plan.value = null; focusPanel.value = 'dashboard' }
-async function returnToRun() { if (runs.value.length) await selectRun(runs.value[0].id) }
+function newCreation() { router.push('/create') }
+async function returnToRun() { if (route.query.run) await selectRun(String(route.query.run))
+  else if (runs.value.length) await selectRun(runs.value[0].id) }
 function handleGlobalKeydown(event) {
   if (event.key === 'Escape' && !activeRun.value && runs.value.length && !planVisible.value && !rejectVisible.value) returnToRun()
 }
@@ -404,7 +408,8 @@ onMounted(async () => {
   providerStatus.value = await agentAPI.providerStatus()
   if (!providerOperationalReady.value) form.dry_run = true
   await loadRuns()
-  if (runs.value.length) await selectRun(runs.value[0].id)
+  if (route.query.run) await selectRun(String(route.query.run))
+  else if (runs.value.length) await selectRun(runs.value[0].id)
   pollTimer = window.setInterval(refreshActive, 4000)
 })
 onBeforeUnmount(() => {

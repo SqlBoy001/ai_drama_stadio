@@ -2693,7 +2693,7 @@ const { videoResolution: storeVideoResolution } = storeToRefs(store)
 const { navCollapsed, storyboardMenuExpanded, toggleNav, scrollToTop, scrollToAnchor } = useNavigation()
 
 function goList() {
-  router.push('/')
+  router.push('/projects')
 }
 
 function goCanvasMode() {
