@@ -102,3 +102,13 @@ sed -n '245,335p' backend-node/src/services/agentWorkbenchService.js
 - 当前阻塞：自动审批拒绝将现有会议室素材发给Volcengine Seedance2.5做单次真实视频验证，理由为具体素材/目的地外发尚缺明确授权；未发请求，费用0。不能宣称真实画面质量验收完成。
 - 下一步：授权后限定1次5秒480p小样，核对实际出站i2v、返回视频人物/场景/动作和供应商费用；未通过不得通知整体验收。继续统一质量门禁与版本化局部修复。
 - 关键文件：backend-node/src/services/videoService.js、videoClient.js、shotPresence.js、characterContinuityService.js、imageService.js；对应回归见backend-node/test。
+
+## 用户授权后的单次真实视频验证（2026-09-18）
+- 授权范围：用户明确允许项目4会议室首帧/原视频24提示词发往火山doubao-seedance-2-5-260628；最多1次5秒480p、5元内、不重试。
+- 价格核实：官方 https://docs.volcengine.com/docs/ark/model-pricing?lang=zh 当日页面，480p/720p不含视频输入70元/百万token；5秒480p示例3.36元，预估在预算内。项目硬编码成本估算不是供应商价格依据。
+- 执行：仅创建视频25，未绑定storyboard_id、不覆盖原分镜/视频；新增生成提交1次。真实日志确认task_type=i2v、has_first_frame=true、frame_count=1。
+- 当前报错：供应商HTTP400，input image content[1] may contain real person。记录状态failed，无视频产物；不自动重试、不规避供应商限制。
+- 费用：提交前估算约3.36元；未取得供应商账单或计费用量，不宣称已实扣或实付0元。
+- 验证边界：真实请求首帧传输通过，真实输出视听质量未通过验收（未产出）。此次未改业务源码，不重复全量测试。
+- 下一步：处理供应商能力/内容限制的清晰错误展示，并继续离线质量门禁工作；真实画面验收需使用供应商明确支持且获授权的素材方案。
+- 关键文件：docs/media-quality-audit-20260918.md；临时日志/tmp/ai-drama-server-quality.log（不提交，含供应商请求信息）。
