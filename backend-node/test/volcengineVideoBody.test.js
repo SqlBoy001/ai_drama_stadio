@@ -109,3 +109,11 @@ test('local encoded Chinese frame path is embedded in the actual provider body',
   assert.equal(body.content.find(x=>x.role==='first_frame').image_url.url,'data:image/jpeg;base64,/9j/2Q==');
  } finally {global.fetch=originalFetch;db.close();fs.rmSync(root,{recursive:true,force:true});}
 });
+
+test('official preset-only references use reference_image content, never empty t2v', async()=>{
+ const db=new Database(':memory:');runMigrationsAndEnsure(db);
+ aiConfigService.createConfig(db,silentLog,{service_type:'video',provider:'volces',name:'official',base_url:'https://example.invalid/api/v3',api_key:'test-key',api_protocol:'volcengine',endpoint:'/contents/generations/tasks',model:['doubao-seedance-2-5-260628'],is_default:true});
+ const originalFetch=global.fetch;let body;
+ global.fetch=async(_url,opts)=>{body=JSON.parse(opts.body);return {ok:true,status:200,text:async()=>'{"id":"test-only","status":"queued"}'};};
+ try{await callVideoApi(db,silentLog,{prompt:'参考图片1为主角',model:'doubao-seedance-2-5-260628',reference_urls:['asset://asset-test-official'],duration:5});assert.equal(body.content.find(x=>x.role==='reference_image').image_url.url,'asset://asset-test-official');assert.equal(body.task_type,'i2v');}finally{global.fetch=originalFetch;db.close();}
+});

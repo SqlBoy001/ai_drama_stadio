@@ -172,6 +172,7 @@
       <section v-if="route.params.id" class="ai-return-guide" aria-label="AI 创作导航">
         <div>
           <strong>高级制作页 · 查看或手动调整内容</strong>
+          <p>写实虚拟角色：先在 <a href="https://docs.volcengine.com/docs/ark/avatar-library?lang=zh" target="_blank" rel="noopener noreferrer">官方虚拟人像库</a> 选角，再在下方角色卡绑定素材 ID。选择不代表供应商已验证。</p>
           <p v-if="linkedAiRun">{{ linkedAiRun.dry_run ? '关联 AI 任务为 Mock；本页手动生成仍可能调用真实模型并产生费用。' : '' }}查看内容后，返回 AI 任务审核并继续；无需逐个点击下面的生成按钮。</p>
           <p v-else-if="aiLinkError">AI 任务入口加载失败，请重试。当前页面内容仍可查看。</p>
           <p v-else-if="aiLinkLoading">正在查找这个项目对应的 AI 任务…</p>
@@ -496,6 +497,7 @@
                     <div class="asset-desc-full">{{ char.appearance || char.description || '暂无描述' }}</div>
                     <div class="asset-btns">
                       <el-button size="small" @click="editCharacter(char)">编辑</el-button>
+                      <el-button size="small" @click="bindOfficialAvatar(char)">{{ char.official_avatar ? '已选官方虚拟角色（未验证）' : '选择官方虚拟角色' }}</el-button>
                       <el-button size="small" :loading="addingCharToLibraryId === char.id" :disabled="!hasAssetImage(char)" @click="onAddCharacterToLibrary(char)">
                         加入本剧库
                       </el-button>
@@ -1528,6 +1530,7 @@
                   >
                     生成分镜视频
                   </el-button>
+                  <el-button size="small" @click="previewOfficialAvatarPlan(sb)">检查官方虚拟角色方案</el-button>
                 </template>
               </div>
               <!-- 视频历史条：有多条历史时显示，点击可切换 -->
@@ -2724,6 +2727,23 @@ const { videoResolution: storeVideoResolution } = storeToRefs(store)
 // ── Composable: Navigation ─────────────────────────────
 const { navCollapsed, storyboardMenuExpanded, toggleNav, scrollToTop, scrollToAnchor } = useNavigation()
 
+async function bindOfficialAvatar(char) {
+  try {
+    const { value } = await ElMessageBox.prompt('先在火山体验中心的虚拟人像库选择角色并同意使用协议，再粘贴该素材的 asset ID。此操作仅绑定官方虚拟角色，不认证或替换当前自生成图片，也不产生生成费用。', '绑定官方虚拟角色：' + char.name, {
+      inputValue: char.official_avatar?.asset_id || '', confirmButtonText: '确认来自官方虚拟人像库并保存', cancelButtonText: '取消',
+      inputPattern: /^(asset:\/\/)?asset-[a-zA-Z0-9-]+$/, inputErrorMessage: '请输入有效的 asset ID',
+    })
+    await characterAPI.bindOfficialAvatar(char.id, { asset_id: value, source_confirmed: true })
+    await loadDrama()
+    ElMessage.success('已保存选择；供应商可用性尚未验证')
+  } catch (e) { if (e !== 'cancel' && e !== 'close') ElMessage.error(e.message || '绑定失败') }
+}
+async function previewOfficialAvatarPlan(sb) {
+  try {
+    const plan = await characterAPI.officialAvatarPlan(sb.id)
+    await ElMessageBox.alert(plan.status === 'BLOCKED' ? '请先绑定出镜角色：' + plan.missing.join('、') : plan.references.map(r => r.name + ' → ' + r.uri).join('\n') + '\n\n' + plan.note, '官方虚拟角色方案（零费用检查）', { confirmButtonText: '知道了' })
+  } catch (e) { if (e !== 'cancel' && e !== 'close') ElMessage.error(e.message || '检查失败') }
+}
 function goList() {
   router.push('/projects')
 }

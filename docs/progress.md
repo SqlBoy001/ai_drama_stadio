@@ -112,3 +112,13 @@ sed -n '245,335p' backend-node/src/services/agentWorkbenchService.js
 - 验证边界：真实请求首帧传输通过，真实输出视听质量未通过验收（未产出）。此次未改业务源码，不重复全量测试。
 - 下一步：处理供应商能力/内容限制的清晰错误展示，并继续离线质量门禁工作；真实画面验收需使用供应商明确支持且获授权的素材方案。
 - 关键文件：docs/media-quality-audit-20260918.md；临时日志/tmp/ai-drama-server-quality.log（不提交，含供应商请求信息）。
+
+## 官方预置虚拟角色接入准备（2026-09-18）
+- 已完成：官方文档核实Seedance2.0/2.5支持预置虚拟人像asset URI；新增独立official_avatar字段，不覆盖自生成角色图或已有认证资产。角色卡可绑定来自官方库的ID，状态明确为selected_unverified。
+- 已完成：单镜零费用方案接口按本项目出镜角色构建有序资产引用/人物提示词，缺绑定返回BLOCKED，明确画外音角色不要求绑定；经典火山Seedance2.x的纯官方asset列表走reference_image请求，未静默转文生视频。
+- API：PUT /api/v1/characters/:id/official-avatar；GET /api/v1/storyboards/:id/official-avatar-plan。后者只检查与预览，不发起生成；既有普通生成按钮未自动改用官方角色。
+- 验证：完整verify通过，后端124/124、前端18/18、JS语法、Vue构建、隔离HTTP启动与Mock冒烟。无独立类型检查脚本。生产已备份SQLite并重启；浏览器看到绑定/检查按钮、无运行时错误；第64镜只阻塞缺失李默绑定。
+- 当前阻塞：可访问的火山浏览器会话未登录；首次人像库需用户接受协议并在本人账号内选择资产。尚无真实asset ID，不能验证账号可用性或官方角色成片质量。不要把手填ID当成认证成功。
+- 付费调用0；未使用官方示例ID冒充用户选角。原素材保留。下一步：用户登录选角后绑定两位角色，基于明确模型/预算生成单镜小样，再继续图像/视频质量验收。官方资产参考路线不继承原自生成写实首帧，界面已明确提示。
+- 关键文件：officialAvatarService.js、26_official_avatar.sql、routes/characters.js、videoClient.js、FilmCreate.vue；临时日志/tmp/drama-avatar-verify.log。
+- 官方来源：https://docs.volcengine.com/docs/ark/avatar-library?lang=zh 与 https://docs.volcengine.com/docs/ark/seedance-portrait-asset-guide?lang=zh#preset-avatar。

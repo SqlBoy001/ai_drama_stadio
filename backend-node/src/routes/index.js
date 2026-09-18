@@ -180,6 +180,8 @@ function setupRouter(cfg, db, log) {
   // ---------- characters ----------
   r.get('/characters/:id', characters.getOne);
   r.put('/characters/:id', characters.update);
+  r.put('/characters/:id/official-avatar', characters.bindOfficialAvatar);
+  r.get('/storyboards/:id/official-avatar-plan', characters.officialAvatarPlan);
   r.delete('/characters/:id', characters.delete);
   r.post('/characters/batch-generate-images', characters.batchGenerateImages);
   r.post('/characters/:id/generate-image', characters.generateImage);

@@ -17,6 +17,8 @@ export const characterAPI = {
       style
     })
   },
+  bindOfficialAvatar(characterId, data) { return request.put(`/characters/${characterId}/official-avatar`, data) },
+  officialAvatarPlan(shotId) { return request.get(`/storyboards/${shotId}/official-avatar-plan`) },
   update(characterId, data) {
     return request.put(`/characters/${characterId}`, data)
   },

@@ -435,6 +435,7 @@ function rowToCharacter(r) {
     polished_prompt: r.polished_prompt || null,
     negative_prompt: r.negative_prompt || null,
     four_view_image_url: r.four_view_image_url || null,
+    official_avatar: parseJsonColumn(r.official_avatar),
     seedance2_asset: parseJsonColumn(r.seedance2_asset),
     seedance2_voice_asset: parseJsonColumn(r.seedance2_voice_asset),
     created_at: r.created_at,

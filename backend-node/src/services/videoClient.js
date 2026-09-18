@@ -339,7 +339,7 @@ function resolveImageInputForOmniLocalBase64(rawUrl, files_base_url, storage_loc
 async function resolveImageInputForOmniAsync(rawUrl, files_base_url, storage_local_path, log, video_gen_id, index) {
   const raw = (rawUrl || '').trim();
   if (!raw) return null;
-  if (raw.startsWith('data:')) return raw;
+  if (raw.startsWith('data:') || /^asset:\/\/asset-[a-zA-Z0-9-]+$/.test(raw)) return raw;
 
   const isPublicHttp = /^https?:\/\//i.test(raw) && !/localhost|127\.0\.0\.1/i.test(raw);
   if (isPublicHttp) return raw;
@@ -3994,7 +3994,11 @@ async function callVideoApi(db, log, opts) {
     });
   }
 
-  if (protocol === 'volcengine_omni') {
+  const officialAssetReferences = protocol === 'volcengine' && isSeedance2FamilyModel(model)
+    && !opts.first_frame_url && !opts.last_frame_url && !opts.image_url
+    && Array.isArray(opts.reference_urls) && opts.reference_urls.length > 0
+    && opts.reference_urls.every(url => /^asset:\/\/asset-[a-zA-Z0-9-]+$/.test(String(url)));
+  if (protocol === 'volcengine_omni' || officialAssetReferences) {
     return callVolcengineOmniVideoApi(config, log, {
       prompt,
       model,
