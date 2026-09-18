@@ -79,3 +79,18 @@ sed -n '245,335p' backend-node/src/services/agentWorkbenchService.js
 - 当前报错：首次误用系统Node导致SQLite ABI不符，完整日志确认后切回项目Node22解决；保留原Vite大包警告。无类型检查配置，不宣称类型检查通过。
 - 下一步命令：export PATH=/Users/shenzihao/.nvm/versions/node/v22.17.1/bin:$PATH；npm run verify。
 - 关键文件：frontweb/src/views/FilmCreate.vue。此修改解决返回入口与操作说明，尚未重构高级制作页全部控件。
+
+## 本地访问恢复（2026-09-17）
+- 原因证据：5679 无监听进程，curl /health 报连接失败；没有上一进程退出日志，具体退出原因未确认。
+- 已完成：使用现有启动脚本、Node22，以独立后台进程恢复服务，日志 /tmp/ai-drama-server.log；启动前确认无进行中视频任务。
+- 验证：SQLite ABI 自检、实际服务启动、/health 与用户工作台 URL HTTP200。未修改业务代码，未重复全量单测/构建；项目无类型检查脚本。付费请求0。
+- 当前报错：无阻塞错误。下一步命令：curl -fsS http://localhost:5679/health；必要时查看 /tmp/ai-drama-server.log。
+- 关键文件：start_app.command、backend-node/src/server.js；本次仅追加进度记录。
+
+## 分阶段人工审核与媒体诊断（2026-09-18）
+- 已完成：高级制作页取消三个自动倒计时，改为显式审核后进入参考图/分镜图/视频；补全缺失入口视频前也等待审核。停止、离开页面、切换项目/集取消待审核关卡；修正Mock任务与高级页真实调用混用的提示。
+- 已查明：第9镜传入李默及画外主管两张人物参考，实际成图角色动作串位且分屏；4段视频抽帧存在眼镜新增、重复人物、另一组男女人物等偏差。详见 docs/media-quality-audit-20260918.md。尚未修复模型输出或完成统一服务端分阶段工作流。
+- 验证：npm run verify通过，后端115、前端18（新增显式确认/时间不放行/取消/重复点击回归），JS语法检查、Vue构建、隔离启动与HTTP Mock冒烟均通过。无独立类型检查脚本。浏览器制作页可加载、无运行时错误；未在生产点击生成进行门禁测试。
+- 当前报错：无阻塞失败；原Vite大包告警保留。浏览器工具一次自动审批超时，重试成功。现有媒体质量问题保留待局部修复，0次新增付费请求。
+- 下一步命令：先读取本报告与git diff；检查第9镜的可见人物与画外音区分，再对单镜参考绑定增加回归；不要整集重生。
+- 关键文件：frontweb/src/views/FilmCreate.vue、frontweb/src/utils/pipelineReview.js、frontweb/test/pipelineReview.test.js。

@@ -172,7 +172,7 @@
       <section v-if="route.params.id" class="ai-return-guide" aria-label="AI 创作导航">
         <div>
           <strong>高级制作页 · 查看或手动调整内容</strong>
-          <p v-if="linkedAiRun">{{ linkedAiRun.dry_run ? '当前是 Mock 演练，不会生成真实视频。' : '' }}查看内容后，返回 AI 任务审核并继续；无需逐个点击下面的生成按钮。</p>
+          <p v-if="linkedAiRun">{{ linkedAiRun.dry_run ? '关联 AI 任务为 Mock；本页手动生成仍可能调用真实模型并产生费用。' : '' }}查看内容后，返回 AI 任务审核并继续；无需逐个点击下面的生成按钮。</p>
           <p v-else-if="aiLinkError">AI 任务入口加载失败，请重试。当前页面内容仍可查看。</p>
           <p v-else-if="aiLinkLoading">正在查找这个项目对应的 AI 任务…</p>
           <p v-else>此项目没有关联的 AI 任务。下面是手动制作工具；也可以从一句话开始新的 AI 创作。</p>
@@ -401,7 +401,7 @@
             :disabled="!currentEpisodeId || pipelineRunning"
             @click="startOneClickPipeline"
           >
-            一键成片带图片视频
+            分阶段制作（逐步审核）
           </el-button>
           <el-button
             :loading="pipelineRunning && !pipelinePaused"
@@ -431,18 +431,14 @@
             <span v-if="pipelineStepIndex > 0" class="pipeline-step-badge">{{ pipelineStepIndex }}/{{ pipelineStepTotal }}</span>
             {{ pipelineCurrentStep.replace(/^\[步骤 \d+\/\d+\] /, '') }}
           </div>
-          <!-- 阶段间倒计时 -->
-          <div v-if="pipelineCountdown > 0" class="pipeline-countdown">
-            <div class="pipeline-countdown-ring">
-              <span class="pipeline-countdown-num">{{ pipelineCountdown }}</span>
-              <span class="pipeline-countdown-unit">秒</span>
-            </div>
+          <div v-if="pipelineReviewMessage" class="pipeline-countdown" role="region" aria-label="阶段审核">
             <div class="pipeline-countdown-body">
-              <p class="pipeline-countdown-msg">{{ pipelineCountdownMsg }}</p>
+              <strong>等待你审核 · 不会自动进入下一阶段</strong>
+              <p class="pipeline-countdown-msg">{{ pipelineReviewMessage }}</p>
+              <p>请向下查看本阶段结果；角色、动作或构图不对时先停止并修改。继续生成可能产生费用。</p>
               <div class="pipeline-countdown-actions">
-                <el-button size="small" type="success" @click="skipPipelineCountdown">⚡ 立即开始下一阶段</el-button>
-                <el-button v-if="!pipelinePaused" size="small" type="warning" @click="pipelinePaused = true">⏸ 暂停倒计时</el-button>
-                <span v-else class="pipeline-countdown-paused">已暂停 — 点击右上角"继续"恢复</span>
+                <el-button size="small" type="success" :disabled="pipelinePaused" @click="pipelineReview.approve()">我已检查，开始下一阶段</el-button>
+                <el-button size="small" @click="pipelineReview.cancel()">停止并修改</el-button>
               </div>
             </div>
           </div>
@@ -2662,6 +2658,7 @@ import { useGenerationTaskStore, GEN_RESOURCE } from '@/stores/generationTaskSto
 import { syncGeneratingSetsFromStore, buildEpisodeContext, buildExtractTaskMeta, isEpisodeExtractRunning } from '@/composables/useGenerationTaskSync'
 import { dramaAPI } from '@/api/drama'
 import { agentAPI } from '@/api/agent'
+import { createPipelineReview } from '@/utils/pipelineReview'
 import { generationAPI } from '@/api/generation'
 import { aiAPI } from '@/api/ai'
 import { characterAPI } from '@/api/characters'
@@ -2886,9 +2883,8 @@ const pipelineStepIndex = ref(0)    // 当前步骤序号（1-based）
 /** 全流程 10 步；仅文本框架为前 4 步 */
 const pipelineStepTotal = ref(10)
 let pipelineResolveResume = null
-// 倒计时（两个生成阶段之间的确认窗口）
-const pipelineCountdown = ref(0)      // 剩余秒数，0 表示不在倒计时
-const pipelineCountdownMsg = ref('')  // 倒计时说明文字
+const pipelineReview = createPipelineReview()
+const pipelineReviewMessage = ref('')
 const pipelineConcurrency = ref(3)
 const pipelineVideoConcurrency = ref(3)
 const pipelineActiveTasks = reactive(new Set())
@@ -3256,6 +3252,7 @@ async function cancelActiveTask(item) {
       return
     }
     if (item.kind === 'pipeline') {
+      pipelineReview.cancel()
       pipelineAbortRequested.value = true
       pipelineRunning.value = false
       pipelinePaused.value = false
@@ -7410,24 +7407,16 @@ function pipelineRest() {
   return new Promise((r) => setTimeout(r, 1000))
 }
 
-/** 跳过倒计时，立即进入下一阶段 */
-function skipPipelineCountdown() {
-  pipelineCountdown.value = 0
-}
-
-/** 阶段间倒计时，支持暂停冻结 + 立即跳过 */
-async function runPipelineCountdown(totalSeconds, msg) {
-  pipelineCountdown.value = totalSeconds
-  pipelineCountdownMsg.value = msg
+/** No timeout: moving to another paid stage requires an explicit click. */
+async function waitForPipelineReview(message) {
+  await checkPause()
+  pipelineReviewMessage.value = message
+  pipelineCurrentStep.value = '等待人工审核：' + message
   try {
-    while (pipelineCountdown.value > 0) {
-      await checkPause()                              // 暂停时冻结在此
-      await new Promise((r) => setTimeout(r, 1000))  // 等 1 秒
-      if (pipelineCountdown.value > 0) pipelineCountdown.value--
-    }
+    await pipelineReview.wait()
+    await checkPause()
   } finally {
-    pipelineCountdown.value = 0
-    pipelineCountdownMsg.value = ''
+    pipelineReviewMessage.value = ''
   }
 }
 
@@ -7713,17 +7702,14 @@ async function runOneClickPipeline(textOnly = false) {
     }
 
     // ════════════════════════════════════════════════════════
-    // ⏱ 倒计时 20 秒：请浏览分镜内容，确认后开始生成角色/场景/道具图片
+    // 人工审核：请浏览分镜内容，确认后开始生成角色/场景/道具图片
     // ════════════════════════════════════════════════════════
     const continuityRepairCount = new Set([
       ...continuityForceRegenerateImageIds,
       ...continuityForceRegenerateVideoIds,
     ]).size
-    await runPipelineCountdown(
-      20,
-      continuityRepairCount > 0
-        ? `分镜脚本已确认，画面一致性校对要求局部重生 ${continuityRepairCount} 个镜头。倒计时结束后将先准备角色、场景、道具图片，再重生受影响分镜图。`
-        : '分镜脚本与画面一致性校对已通过。倒计时结束后将开始生成角色、场景、道具图片。'
+    await waitForPipelineReview(
+      `请审核分镜脚本中的人物、动作、镜头数与时长。${continuityRepairCount ? `有 ${continuityRepairCount} 个镜头需要局部修复。` : ''}确认后仅开始角色、场景、道具参考图。`
     )
     await checkPause()
 
@@ -7837,9 +7823,9 @@ async function runOneClickPipeline(textOnly = false) {
     }
 
     // ════════════════════════════════════════════════════════
-    // ⏱ 倒计时 30 秒：请浏览角色/场景/道具图，确认后开始生成分镜图
+    // 人工审核：请浏览角色/场景/道具图，确认后开始生成分镜图
     // ════════════════════════════════════════════════════════
-    await runPipelineCountdown(30, '角色、场景、道具图片生成完毕，请浏览确认效果。倒计时结束后将开始生成分镜图（消耗较多 Token）。')
+    await waitForPipelineReview('请核对角色参考图的姓名、脸、服装，以及场景、道具。确认后开始分镜图，不生成视频。')
     await checkPause()
 
     // ════════════════════════════════════════════════════════
@@ -7898,9 +7884,9 @@ async function runOneClickPipeline(textOnly = false) {
     }
 
     // ════════════════════════════════════════════════════════
-    // ⏱ 倒计时 20 秒：请浏览分镜图，确认后开始生成分镜视频
+    // 人工审核：请浏览分镜图，确认后开始生成分镜视频
     // ════════════════════════════════════════════════════════
-    await runPipelineCountdown(20, '分镜图生成完毕，请浏览确认图片效果。倒计时结束后将开始生成分镜视频（消耗最多 Token）。')
+    await waitForPipelineReview('请逐镜检查分镜图：人物身份、动作、道具与构图。确认图片符合预期后，才开始分镜视频。')
     await checkPause()
 
     // ════════════════════════════════════════════════════════
@@ -8006,6 +7992,7 @@ async function runOneClickPipeline(textOnly = false) {
       extra: { error_count: pipelineErrorLog.value.length },
     })
   } catch (e) {
+    if (e?.pipelineAborted) return
     addPipelineError('流程', e.message || String(e))
     trackFilmCreateAction('one_click_generate_failed', {
       extra: { message: String(e?.message || 'failed').slice(0, 120) },
@@ -8020,6 +8007,7 @@ async function startRepairPipeline() {
   pipelineActiveTasks.clear()
   pipelineRunning.value = true
   pipelinePaused.value = false
+  pipelineAbortRequested.value = false
   try {
     await runRepairPipeline()
   } finally {
@@ -8267,6 +8255,7 @@ async function runRepairPipeline() {
       if (paused) { await waitForResume() }
     }
     await loadStoryboardMedia()
+    await waitForPipelineReview('补全图片阶段结束。请检查已有和新生成的分镜图，确认后才补齐视频。')
     const boards2 = (store.storyboards || []).filter((sb) => {
       const vidList = sbVideos.value[sb.id] || []
       if (vidList.some((v) => v.status === 'completed' && recordHasPlayableVideoUrl(v))) return false
@@ -8343,12 +8332,14 @@ async function runRepairPipeline() {
     pipelineCurrentStep.value = '补全并生成流程已执行完成'
     ElMessage.success('修复缺失流程已执行完成')
   } catch (e) {
-    addPipelineError('流程', e.message || String(e))
+    if (!e?.pipelineAborted) addPipelineError('流程', e.message || String(e))
   }
 }
 
 
 onBeforeUnmount(() => {
+  pipelineAbortRequested.value = true
+  pipelineReview.cancel()
 })
 
 function applyRouteToStore() {
@@ -8380,6 +8371,7 @@ onMounted(async () => {
 })
 
 watch(() => route.params.id, () => {
+  pipelineReview.cancel()
   applyRouteToStore()
 })
 
@@ -8388,6 +8380,7 @@ watch(() => route.params.id, () => {
 watch(
   () => selectedEpisodeId.value,
   (newId) => {
+    pipelineReview.cancel()
     if (!dramaId.value) return
     const currentInQuery = route.query.episode != null ? Number(route.query.episode) : null
     const desired = newId != null ? Number(newId) : null
