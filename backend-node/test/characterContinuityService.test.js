@@ -120,3 +120,17 @@ test('professional first/key/last frame prompt generators treat continuity wardr
     assert.match(prompt, /高于参考图服装/);
   }
 });
+
+test('audio-only role is removed from both fresh and cached wardrobe locks', () => {
+ const db = createDb();
+ db.prepare("UPDATE storyboards SET action=?, result=?, image_prompt='', video_prompt='' WHERE id=53")
+   .run('林晚冲进消防通道。','苏晴追来的脚步声从身后传来。');
+ continuity.auditEpisodeContinuity(db,5,{apply:true});
+ const snapshot=JSON.parse(db.prepare('SELECT continuity_snapshot FROM storyboards WHERE id=53').get().continuity_snapshot);
+ assert.ok(snapshot.characters['林晚']);
+ assert.equal(snapshot.characters['苏晴'],undefined);
+ const prompt=continuity.applyStoryboardContinuityLock(db,53,'林晚打电话。\n【人物服装连戏最高优先级】\n- 苏晴：错误的旧锁');
+ assert.ok(prompt.includes('林晚'));
+ assert.ok(!prompt.includes('苏晴'));
+ db.close();
+});

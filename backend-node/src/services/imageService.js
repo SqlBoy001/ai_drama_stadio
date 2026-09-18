@@ -1,3 +1,4 @@
+const { isAudioOnlyCharacter } = require('./shotPresence');
 function list(db, query) {
   let sql = 'FROM image_generations WHERE deleted_at IS NULL';
   const params = [];
@@ -1059,11 +1060,13 @@ async function processImageGeneration(db, log, imageGenId) {
       try {
         // 同时检查分镜的 action / dialogue / result 字段，避免角色通过台词/动作出场却被误过滤
         let sbTextForFilter = '';
+        let presenceShot = {};
         try {
           const sbForFilter = db.prepare(
             'SELECT action, dialogue, result FROM storyboards WHERE id = ? AND deleted_at IS NULL'
           ).get(Number(row.storyboard_id));
           if (sbForFilter) {
+            presenceShot = sbForFilter;
             sbTextForFilter = [sbForFilter.action, sbForFilter.dialogue, sbForFilter.result]
               .filter(Boolean).join(' ');
           }
@@ -1087,7 +1090,7 @@ async function processImageGeneration(db, log, imageGenId) {
           const nameMatch = label.match(/for\s+"([^"]+)"/i);
           const charName = nameMatch ? nameMatch[1].trim() : '';
           const nameInPrompt = charName && promptText.includes(charName.toLowerCase());
-          if (nameInPrompt || !charName) {
+          if ((nameInPrompt || !charName) && !isAudioOnlyCharacter(presenceShot, charName)) {
             filteredRefs.push(reference_image_urls[fi]);
             filteredLabels.push(label);
           } else {

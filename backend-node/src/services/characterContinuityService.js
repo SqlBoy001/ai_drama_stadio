@@ -1,3 +1,4 @@
+const { isAudioOnlyCharacter } = require('./shotPresence');
 const WARDROBE_TRANSITION_RE = /换上|换成|换装|改穿|穿上|脱下|脱掉|脱去|变装|变成|幻化|撕下|外套滑落/;
 const GARMENT_RE = /(?:针织开衫|开衫|连衣裙|长裙|短裙|半身裙|红裙|裙装|裙子|卫衣|衬衫|西装|风衣|大衣|夹克|毛衣|T恤|上衣|长裤|短裤|裤子|制服|汉服|旗袍|长袍|袍服|外套|裙)/;
 const COLOR_RE = /米白|纯白|乳白|浅色|深色|白色?|黑色?|红色?|深红|暗红|蓝色?|灰色?|浅灰|深灰|绿色?|黄色?|紫色?|粉色?|棕色?|卡其|杏色|藏青/;
@@ -159,7 +160,7 @@ function auditEpisodeContinuity(db, episodeId, options = {}) {
 
     for (const characterId of ids) {
       const character = characterMap.get(characterId);
-      if (!character?.name) continue;
+      if (!character?.name || isAudioOnlyCharacter(row, character.name)) continue;
       const name = String(character.name).trim();
       const referenceWardrobe = extractReferenceWardrobe(character.appearance);
       const explicitWardrobe = extractExplicitWardrobe(shotText, name);
@@ -323,7 +324,7 @@ function auditEpisodeContinuity(db, episodeId, options = {}) {
 
 function getStoryboardSnapshot(db, storyboardId) {
   const row = db.prepare(
-    'SELECT id, episode_id, continuity_snapshot FROM storyboards WHERE id = ? AND deleted_at IS NULL'
+    'SELECT id, episode_id, action, result, continuity_snapshot FROM storyboards WHERE id = ? AND deleted_at IS NULL'
   ).get(Number(storyboardId));
   if (!row) return null;
   let snapshot = safeJson(row.continuity_snapshot, null);
@@ -331,6 +332,10 @@ function getStoryboardSnapshot(db, storyboardId) {
     auditEpisodeContinuity(db, row.episode_id, { apply: true });
     const refreshed = db.prepare('SELECT continuity_snapshot FROM storyboards WHERE id = ?').get(Number(storyboardId));
     snapshot = safeJson(refreshed?.continuity_snapshot, null);
+  }
+  if (snapshot?.characters) {
+    snapshot.characters = Object.fromEntries(Object.entries(snapshot.characters)
+      .filter(([name]) => !isAudioOnlyCharacter(row, name)));
   }
   return snapshot;
 }
@@ -357,9 +362,8 @@ function buildContinuityLock(snapshot) {
 }
 
 function applyStoryboardContinuityLock(db, storyboardId, prompt) {
-  const base = String(prompt || '').trim();
+  const base = String(prompt || '').split('【人物服装连戏最高优先级】')[0].trim();
   if (!storyboardId || !base) return base;
-  if (base.includes('【人物服装连戏最高优先级】')) return base;
   const lock = buildContinuityLock(getStoryboardSnapshot(db, storyboardId));
   return lock ? `${base}\n${lock}` : base;
 }

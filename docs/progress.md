@@ -94,3 +94,11 @@ sed -n '245,335p' backend-node/src/services/agentWorkbenchService.js
 - 当前报错：无阻塞失败；原Vite大包告警保留。浏览器工具一次自动审批超时，重试成功。现有媒体质量问题保留待局部修复，0次新增付费请求。
 - 下一步命令：先读取本报告与git diff；检查第9镜的可见人物与画外音区分，再对单镜参考绑定增加回归；不要整集重生。
 - 关键文件：frontweb/src/views/FilmCreate.vue、frontweb/src/utils/pipelineReview.js、frontweb/test/pipelineReview.test.js。
+
+## 首帧丢失根因与画外角色修复（2026-09-18）
+- 已完成：复现视频服务reference列表非空就删除首帧，经典协议最终发t2v的缺陷；保留帧参数，并拒绝reference-only静默降级及不可读本地帧。补充中文编码本地路径的出站body回归。
+- 已完成：明确纯音频角色从图像参考筛选和服装锁中一致排除；旧缓存锁更新后不保留画外角色。保守规则不声称解决所有自然语言歧义。
+- 验证：根因回归先失败后通过；完整verify通过（后端121、前端18、JS语法、Vue构建、隔离HTTP启动/Mock冒烟）。无独立类型检查。原服务无运行中媒体后已重启加载修复。
+- 当前阻塞：自动审批拒绝将现有会议室素材发给Volcengine Seedance2.5做单次真实视频验证，理由为具体素材/目的地外发尚缺明确授权；未发请求，费用0。不能宣称真实画面质量验收完成。
+- 下一步：授权后限定1次5秒480p小样，核对实际出站i2v、返回视频人物/场景/动作和供应商费用；未通过不得通知整体验收。继续统一质量门禁与版本化局部修复。
+- 关键文件：backend-node/src/services/videoService.js、videoClient.js、shotPresence.js、characterContinuityService.js、imageService.js；对应回归见backend-node/test。

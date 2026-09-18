@@ -3569,7 +3569,7 @@ function resolveVolcClassicImage(rawUrl, files_base_url, storage_local_path, log
   const baseIndicatesLocal = fb && /localhost|127\.0\.0\.1/i.test(fb);
   const urlIndicatesLocal = /localhost|127\.0\.0\.1/i.test(u);
 
-  if ((baseIndicatesLocal || urlIndicatesLocal) && storage_local_path) {
+  if ((baseIndicatesLocal || urlIndicatesLocal || !/^https?:\/\//i.test(u)) && storage_local_path) {
     let rel = null;
     const marker = '/static/';
     const idx = u.toLowerCase().indexOf(marker);
@@ -3582,7 +3582,11 @@ function resolveVolcClassicImage(rawUrl, files_base_url, storage_local_path, log
       rel = u.replace(/^\//, '').split('?')[0];
     }
     if (rel) {
-      const filePath = path.join(storage_local_path, rel);
+      let decoded;
+      try { decoded = decodeURIComponent(rel); } catch (_) { throw new Error('首尾帧路径编码无效'); }
+      const root = path.resolve(storage_local_path);
+      const filePath = path.resolve(root, decoded);
+      if (!filePath.startsWith(root + path.sep)) throw new Error('首尾帧路径超出素材目录');
       try {
         if (fs.existsSync(filePath)) {
           const buf = fs.readFileSync(filePath);
@@ -3597,8 +3601,7 @@ function resolveVolcClassicImage(rawUrl, files_base_url, storage_local_path, log
       } catch (_) {}
     }
   }
-  // 兜底返回原始值（中转或公网会处理）
-  return u;
+  throw new Error('无法读取本地首尾帧图片；已阻止提交，请检查素材文件后重试。');
 }
 
 /** MiniMax 国内/海外根域名：去掉末尾 /v1 /v2，便于拼 V2 路径 */
@@ -4097,6 +4100,10 @@ async function callVideoApi(db, log, opts) {
     lastForApi = null;
   }
 
+  // A classic protocol must never silently discard a reference-only request.
+  if (Array.isArray(opts.reference_urls) && opts.reference_urls.length && !firstForApi && !lastForApi) {
+    return { error: '当前视频协议未绑定首帧，不能将参考图请求降级为文生视频；请选择首帧或支持多参考图的协议。' };
+  }
   const hasAnyFrame = !!(firstForApi || lastForApi);
   // 只要有首帧或尾帧就走 i2v；旧版单图行为完全保留
   const volcTaskType = isVolc ? (hasAnyFrame ? 'i2v' : 't2v') : null;
