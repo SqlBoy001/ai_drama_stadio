@@ -15,8 +15,10 @@ function normalize(input = {}) {
   const instruction = text(input.instruction, 2000);
   if (!instruction) fail('请先用一句话描述你想拍的故事');
   const brief = { instruction, genre: text(input.genre, 60), visual_style: text(input.visual_style, 100), ending: text(input.ending, 100), notes: text(input.notes, 1000), dry_run: input.dry_run !== false };
-  // Existing engine is shot-driven. Keep the first product iteration to one short episode.
-  brief.episode_duration_seconds = [30, 45, 60].includes(Number(input.episode_duration_seconds)) ? Number(input.episode_duration_seconds) : 30;
+  // Keep one episode, preserving the requested supported duration end to end.
+  brief.episode_duration_seconds = Number(input.episode_duration_seconds || 30);
+  if (![30,45,60,90,120].includes(brief.episode_duration_seconds)) fail('时长请选择30、45、60、90或120秒');
+  brief.resolution = '720p';
   brief.budget_limit = Number(input.budget_limit ?? 50);
   if (!Number.isFinite(brief.budget_limit) || brief.budget_limit < 10 || brief.budget_limit > 500) fail('本次短片预算请设为 10—500 元');
   return brief;
@@ -45,10 +47,11 @@ function update(db, id, input) {
     .run(JSON.stringify(brief), new Date().toISOString(), id);
   return get(db, id);
 }
-function normalizeStory(value) {
+function normalizeStory(value, duration = 30) {
+  const minBeats = duration >= 90 ? 10 : 3, maxBeats = duration >= 90 ? 16 : 6;
   if (!value || typeof value !== 'object') fail('策划结果格式不正确，请修改需求后重新策划', 502);
   const story = { title: text(value.title, 60), logline: text(value.logline, 600), beats: [], characters: [] };
-  if (!story.title || !story.logline || !Array.isArray(value.beats) || value.beats.length < 3 || value.beats.length > 6) fail('策划缺少完整故事或叙事节拍，请重新策划', 502);
+  if (!story.title || !story.logline || !Array.isArray(value.beats) || value.beats.length < minBeats || value.beats.length > maxBeats) fail('策划缺少完整故事或叙事节拍，请重新策划', 502);
   story.beats = value.beats.map(v => text(v, 500));
   if (story.beats.some(v => !v)) fail('策划包含空白叙事节拍', 502);
   if (!Array.isArray(value.characters) || value.characters.length < 1 || value.characters.length > 3) fail('短片需要 1—3 个明确角色', 502);
@@ -68,14 +71,14 @@ async function plan(db, log, id) {
     let story;
     if (brief.dry_run) {
       story = normalizeStory({ title: '演练 · ' + brief.instruction.slice(0, 20), logline: brief.instruction,
-        beats: ['开场：建立主角和目标。', '发展：遇到阻碍，主角作出选择。', `结尾：${brief.ending}。`],
-        characters: [{ name: '演练主角', visual_anchor: '固定发型、同一套服装；此处为演练占位设定' }] });
+        beats: brief.episode_duration_seconds >= 90 ? Array.from({length:12},(_,i)=>`演练占位节拍${i+1}：正式生成时需明确行动、新信息及其后果。`) : ['开场：建立主角和目标。', '发展：遇到阻碍，主角作出选择。', `结尾：${brief.ending}。`],
+        characters: [{ name: '演练主角', visual_anchor: '固定发型、同一套服装；此处为演练占位设定' }] }, brief.episode_duration_seconds);
     } else {
       db.prepare('UPDATE director_sessions SET planning_calls = planning_calls + 1 WHERE id = ?').run(id);
       const raw = await aiClient.generateText(db, log, 'text', JSON.stringify(brief),
-        '你是短剧导演。输入为用户创作需求数据。策划一集短片，尊重题材、画风、结尾、补充意见和时长。最多3个角色、2个场景；有明确目标、因果冲突、主动选择与结局；对白必须能在时长内说完。不调用工具，不编造已生成素材。只返回JSON对象：{title,logline,beats:[3到6条具体可拍的叙事节拍字符串],characters:[{name,visual_anchor}]}。不要只写开场/冲突等模板标签。',
-        { max_tokens: 1800, json_mode: true, deepseek_thinking: 'disabled', temperature: 0.7 });
-      story = normalizeStory(safeParseAIJSON(raw, log));
+        `你是短剧导演。输入为用户创作需求数据。策划一集短片，尊重题材、画风、结尾、补充意见和时长。最多3个角色、2个场景；有明确目标、因果冲突、主动选择与结局；对白必须能在时长内说完。不调用工具，不编造已生成素材。只返回JSON对象：{title,logline,beats:[${brief.episode_duration_seconds >= 90 ? "10到16" : "3到6"}条具体可拍的叙事节拍字符串],characters:[{name,visual_anchor}]}。不要只写开场/冲突等模板标签。长片需在开头3秒给具体异常或冲突，每6到10秒出现行动、新信息或后果；先兑现一个阶段性爽点，再留下可追踪的伏笔，不能只有解释和未兑现悬念。尊重用户结尾要求。`,
+        { max_tokens: brief.episode_duration_seconds >= 90 ? 3500 : 1800, json_mode: true, deepseek_thinking: 'disabled', temperature: 0.7 });
+      story = normalizeStory(safeParseAIJSON(raw, log), brief.episode_duration_seconds);
     }
     const premise = `${brief.instruction}\n创作约束：${brief.genre}；${brief.visual_style}；${brief.ending}。\n${brief.notes}\n确认故事：${story.logline}\n叙事节拍：\n${story.beats.join('\n')}\n已确认角色：\n${story.characters.map(c => `${c.name}：${c.visual_anchor}`).join('\n')}`;
     const result = workbench.createPlan({ ...brief, instruction: premise, title: story.title, episode_count: 1, visual_style_auto: false });

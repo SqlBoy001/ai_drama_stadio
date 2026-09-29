@@ -1,9 +1,9 @@
 <template>
   <div class="director-page">
-    <header><router-link to="/create" class="logo">Drama Stadio<span>把灵感拍成故事</span></router-link><nav aria-label="主导航"><router-link to="/projects">我的作品</router-link><router-link to="/agent-workbench">制作工作台</router-link><router-link to="/ai-config">模型设置</router-link></nav></header>
+
     <main>
-      <p class="eyebrow">你的第一部 AI 短片</p>
-      <h1>你讲一个想法，<br>我们一起把它拍出来。</h1>
+      <p class="eyebrow">AI DIRECTOR / 创作策划</p>
+      <h1>一个想法，<br>一部属于你的作品。</h1>
       <p class="intro">不用懂分镜，也不用写提示词。先做一集短片，确认方向，再开始制作。</p>
       <ol class="steps" aria-label="创作步骤"><li :class="{ current: !session }">1 说想法</li><li :class="{ current: session && !session.plan }">2 定方向</li><li :class="{ current: session?.plan }">3 看方案</li></ol>
       <p v-if="error" class="error" role="alert">{{ error }}</p>
@@ -19,7 +19,7 @@
         <fieldset v-for="question in questions" :key="question.key" :disabled="busy"><legend>{{ question.title }}</legend><div class="choices"><label v-for="option in question.options" :key="option" :class="{ selected: brief[question.key] === option }"><input type="radio" :name="question.key" :value="option" v-model="brief[question.key]">{{ option }}</label></div></fieldset>
         <label for="notes">还有什么特别想要或不想要的？<small>选填，修改意见会进入策划与剧本</small></label><textarea id="notes" v-model="brief.notes" maxlength="1000" rows="2" placeholder="例如：不要血腥，女主穿黄色外套，最后让人会心一笑。" :disabled="busy" />
         <details><summary>时长、预算与真实生成</summary><div class="settings">
-          <label>时长<select v-model.number="brief.episode_duration_seconds" :disabled="busy"><option :value="30">30 秒（推荐）</option><option :value="45">45 秒</option><option :value="60">60 秒</option></select></label>
+          <label>时长<select v-model.number="brief.episode_duration_seconds" :disabled="busy"><option :value="30">30 秒（推荐）</option><option :value="45">45 秒</option><option :value="60">60 秒</option><option :value="90">90 秒</option><option :value="120">2 分钟（120 秒）</option></select></label>
           <label>媒体预算上限（元）<input v-model.number="brief.budget_limit" type="number" min="10" max="500" :disabled="busy"></label>
           <label class="mode"><input type="checkbox" v-model="realMode" :disabled="busy">使用已配置的真实模型</label>
         </div><p class="notice">真实模式：下一步会调用一次文本模型策划（单独计费），确认方案后才开始生产。预算为媒体参考上限，不是供应商账单保证。</p><p v-if="realMode && !textReady" class="error">请先在模型设置中启用文本模型。也可关闭真实模式继续演练。</p></details>
@@ -29,7 +29,7 @@
       <section v-else class="card">
         <div class="card-heading"><span class="badge">{{ session.brief.dry_run ? '演练示例 · 未调用模型' : 'AI 导演方案' }}</span><button class="text" :disabled="busy || !!session.run_id" @click="edit">调整想法</button></div>
         <h2>{{ session.plan.project.title }}</h2><p class="story">{{ session.plan.director.story.logline }}</p>
-        <dl><div><dt>画面</dt><dd>{{ session.brief.visual_style }}</dd></div><div><dt>时长</dt><dd>1 集 · {{ session.brief.episode_duration_seconds }} 秒</dd></div><div><dt>生产费用参考</dt><dd>{{ session.brief.dry_run ? '演练 ¥0' : `约 ¥${session.plan.estimated.estimated_cost}` }}</dd></div></dl>
+        <dl><div><dt>画面（720p目标）</dt><dd>{{ session.brief.visual_style }}</dd></div><div><dt>时长</dt><dd>1 集 · {{ session.brief.episode_duration_seconds }} 秒</dd></div><div><dt>生产费用参考</dt><dd>{{ session.brief.dry_run ? '演练 ¥0' : `约 ¥${session.plan.estimated.estimated_cost}` }}</dd></div></dl>
         <h3>故事会这样展开</h3><ol class="beats"><li v-for="(beat, i) in session.plan.director.story.beats" :key="i">{{ beat }}</li></ol>
         <h3>主角与视觉设定</h3><p v-for="character in session.plan.characters" :key="character.temporary_id"><b>{{ character.name }}</b> · {{ character.visual_anchor }}</p>
         <p class="notice">{{ session.brief.dry_run ? '演练只验证流程，不会生成可播放视频，也不会产生模型费用。' : '确认后先生成剧本；剧本、视觉资产与最终镜头会分别等待你的审核。画面与剧情质量仍需你确认。' }}</p>

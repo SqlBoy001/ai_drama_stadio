@@ -543,40 +543,28 @@ async function generateTextWithVision(db, log, serviceType, userPrompt, systemPr
   const fs = require('fs');
   const path = require('path');
 
-  // 解析图片为 base64 data URL 或 HTTP URL
-  let imageUrlForApi;
-  let imageLogInfo = {};
-  if (imageSource.imageUrl) {
-    imageUrlForApi = imageSource.imageUrl;
-    if (imageUrlForApi.startsWith('data:')) {
-      // base64 data URL：只记录类型和大小，不记录内容
-      const mimeMatch = imageUrlForApi.match(/^data:([^;]+);base64,/);
-      const mime = mimeMatch ? mimeMatch[1] : 'unknown';
-      const b64Len = imageUrlForApi.length - (mimeMatch ? mimeMatch[0].length : 0);
-      imageLogInfo = { image_type: 'base64', image_mime: mime, image_size_kb: Math.round(b64Len * 0.75 / 1024) };
-    } else {
-      imageLogInfo = { image_type: 'url', image_url: imageUrlForApi.slice(0, 100) };
+  // Arrays preserve explicit target/reference ordering for independent visual review.
+  const sources = Array.isArray(imageSource) ? imageSource : [imageSource];
+  if (!sources.length || sources.length > 8) throw new Error('视觉输入必须包含1–8张图片');
+  const imageContent = sources.flatMap((source) => {
+    let url = source.imageUrl;
+    if (!url && source.localAbsPath) {
+      const ext = path.extname(source.localAbsPath).toLowerCase();
+      const mime = { '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.png':'image/png', '.webp':'image/webp', '.gif':'image/gif' }[ext];
+      if (!mime) throw new Error('不支持的视觉图片格式');
+      url = `data:${mime};base64,${fs.readFileSync(source.localAbsPath).toString('base64')}`;
     }
-  } else if (imageSource.localAbsPath) {
-    if (!fs.existsSync(imageSource.localAbsPath)) {
-      throw new Error(`图片文件不存在：${imageSource.localAbsPath}`);
-    }
-    const buf = fs.readFileSync(imageSource.localAbsPath);
-    const ext = path.extname(imageSource.localAbsPath).toLowerCase();
-    const mimeMap = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.gif': 'image/gif' };
-    const mime = mimeMap[ext] || 'image/jpeg';
-    imageUrlForApi = `data:${mime};base64,${buf.toString('base64')}`;
-    imageLogInfo = { image_type: 'local_file', image_path: imageSource.localAbsPath, image_size_kb: Math.round(buf.length / 1024), image_mime: mime };
-  } else {
-    throw new Error('imageSource 必须包含 imageUrl 或 localAbsPath');
-  }
+    if (!url) throw new Error('imageSource 必须包含 imageUrl 或 localAbsPath');
+    return [...(source.label ? [{type:'text', text:source.label}] : []), {type:'image_url', image_url:{url}}];
+  });
+  const imageLogInfo = { image_count: sources.length };
 
   // 复用 generateText 的配置查找逻辑
   const { model: preferredModel, temperature = 0.3, max_tokens = 500 } = options;
   let config = preferredModel
     ? getConfigForModel(db, serviceType, preferredModel)
     : getDefaultConfig(db, serviceType);
-  if (!config) config = getDefaultConfig(db, 'text');
+  if (!config && !options.require_service_config) config = getDefaultConfig(db, 'text');
   if (!config) throw new Error(`未配置文本模型，请在「AI 配置」中添加 ${serviceType} 类型的配置`);
   const model = getModelFromConfig(config, preferredModel);
   const url = buildChatUrl(config);
@@ -612,7 +600,7 @@ async function generateTextWithVision(db, log, serviceType, userPrompt, systemPr
         role: 'user',
         content: [
           { type: 'text', text: mergedUserText },
-          { type: 'image_url', image_url: { url: imageUrlForApi } },
+          ...imageContent,
         ],
       },
     ],

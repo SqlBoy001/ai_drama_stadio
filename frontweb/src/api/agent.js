@@ -1,6 +1,13 @@
 import request from '@/utils/request'
 
 export const agentAPI = {
+  chatcutAudioReview: (id, job, retry = false) => request.post(`/agent/runs/${id}/chatcut/${job}/audio-review`, { retry }),
+  chatcutConnection: () => request.get('/agent/chatcut/connection'),
+  chatcutPrepare: (id, project_id) => request.post(`/agent/runs/${id}/chatcut/prepare`, { project_id }),
+  chatcutExport: (id, job) => request.post(`/agent/runs/${id}/chatcut/${job}/export`),
+  chatcutCollect: (id, job) => request.post(`/agent/runs/${id}/chatcut/${job}/collect`),
+  chatcutApprove: (id, job, comment) => request.post(`/agent/runs/${id}/chatcut/${job}/approve`, { comment }),
+  chatcutAdopt: (id, job, comment) => request.post(`/agent/runs/${id}/chatcut/${job}/adopt`, { comment }),
   providerStatus: () => request.get('/agent/providers/status'),
   plan: (data) => request.post('/agent/plan', data),
   createRun: (data) => request.post('/agent/runs', data),

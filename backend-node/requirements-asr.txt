@@ -1,0 +1,2 @@
+# Optional local-only transcription runtime; Python >= 3.11.
+faster-whisper==1.2.1

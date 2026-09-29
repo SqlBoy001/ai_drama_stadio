@@ -25,9 +25,41 @@ const server = app.listen(0,'127.0.0.1',async()=>{
   assert.equal(first.id,second.id);
   let result=await req('/api/v1/agent/runs',{instruction:'做一个《扫描演练》的1集都市故事，每集30秒，预算100元',dry_run:true,episode_count:1,episode_duration_seconds:30,budget_limit:100});
   let run=result.data;assert.ok(run.dry_run);assert.equal(run.status,'SCRIPT_REVIEW');
-  for(const state of ['ASSET_REVIEW','FINAL_REVIEW','EXPORTED']){const a=run.approvals.find(a=>a.status==='PENDING');run=(await req('/api/v1/approvals/'+a.id+'/approve',{comment:'isolated mock smoke'})).data;assert.equal(run.status,state);}
+  for(const state of ['ASSET_REVIEW','IMAGE_REVIEW','FINAL_REVIEW','EXPORTED']){const a=run.approvals.find(a=>a.status==='PENDING');run=(await req('/api/v1/approvals/'+a.id+'/approve',{comment:'isolated mock smoke'})).data;assert.equal(run.status,state);}
   assert.equal(run.usage.length,6);assert.equal(run.qc_reports.length,6);
-  console.log('SMOKE PASS: director draft/questions/plan/idempotent start, health, frontend route, 3 approvals, 6 mock usage/QC, EXPORTED (state only).');
+  const reviewService=require('../backend-node/src/services/agentReviewService');
+  const editingBlocked=await fetch(base+'/api/v1/agent/runs/'+run.id+'/editing-handoff');assert.equal(editingBlocked.status,400);assert.match(await editingBlocked.text(),/Mock/);
+  const chatcutBlocked=await fetch(base+'/api/v1/agent/runs/'+run.id+'/chatcut-import-plan');assert.equal(chatcutBlocked.status,400);assert.match(await chatcutBlocked.text(),/Mock/);
+  const desktopBlocked=await fetch(base+'/api/v1/agent/runs/'+run.id+'/chatcut/prepare',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({project_id:'never-contact-desktop'})});assert.equal(desktopBlocked.status,400);assert.match(await desktopBlocked.text(),/Mock/);
+  const audioBlocked=await fetch(base+'/api/v1/agent/runs/'+run.id+'/chatcut/nonexistent/audio-review',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});assert.equal(audioBlocked.status,400);
+  const audioCrossSite=await fetch(base+'/api/v1/agent/runs/'+run.id+'/chatcut/nonexistent/audio-review',{method:'POST',headers:{Origin:'https://untrusted.example','content-type':'application/json'},body:'{}'});assert.equal(audioCrossSite.status,403);
+  const crossSite=await fetch(base+'/api/v1/agent/chatcut/connection',{headers:{Origin:'https://untrusted.example'}});assert.equal(crossSite.status,403);
+  let handoff=(await req('/api/v1/agent/runs',{instruction:'悬疑主角主动破局',dry_run:true,episode_count:1,episode_duration_seconds:30,budget_limit:100})).data;
+  const originals=db.prepare('SELECT episode_number,title,script_content FROM episodes WHERE drama_id=? ORDER BY episode_number').all(handoff.project_id);
+  await reviewService.runScriptReview(db,{},handoff,originals,{invoke:async(role,input)=>role==='writer'?input.episodes.map(ep=>({...ep,script_content:ep.script_content+'局部修正'})):{decision:'REVISE',checks:reviewService.CRITERIA.map(criterion=>({criterion,status:'FAIL',evidence:'第1场缺少主动行动'})),findings:[{location:'第1场',evidence:'主角只听解释',requirement:'主动破局',fix:'加入改变局面的试探'}]}});
+  handoff=(await req('/api/v1/agent/runs/'+handoff.id)).data;
+  assert.equal(handoff.review_cycles[0].versions.length,3);assert.equal(handoff.review_cycles[0].calls,5);
+  const approval=handoff.approvals.find(a=>a.status==='PENDING');
+  const blocked=await fetch(base+'/api/v1/approvals/'+approval.id+'/approve',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});assert.equal(blocked.status,400);
+  handoff=(await req('/api/v1/approvals/'+approval.id+'/approve',{comment:'人工接受已知节奏问题，继续Mock验证'})).data;
+  assert.equal(handoff.review_cycles[0].status,'HUMAN_ACCEPTED');assert.equal(handoff.status,'ASSET_REVIEW');
+  handoff=(await req('/api/v1/approvals/'+handoff.approvals.find(a=>a.status==='PENDING').id+'/approve',{comment:'Mock assets'})).data;
+  const visual=require('../backend-node/src/services/agentVisualReviewService');
+  const sharp=require('../backend-node/node_modules/sharp');
+  await sharp({create:{width:32,height:32,channels:3,background:'red'}}).png().toFile(path.join(storage,'visual-smoke.png'));
+  const shot=db.prepare('SELECT s.id FROM storyboards s JOIN episodes e ON e.id=s.episode_id WHERE e.drama_id=? LIMIT 1').get(handoff.project_id).id;
+  db.prepare("UPDATE storyboards SET characters='[]',scene_id=NULL,local_path='visual-smoke.png' WHERE id=?").run(shot);
+  db.prepare('DELETE FROM storyboard_props WHERE storyboard_id=?').run(shot);
+  await visual.runImageReview(db,{storage:{local_path:storage}},{},handoff,shot,{review:async()=>({decision:'UNCERTAIN',checks:visual.CRITERIA.map(criterion=>({criterion,status:'UNCERTAIN',evidence:'Mock色块不能证明人物动作'})),findings:[]})});
+  const imageApproval=handoff.approvals.find(a=>a.status==='PENDING');
+  db.prepare('UPDATE approval_requests SET snapshot_json=? WHERE id=?').run(JSON.stringify(require('../backend-node/src/services/agentImageGate').snapshot(db,handoff.project_id)),imageApproval.id);
+  const imageBlocked=await fetch(base+'/api/v1/approvals/'+imageApproval.id+'/approve',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});assert.equal(imageBlocked.status,400);
+  handoff=(await req('/api/v1/agent/runs/'+handoff.id)).data;assert.equal(handoff.review_cycles.find(c=>c.stage.startsWith('image:')).calls,1);
+  handoff=(await req('/api/v1/approvals/'+imageApproval.id+'/approve',{comment:'仅验证Mock人工接管，不代表内容达标'})).data;
+  assert.equal(handoff.review_cycles.find(c=>c.stage.startsWith('image:')).status,'HUMAN_ACCEPTED');
+  console.log('VISUAL SMOKE PASS: actual fixture image input, persisted evidence, HTTP reason-required handoff; zero paid calls.');
+  console.log('REVIEW SMOKE PASS: two repairs, three immutable versions, HTTP handoff evidence, reason-required override, zero provider credentials.');
+  console.log('SMOKE PASS: director draft/questions/plan/idempotent start, health, frontend route, 4 approvals, 6 mock usage/QC, EXPORTED (state only).');
  }catch(e){console.error(e);process.exitCode=1;}finally{server.close(()=>{db.close();fs.rmSync(storage,{recursive:true,force:true});});}
 });
 server.on('error',e=>{console.error(e);db.close();fs.rmSync(storage,{recursive:true,force:true});process.exitCode=1;});

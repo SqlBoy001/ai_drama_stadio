@@ -1,0 +1,1324 @@
+{
+  "production_version": "v01",
+  "generated_at": "2026-09-26T05:08:48.791496+00:00",
+  "source_versions": [
+    "用户授权章节",
+    "已确认60秒内容结构"
+  ],
+  "supersedes": null,
+  "status": "text_and_mock",
+  "schema_version": "1.0",
+  "episode_id": "EP01",
+  "title": "亡国公主醒来，先杀押送官",
+  "target_duration_seconds": 60,
+  "aspect_ratio": "9:16",
+  "visual_style": {
+    "preset": "三维国漫",
+    "medium": "stylized 3D animation",
+    "palette": "灰蓝、土黄",
+    "lighting": "画左上阴天柔光",
+    "negative_constraints": [
+      "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+    ]
+  },
+  "story_structure": {
+    "opening_conflict_end_seconds": 3,
+    "escalation_summary": "出卖、阻拦失败、近身威胁、反杀",
+    "final_hook_start_seconds": 55,
+    "final_hook": "把他们都干掉，如何？"
+  },
+  "shots": [
+    {
+      "shot_id": "EP01-S001",
+      "shot_version": 1,
+      "sequence": 1,
+      "start_seconds": 0,
+      "end_seconds": 5,
+      "duration_seconds": 5,
+      "beat_role": "hook",
+      "scene_id": "SC-001",
+      "shot_size": "中近景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "出卖者指向画左姜瑾，姜瑾抬眼",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-004",
+          "name": "出卖者",
+          "costume_id": "CST-004",
+          "appearance_lock": "十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-001",
+          "name": "姜瑾",
+          "costume_id": "CST-001",
+          "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "出卖者跪地抬手，姜瑾垂头坐在画左",
+        "timed_beats": [
+          "0–2.5秒：出卖者跪地抬手，姜瑾垂头坐在画左，向结果推进",
+          "2.5–5秒：出卖者指向画左姜瑾，姜瑾抬眼"
+        ],
+        "end_pose": "出卖者指向画左姜瑾，姜瑾抬眼",
+        "emotion_change": "hook"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-004",
+          "text": "放了胥郎！她才是瑾阳公主！",
+          "emotion": "惊恐，指人后躲避视线",
+          "delivery": "spoken",
+          "estimated_seconds": 3.25,
+          "start_offset_seconds": 0.2,
+          "end_offset_seconds": 3.45
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-004-turnaround",
+          "CH-001-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "出卖者跪地抬手，姜瑾垂头坐在画左 → 出卖者指向画左姜瑾，姜瑾抬眼",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；首帧状态：出卖者跪地抬手，姜瑾垂头坐在画左。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "出卖者跪地抬手，姜瑾垂头坐在画左"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，出卖者跪地抬手，姜瑾垂头坐在画左，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：出卖者指向画左姜瑾，姜瑾抬眼。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "出卖者指向画左姜瑾，姜瑾抬眼"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": []
+    },
+    {
+      "shot_id": "EP01-S002",
+      "shot_version": 1,
+      "sequence": 2,
+      "start_seconds": 5,
+      "end_seconds": 10,
+      "duration_seconds": 5,
+      "beat_role": "setup",
+      "scene_id": "SC-001",
+      "shot_size": "脚镣特写转半身近景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "姜瑾抬眼看向画右押送兵",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "姜瑾",
+          "costume_id": "CST-001",
+          "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "姜瑾手指碰到脚镣",
+        "timed_beats": [
+          "0–2.5秒：姜瑾手指碰到脚镣，向结果推进",
+          "2.5–5秒：姜瑾抬眼看向画右押送兵"
+        ],
+        "end_pose": "姜瑾抬眼看向画右押送兵",
+        "emotion_change": "setup"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "这不是我的身体。",
+          "emotion": "克制、先观察再反击",
+          "delivery": "inner_voice",
+          "estimated_seconds": 2.25,
+          "start_offset_seconds": 1,
+          "end_offset_seconds": 3.25
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾手指碰到脚镣，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-001-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾手指碰到脚镣，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "姜瑾手指碰到脚镣 → 姜瑾抬眼看向画右押送兵",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾手指碰到脚镣，表情依事件变化，阴天柔光照亮面部；首帧状态：姜瑾手指碰到脚镣。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾手指碰到脚镣"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾手指碰到脚镣，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：姜瑾抬眼看向画右押送兵。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾抬眼看向画右押送兵"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": []
+    },
+    {
+      "shot_id": "EP01-S003",
+      "shot_version": 1,
+      "sequence": 3,
+      "start_seconds": 10,
+      "end_seconds": 16,
+      "duration_seconds": 6,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "双人中景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "赵校尉向画左姜瑾迈一步",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-002",
+          "name": "赵校尉",
+          "costume_id": "CST-002",
+          "appearance_lock": "二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-007",
+          "name": "押送兵",
+          "costume_id": "CST-007",
+          "appearance_lock": "三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "押送兵站画右，赵校尉从后方进入",
+        "timed_beats": [
+          "0–3秒：押送兵站画右，赵校尉从后方进入，向结果推进",
+          "3–6秒：赵校尉向画左姜瑾迈一步"
+        ],
+        "end_pose": "赵校尉向画左姜瑾迈一步",
+        "emotion_change": "escalation"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-007",
+          "text": "公主可是将军要的人。",
+          "emotion": "站岗与压制，警觉",
+          "delivery": "spoken",
+          "estimated_seconds": 2.75,
+          "start_offset_seconds": 0,
+          "end_offset_seconds": 2.75
+        },
+        {
+          "speaker_id": "CH-002",
+          "text": "人活着送到就行。",
+          "emotion": "傲慢，近身后突然失措",
+          "delivery": "spoken",
+          "estimated_seconds": 2.25,
+          "start_offset_seconds": 3,
+          "end_offset_seconds": 5.25
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-002-turnaround",
+          "CH-007-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "押送兵站画右，赵校尉从后方进入 → 赵校尉向画左姜瑾迈一步",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；首帧状态：押送兵站画右，赵校尉从后方进入。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "押送兵站画右，赵校尉从后方进入"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，押送兵站画右，赵校尉从后方进入，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：赵校尉向画左姜瑾迈一步。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "赵校尉向画左姜瑾迈一步"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": [
+        "多人单镜配音需分轨，现有工作台自动配音入口不支持，禁止直接提交"
+      ]
+    },
+    {
+      "shot_id": "EP01-S004",
+      "shot_version": 1,
+      "sequence": 4,
+      "start_seconds": 16,
+      "end_seconds": 22,
+      "duration_seconds": 6,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "中景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "周雎起身被压回，木枷和镣铐始终保留",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-003",
+          "name": "周雎",
+          "costume_id": "CST-003",
+          "appearance_lock": "四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-007",
+          "name": "押送兵",
+          "costume_id": "CST-007",
+          "appearance_lock": "三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "周雎带枷坐地",
+        "timed_beats": [
+          "0–3秒：周雎带枷坐地，向结果推进",
+          "3–6秒：周雎起身被压回，木枷和镣铐始终保留"
+        ],
+        "end_pose": "周雎起身被压回，木枷和镣铐始终保留",
+        "emotion_change": "escalation"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-003",
+          "text": "谁敢动她！",
+          "emotion": "虚弱但不退让",
+          "delivery": "spoken",
+          "estimated_seconds": 1.5,
+          "start_offset_seconds": 0.4,
+          "end_offset_seconds": 1.9
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-003-turnaround",
+          "CH-007-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "周雎带枷坐地 → 周雎起身被压回，木枷和镣铐始终保留",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；首帧状态：周雎带枷坐地。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "周雎带枷坐地"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；押送兵：三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007；按场景轴线站位，周雎带枷坐地，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：周雎起身被压回，木枷和镣铐始终保留。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "周雎起身被压回，木枷和镣铐始终保留"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": []
+    },
+    {
+      "shot_id": "EP01-S005",
+      "shot_version": 1,
+      "sequence": 5,
+      "start_seconds": 22,
+      "end_seconds": 28,
+      "duration_seconds": 6,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "中景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "赵校尉踢出，遮挡切点后寺人监倒在近景下沿",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-005",
+          "name": "寺人监",
+          "costume_id": "CST-005",
+          "appearance_lock": "三十岁男子，瘦削、长脸；黑发束髻；暗绿长袍，套装CST-005",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "赵校尉",
+          "costume_id": "CST-002",
+          "appearance_lock": "二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "寺人监挡住赵校尉去路",
+        "timed_beats": [
+          "0–3秒：寺人监挡住赵校尉去路，向结果推进",
+          "3–6秒：赵校尉踢出，遮挡切点后寺人监倒在近景下沿"
+        ],
+        "end_pose": "赵校尉踢出，遮挡切点后寺人监倒在近景下沿",
+        "emotion_change": "escalation"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-005",
+          "text": "求你放过公主！",
+          "emotion": "护主，恳求后倒地",
+          "delivery": "spoken",
+          "estimated_seconds": 2.0,
+          "start_offset_seconds": 0.2,
+          "end_offset_seconds": 2.2
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "寺人监：三十岁男子，瘦削、长脸；黑发束髻；暗绿长袍，套装CST-005；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-005-turnaround",
+          "CH-002-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "寺人监：三十岁男子，瘦削、长脸；黑发束髻；暗绿长袍，套装CST-005；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "寺人监挡住赵校尉去路 → 赵校尉踢出，遮挡切点后寺人监倒在近景下沿",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "寺人监：三十岁男子，瘦削、长脸；黑发束髻；暗绿长袍，套装CST-005；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；首帧状态：寺人监挡住赵校尉去路。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "寺人监挡住赵校尉去路"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "寺人监：三十岁男子，瘦削、长脸；黑发束髻；暗绿长袍，套装CST-005；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，寺人监挡住赵校尉去路，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：赵校尉踢出，遮挡切点后寺人监倒在近景下沿。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "赵校尉踢出，遮挡切点后寺人监倒在近景下沿"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": []
+    },
+    {
+      "shot_id": "EP01-S006",
+      "shot_version": 1,
+      "sequence": 6,
+      "start_seconds": 28,
+      "end_seconds": 34,
+      "duration_seconds": 6,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "手部近景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "姜瑾左袖仍被抓，右手向匕首柄移动",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "姜瑾",
+          "costume_id": "CST-001",
+          "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "赵校尉",
+          "costume_id": "CST-002",
+          "appearance_lock": "二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-003",
+          "state_start": "匕首赵校尉右腰",
+          "state_end": "赵校尉右腰",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-004",
+          "state_start": "赵校尉左腰刀鞘内",
+          "state_end": "赵校尉左腰刀鞘内",
+          "held_by": "CH-002"
+        }
+      ],
+      "action": {
+        "start_pose": "赵校尉右手抓姜瑾左袖，腰右侧匕首入镜",
+        "timed_beats": [
+          "0–3秒：赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，向结果推进",
+          "3–6秒：姜瑾左袖仍被抓，右手向匕首柄移动"
+        ],
+        "end_pose": "姜瑾左袖仍被抓，右手向匕首柄移动",
+        "emotion_change": "choice"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-002",
+          "text": "起来，跟我走。",
+          "emotion": "傲慢，近身后突然失措",
+          "delivery": "spoken",
+          "estimated_seconds": 1.75,
+          "start_offset_seconds": 0.3,
+          "end_offset_seconds": 2.05
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-001-turnaround",
+          "CH-002-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "赵校尉右手抓姜瑾左袖，腰右侧匕首入镜 → 姜瑾左袖仍被抓，右手向匕首柄移动",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；首帧状态：赵校尉右手抓姜瑾左袖，腰右侧匕首入镜。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "赵校尉右手抓姜瑾左袖，腰右侧匕首入镜"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉右手抓姜瑾左袖，腰右侧匕首入镜，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：姜瑾左袖仍被抓，右手向匕首柄移动。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾左袖仍被抓，右手向匕首柄移动"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": []
+    },
+    {
+      "shot_id": "EP01-S007",
+      "shot_version": 1,
+      "sequence": 7,
+      "start_seconds": 34,
+      "end_seconds": 40,
+      "duration_seconds": 6,
+      "beat_role": "payoff",
+      "scene_id": "SC-001",
+      "shot_size": "近景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "姜瑾右手已握夺来的匕首并停在画面下方；赵校尉脸色僵住",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "姜瑾",
+          "costume_id": "CST-001",
+          "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "赵校尉",
+          "costume_id": "CST-002",
+          "appearance_lock": "二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-003",
+          "state_start": "匕首赵校尉右腰",
+          "state_end": "姜瑾右手",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-004",
+          "state_start": "赵校尉左腰刀鞘内",
+          "state_end": "赵校尉左腰刀鞘内",
+          "held_by": "CH-002"
+        }
+      ],
+      "action": {
+        "start_pose": "姜瑾右手接近赵校尉右腰匕首",
+        "timed_beats": [
+          "0–3秒：姜瑾右手接近赵校尉右腰匕首，向结果推进",
+          "3–6秒：姜瑾右手已握夺来的匕首并停在画面下方；赵校尉脸色僵住"
+        ],
+        "end_pose": "姜瑾右手已握夺来的匕首并停在画面下方；赵校尉脸色僵住",
+        "emotion_change": "payoff"
+      },
+      "dialogue": [],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-001-turnaround",
+          "CH-002-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "姜瑾右手接近赵校尉右腰匕首 → 姜瑾右手已握夺来的匕首并停在画面下方；赵校尉脸色僵住",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；首帧状态：姜瑾右手接近赵校尉右腰匕首。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾右手接近赵校尉右腰匕首"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，姜瑾右手接近赵校尉右腰匕首，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：姜瑾右手已握夺来的匕首并停在画面下方；赵校尉脸色僵住。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾右手已握夺来的匕首并停在画面下方；赵校尉脸色僵住"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": [
+        "高难道具交互，先验证再扩片"
+      ]
+    },
+    {
+      "shot_id": "EP01-S008",
+      "shot_version": 1,
+      "sequence": 8,
+      "start_seconds": 40,
+      "end_seconds": 46,
+      "duration_seconds": 6,
+      "beat_role": "reveal",
+      "scene_id": "SC-001",
+      "shot_size": "姜瑾面部近景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "姜瑾站稳，右手匕首在画外向地面落下",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "姜瑾",
+          "costume_id": "CST-001",
+          "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "赵校尉",
+          "costume_id": "CST-002",
+          "appearance_lock": "二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-003",
+          "state_start": "姜瑾右手",
+          "state_end": "地面",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-004",
+          "state_start": "赵校尉左腰刀鞘内",
+          "state_end": "赵校尉左腰刀鞘内",
+          "held_by": "CH-002"
+        }
+      ],
+      "action": {
+        "start_pose": "赵校尉松开她的左袖，重心下沉",
+        "timed_beats": [
+          "0–3秒：赵校尉松开她的左袖，重心下沉，向结果推进",
+          "3–6秒：姜瑾站稳，右手匕首在画外向地面落下"
+        ],
+        "end_pose": "姜瑾站稳，右手匕首在画外向地面落下",
+        "emotion_change": "reveal"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "亡国的公主……原来如此。",
+          "emotion": "克制、先观察再反击",
+          "delivery": "inner_voice",
+          "estimated_seconds": 2.75,
+          "start_offset_seconds": 1.5,
+          "end_offset_seconds": 4.25
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-001-turnaround",
+          "CH-002-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "赵校尉松开她的左袖，重心下沉 → 姜瑾站稳，右手匕首在画外向地面落下",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；首帧状态：赵校尉松开她的左袖，重心下沉。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "赵校尉松开她的左袖，重心下沉"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，赵校尉松开她的左袖，重心下沉，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：姜瑾站稳，右手匕首在画外向地面落下。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾站稳，右手匕首在画外向地面落下"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": []
+    },
+    {
+      "shot_id": "EP01-S009",
+      "shot_version": 1,
+      "sequence": 9,
+      "start_seconds": 46,
+      "end_seconds": 53,
+      "duration_seconds": 7,
+      "beat_role": "payoff",
+      "scene_id": "SC-001",
+      "shot_size": "中近景",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "姜瑾左手稳住刀鞘，右手抽刀；赵校尉侧向倒地，出卖者后退",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "姜瑾",
+          "costume_id": "CST-001",
+          "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "赵校尉",
+          "costume_id": "CST-002",
+          "appearance_lock": "二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-004",
+          "name": "出卖者",
+          "costume_id": "CST-004",
+          "appearance_lock": "十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-003",
+          "state_start": "地面",
+          "state_end": "地面",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-004",
+          "state_start": "赵校尉左腰刀鞘内",
+          "state_end": "姜瑾右手",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘",
+        "timed_beats": [
+          "0–3.5秒：匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，向结果推进",
+          "3.5–7秒：姜瑾左手稳住刀鞘，右手抽刀；赵校尉侧向倒地，出卖者后退"
+        ],
+        "end_pose": "姜瑾左手稳住刀鞘，右手抽刀；赵校尉侧向倒地，出卖者后退",
+        "emotion_change": "payoff"
+      },
+      "dialogue": [],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步",
+          "拔刀声"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-001-turnaround",
+          "CH-002-turnaround",
+          "CH-004-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘 → 姜瑾左手稳住刀鞘，右手抽刀；赵校尉侧向倒地，出卖者后退",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；首帧状态：匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；赵校尉：二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；出卖者：十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004；按场景轴线站位，匕首已在地面；赵校尉跪倒，左腰配刀仍在鞘，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：姜瑾左手稳住刀鞘，右手抽刀；赵校尉侧向倒地，出卖者后退。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾左手稳住刀鞘，右手抽刀；赵校尉侧向倒地，出卖者后退"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": [
+        "高难道具交互，先验证再扩片"
+      ]
+    },
+    {
+      "shot_id": "EP01-S010",
+      "shot_version": 1,
+      "sequence": 10,
+      "start_seconds": 53,
+      "end_seconds": 60,
+      "duration_seconds": 7,
+      "beat_role": "cliffhanger",
+      "scene_id": "SC-001",
+      "shot_size": "姜瑾近景、周雎反应切点",
+      "camera_angle": "平视，同轴；武器近景避免越轴",
+      "camera_movement": "固定机位，必要的轻微推近",
+      "composition": "姜瑾左、对手右；字幕留底部安全区",
+      "focal_point": "周雎抬头；最后0.4秒切黑，姜瑾脚镣与周雎木枷未解",
+      "depth_of_field": "shallow",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "姜瑾",
+          "costume_id": "CST-001",
+          "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        },
+        {
+          "character_id": "CH-003",
+          "name": "周雎",
+          "costume_id": "CST-003",
+          "appearance_lock": "四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003",
+          "screen_position_start": "姜瑾画左，赵校尉画右；其他按场景轴线",
+          "screen_position_end": "保持轴线，见动作结果",
+          "eye_line": "朝向交互对象，禁止无动机看镜头"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "姜瑾脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-002",
+          "state_start": "周雎木枷与手脚镣闭合",
+          "state_end": "闭合不变",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-003",
+          "state_start": "地面",
+          "state_end": "地面",
+          "held_by": null
+        },
+        {
+          "prop_id": "PROP-004",
+          "state_start": "姜瑾右手",
+          "state_end": "姜瑾右手",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "姜瑾右手持刀向下，左手空着，转头看向左后方周雎",
+        "timed_beats": [
+          "0–3.5秒：姜瑾右手持刀向下，左手空着，转头看向左后方周雎，向结果推进",
+          "3.5–7秒：周雎抬头；最后0.4秒切黑，姜瑾脚镣与周雎木枷未解"
+        ],
+        "end_pose": "周雎抬头；最后0.4秒切黑，姜瑾脚镣与周雎木枷未解",
+        "emotion_change": "cliffhanger"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "把他们都干掉，如何？",
+          "emotion": "克制、先观察再反击",
+          "delivery": "spoken",
+          "estimated_seconds": 2.5,
+          "start_offset_seconds": 1.5,
+          "end_offset_seconds": 4.0
+        }
+      ],
+      "sound": {
+        "ambience": "荒道风声，低音量",
+        "sfx": [
+          "铁链与衣料按实际动作同步"
+        ],
+        "music_cue": "低强度紧张铺底；反击时短暂收声，不盖对白"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；荒道囚车旁。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印",
+        "reference_assets": [
+          "CH-001-turnaround",
+          "CH-003-turnaround",
+          "SC-001"
+        ]
+      },
+      "video_prompt": {
+        "performance": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "motion": "姜瑾右手持刀向下，左手空着，转头看向左后方周雎 → 周雎抬头；最后0.4秒切黑，姜瑾脚镣与周雎木枷未解",
+        "camera": "同轴固定机位，分段动作不得用溶解变形代替",
+        "continuity": "脚镣未解；周雎枷锁未解；右手夺匕首，落地后右手抽刀，禁止双持凭空换手",
+        "negative": "换脸、年龄漂移、服装变色、多余手指、穿模、自动解锁、凭空出现兵器、裸露、性化、血液、伤口特写、可读文字、水印"
+      },
+      "first_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；首帧状态：姜瑾右手持刀向下，左手空着，转头看向左后方周雎。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "姜瑾右手持刀向下，左手空着，转头看向左后方周雎"
+        ],
+        "reference_assets": [
+          "SC-001"
+        ]
+      },
+      "last_frame": {
+        "description": "姜瑾：13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；周雎：四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003；按场景轴线站位，姜瑾右手持刀向下，左手空着，转头看向左后方周雎，表情依事件变化，阴天柔光照亮面部；尾帧姿态以此覆盖起始姿态：周雎抬头；最后0.4秒切黑，姜瑾脚镣与周雎木枷未解。三维国漫质感，风格化角色，非真人摄影；低饱和土黄与灰蓝，阴天画左上柔光；服装完整，无血腥、无性化内容、无模型生成文字",
+        "required_state": [
+          "周雎抬头；最后0.4秒切黑，姜瑾脚镣与周雎木枷未解"
+        ],
+        "handoff_to_next_shot": "继承末态；切换景别是同一时空，不机械复制画幅"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "后期对白字幕"
+      ],
+      "risk_flags": []
+    }
+  ],
+  "timing_validation": {
+    "shot_count": 10,
+    "sum_duration_seconds": 60,
+    "all_shots_between_4_and_10_seconds": true,
+    "dialogue_timing_pass": true
+  }
+}

@@ -1,0 +1,379 @@
+{
+  "production_version": "v03",
+  "generated_at": "2026-09-21T10:05:45.116842+00:00",
+  "source_versions": [
+    "series_bible:v01",
+    "character_bible:v01",
+    "EP01/script:v01",
+    "actual-local-image-review"
+  ],
+  "supersedes": "EP01/storyboard:v02",
+  "status": "video_generating",
+  "schema_version": "1.0",
+  "episode_id": "EP01",
+  "title": "别开第二次门",
+  "target_duration_seconds": 15,
+  "aspect_ratio": "9:16",
+  "visual_style": {
+    "preset": "日系动画",
+    "medium": "二维赛璐璐动画",
+    "palette": "芥末黄/青蓝",
+    "lighting": "右侧暖壁灯/冷蓝环境",
+    "negative_constraints": [
+      "真人摄影",
+      "换装",
+      "第二人",
+      "手机界面浮层"
+    ]
+  },
+  "story_structure": {
+    "opening_conflict_end_seconds": 3,
+    "escalation_summary": "听到未来自己的警告后主动反锁",
+    "final_hook_start_seconds": 10,
+    "final_hook": "手机黑屏后相同声音出现在身后"
+  },
+  "shots": [
+    {
+      "shot_id": "EP01-S001",
+      "shot_version": 3,
+      "sequence": 1,
+      "start_seconds": 0,
+      "end_seconds": 5,
+      "duration_seconds": 5,
+      "beat_role": "hook",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "手机与人物反应",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "手机转门"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "胸前持手机",
+          "state_end": "保持持握，第三镜黑屏",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。林夏位于画面右侧，右手胸前持黑色手机，左手垂下，视线低头看手机，嘴唇闭合。中近景。 严格采用参考图相同玄关结构：深青色关闭入户门在画面左侧，银色门把手在门的左侧边缘，门铰链在右侧；暖黄色壁灯在画面右侧。门把手上方有一个小巧清晰的银色反锁旋钮。只有一扇门，始终关闭。二维赛璐璐动画，清晰墨线平涂阴影，单幅9:16，不增加人物、闭门器、文字或拼图。",
+        "timed_beats": [
+          "二维赛璐璐动画，单幅9:16画面，清晰墨线平涂阴影。只有林夏一人：二十四岁女性，瘦削鹅蛋脸、深棕眼睛、齐下巴黑色短发，芥末黄连帽卫衣、深灰长裤，无首饰。住宅玄关，左侧唯一深青色入户门始终完全关闭，银色门把手上方的反锁旋钮，右侧暖黄壁灯与窄鞋柜、冷蓝环境光。固定镜头极缓推进。0至3秒右手拿手机，听见手机女声，眼神逐渐警觉；3至4秒左手从下方接住同一部手机，右手松开，明确完成从右手到左手的交接；4至5秒左手持手机在胸前，右手伸向左侧的门锁，目光转向门。换手动作完整可见，只能一部手机，不能复制或凭空消失。手机发出年轻女性普通话声音：别开门，我是十分钟后的你。林夏嘴唇保持闭合。 无配乐，无字幕，无多余旁白，音效克制。"
+        ],
+        "end_pose": "手机已明确从右手交至左手，右手腾出准备反锁",
+        "emotion_change": "平静→警觉"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "别开门，我是十分钟后的你。",
+          "emotion": "克制低声",
+          "estimated_seconds": 3.142857142857143,
+          "start_offset_seconds": 1,
+          "end_offset_seconds": 4.8
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。林夏位于画面右侧，右手胸前持黑色手机，左手垂下，视线低头看手机，嘴唇闭合。中近景。 严格采用参考图相同玄关结构：深青色关闭入户门在画面左侧，银色门把手在门的左侧边缘，门铰链在右侧；暖黄色壁灯在画面右侧。门把手上方有一个小巧清晰的银色反锁旋钮。只有一扇门，始终关闭。二维赛璐璐动画，清晰墨线平涂阴影，单幅9:16，不增加人物、闭门器、文字或拼图。",
+        "negative": "多余人物、开门、换装、浮层、手部畸形",
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_e39ddbf7.jpg"
+        ]
+      },
+      "video_prompt": {
+        "performance": "二维赛璐璐动画，单幅9:16画面，清晰墨线平涂阴影。只有林夏一人：二十四岁女性，瘦削鹅蛋脸、深棕眼睛、齐下巴黑色短发，芥末黄连帽卫衣、深灰长裤，无首饰。住宅玄关，左侧唯一深青色入户门始终完全关闭，银色门把手上方的反锁旋钮，右侧暖黄壁灯与窄鞋柜、冷蓝环境光。固定镜头极缓推进。0至3秒右手拿手机，听见手机女声，眼神逐渐警觉；3至4秒左手从下方接住同一部手机，右手松开，明确完成从右手到左手的交接；4至5秒左手持手机在胸前，右手伸向左侧的门锁，目光转向门。换手动作完整可见，只能一部手机，不能复制或凭空消失。手机发出年轻女性普通话声音：别开门，我是十分钟后的你。林夏嘴唇保持闭合。 无配乐，无字幕，无多余旁白，音效克制。",
+        "motion": "二维赛璐璐动画，单幅9:16画面，清晰墨线平涂阴影。只有林夏一人：二十四岁女性，瘦削鹅蛋脸、深棕眼睛、齐下巴黑色短发，芥末黄连帽卫衣、深灰长裤，无首饰。住宅玄关，左侧唯一深青色入户门始终完全关闭，银色门把手上方的反锁旋钮，右侧暖黄壁灯与窄鞋柜、冷蓝环境光。固定镜头极缓推进。0至1秒右手拿稳手机；1至4秒她听到手机里的声音，眼睛逐渐睁大；4至5秒视线转向左侧的门。手机发出年轻女性普通话声音：别开门，我是十分钟后的你。林夏嘴唇保持闭合。 无配乐，无字幕，无多余旁白，音效克制。",
+        "camera": "固定或极慢推进",
+        "continuity": "门不打开、人物服装和手机持握连续",
+        "negative": "旋转镜头、切镜、浮层、多余人"
+      },
+      "first_frame": {
+        "description": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。林夏位于画面右侧，右手胸前持黑色手机，左手垂下，视线低头看手机，嘴唇闭合。中近景。 严格采用参考图相同玄关结构：深青色关闭入户门在画面左侧，银色门把手在门的左侧边缘，门铰链在右侧；暖黄色壁灯在画面右侧。门把手上方有一个小巧清晰的银色反锁旋钮。只有一扇门，始终关闭。二维赛璐璐动画，清晰墨线平涂阴影，单幅9:16，不增加人物、闭门器、文字或拼图。",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_e39ddbf7.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；听到警告，转向关闭的门",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_video",
+        "costume": "pending_video",
+        "position_and_eye_line": "pending_video",
+        "prop_state": "pending_video",
+        "lighting_and_palette": "pending_video",
+        "previous_last_to_current_first": "pending_video"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "别开门，我是十分钟后的你。",
+          "position": "bottom_safe_area"
+        }
+      ],
+      "risk_flags": [
+        "实际换手/反锁/持握连续性须动态审核"
+      ]
+    },
+    {
+      "shot_id": "EP01-S002",
+      "shot_version": 3,
+      "sequence": 2,
+      "start_seconds": 5,
+      "end_seconds": 10,
+      "duration_seconds": 5,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "反锁旋钮与手",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "门锁"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "胸前持手机",
+          "state_end": "保持持握，第三镜黑屏",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "二维赛璐璐动画，林夏黄卫衣黑短发，站在关闭青色入户门旁，一手胸前持手机，另一手暂时靠在门把手，准备向上移动操作已可见的反锁旋钮。右侧暖壁灯，只有一人，无字无浮层。",
+        "timed_beats": [
+          "二维赛璐璐动画，保持首帧人物身份、服装、手机和房间方向。固定中近景，门始终完全关闭。0至1秒门外轻敲两下；1至3秒靠门的手从门把手向上移动十厘米，用拇指和食指将椭圆形反锁旋钮转动九十度，伴随轻微咔哒声；3至5秒手离开旋钮，身体后退半步。承接上一镜：左手拿手机始终在胸前不换手、不松开，右手操作反锁旋钮。林夏低声说：锁好了。无额外台词，无文字，无透明框，无浮层，无多余人物。"
+        ],
+        "end_pose": "右手完成反锁并放下，左手保持手机在胸前",
+        "emotion_change": "紧张→稍放松"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "锁好了。",
+          "emotion": "克制低声",
+          "estimated_seconds": 0.8571428571428571,
+          "start_offset_seconds": 1,
+          "end_offset_seconds": 4.8
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [
+          "敲门两下",
+          "锁扣"
+        ],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；二维赛璐璐动画，林夏黄卫衣黑短发，站在关闭青色入户门旁，一手胸前持手机，另一手暂时靠在门把手，准备向上移动操作已可见的反锁旋钮。右侧暖壁灯，只有一人，无字无浮层。",
+        "negative": "多余人物、开门、换装、浮层、手部畸形",
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_a9bdf424.jpg"
+        ]
+      },
+      "video_prompt": {
+        "performance": "二维赛璐璐动画，保持首帧人物身份、服装、手机和房间方向。固定中近景，门始终完全关闭。0至1秒门外轻敲两下；1至3秒靠门的手从门把手向上移动十厘米，用拇指和食指将椭圆形反锁旋钮转动九十度，伴随轻微咔哒声；3至5秒手离开旋钮，身体后退半步。承接上一镜：左手拿手机始终在胸前不换手、不松开，右手操作反锁旋钮。林夏低声说：锁好了。无额外台词，无文字，无透明框，无浮层，无多余人物。",
+        "motion": "二维赛璐璐动画，保持首帧人物身份、服装、手机和房间方向。固定中近景，门始终完全关闭。0至1秒门外轻敲两下；1至3秒靠门的手从门把手向上移动十厘米，用拇指和食指将椭圆形反锁旋钮转动九十度，伴随轻微咔哒声；3至5秒手离开旋钮，身体后退半步。拿手机的手始终在胸前不换手、不松开。林夏低声说：锁好了。无额外台词，无文字，无透明框，无浮层，无多余人物。",
+        "camera": "固定或极慢推进",
+        "continuity": "门不打开、人物服装和手机持握连续",
+        "negative": "旋转镜头、切镜、浮层、多余人"
+      },
+      "first_frame": {
+        "description": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；二维赛璐璐动画，林夏黄卫衣黑短发，站在关闭青色入户门旁，一手胸前持手机，另一手暂时靠在门把手，准备向上移动操作已可见的反锁旋钮。右侧暖壁灯，只有一人，无字无浮层。",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_a9bdf424.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；门锁反锁，林夏后退半步",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_video",
+        "costume": "pending_video",
+        "position_and_eye_line": "pending_video",
+        "prop_state": "pending_video",
+        "lighting_and_palette": "pending_video",
+        "previous_last_to_current_first": "pending_video"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "锁好了。",
+          "position": "bottom_safe_area"
+        }
+      ],
+      "risk_flags": [
+        "实际换手/反锁/持握连续性须动态审核"
+      ]
+    },
+    {
+      "shot_id": "EP01-S003",
+      "shot_version": 3,
+      "sequence": 3,
+      "start_seconds": 10,
+      "end_seconds": 15,
+      "duration_seconds": 5,
+      "beat_role": "cliffhanger",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "人物眼神",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "稍向身后"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-001",
+          "state_start": "胸前持手机",
+          "state_end": "保持持握，第三镜黑屏",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "二维赛璐璐动画，林夏黄卫衣黑短发，胸部以上中近景，保持手机在胸前、嘴唇闭合。身后青色门关闭，右侧暖壁灯。门锁不要求在此构图中可见。没有第二人，无字无浮层。",
+        "timed_beats": [
+          "二维赛璐璐动画，单幅9:16画面，清晰墨线平涂阴影。只有林夏一人：二十四岁女性，瘦削鹅蛋脸、深棕眼睛、齐下巴黑色短发，芥末黄连帽卫衣、深灰长裤，无首饰。住宅玄关，左侧唯一深青色入户门始终完全关闭，银色门把手上方的反锁旋钮，右侧暖黄壁灯与窄鞋柜、冷蓝环境光。固定脸部中近景极慢推进。0至1秒手机屏幕熄灭；1至4秒身后画外传来与手机相同的年轻女性普通话声音：晚了，我已经进来了。林夏只将头微转二十度，眼神惊恐，嘴唇不动；4至5秒僵住。禁止出现第二人或怪物，禁止开门，禁止大幅转身或镜头旋转。 无配乐，无字幕，无多余旁白，音效克制。 左手持续持手机在胸前，右手垂下，与上一镜连续。"
+        ],
+        "end_pose": "听到身后声音，林夏僵住",
+        "emotion_change": "疑惑→恐惧"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "晚了，我已经进来了。",
+          "emotion": "克制低声",
+          "estimated_seconds": 2.2857142857142856,
+          "start_offset_seconds": 1,
+          "end_offset_seconds": 4.8
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；二维赛璐璐动画，林夏黄卫衣黑短发，胸部以上中近景，保持手机在胸前、嘴唇闭合。身后青色门关闭，右侧暖壁灯。门锁不要求在此构图中可见。没有第二人，无字无浮层。",
+        "negative": "多余人物、开门、换装、浮层、手部畸形",
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_f7949cd5.jpg"
+        ]
+      },
+      "video_prompt": {
+        "performance": "二维赛璐璐动画，单幅9:16画面，清晰墨线平涂阴影。只有林夏一人：二十四岁女性，瘦削鹅蛋脸、深棕眼睛、齐下巴黑色短发，芥末黄连帽卫衣、深灰长裤，无首饰。住宅玄关，左侧唯一深青色入户门始终完全关闭，银色门把手上方的反锁旋钮，右侧暖黄壁灯与窄鞋柜、冷蓝环境光。固定脸部中近景极慢推进。0至1秒手机屏幕熄灭；1至4秒身后画外传来与手机相同的年轻女性普通话声音：晚了，我已经进来了。林夏只将头微转二十度，眼神惊恐，嘴唇不动；4至5秒僵住。禁止出现第二人或怪物，禁止开门，禁止大幅转身或镜头旋转。 无配乐，无字幕，无多余旁白，音效克制。 左手持续持手机在胸前，右手垂下，与上一镜连续。",
+        "motion": "固定脸部中近景极慢推进。0至1秒手机屏幕熄灭；1至4秒身后画外传来与手机相同的年轻女性普通话声音：晚了，我已经进来了。林夏只将头微转二十度，眼神惊恐，嘴唇不动；4至5秒僵住。禁止出现第二人或怪物，禁止开门，禁止大幅转身或镜头旋转。",
+        "camera": "固定或极慢推进",
+        "continuity": "门不打开、人物服装和手机持握连续",
+        "negative": "旋转镜头、切镜、浮层、多余人"
+      },
+      "first_frame": {
+        "description": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；二维赛璐璐动画，林夏黄卫衣黑短发，胸部以上中近景，保持手机在胸前、嘴唇闭合。身后青色门关闭，右侧暖壁灯。门锁不要求在此构图中可见。没有第二人，无字无浮层。",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_f7949cd5.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰；听到身后声音，林夏僵住",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_video",
+        "costume": "pending_video",
+        "position_and_eye_line": "pending_video",
+        "prop_state": "pending_video",
+        "lighting_and_palette": "pending_video",
+        "previous_last_to_current_first": "pending_video"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "晚了，我已经进来了。",
+          "position": "bottom_safe_area"
+        }
+      ],
+      "risk_flags": [
+        "实际换手/反锁/持握连续性须动态审核"
+      ]
+    }
+  ],
+  "timing_validation": {
+    "shot_count": 3,
+    "sum_duration_seconds": 15,
+    "all_shots_between_4_and_10_seconds": true,
+    "dialogue_timing_pass": true
+  }
+}

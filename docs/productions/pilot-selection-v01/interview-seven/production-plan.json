@@ -1,0 +1,38 @@
+{
+  "production_version": "v01",
+  "generated_at": "2026-09-19T07:41:07.373067+00:00",
+  "source_versions": [
+    "three-scripts:v01"
+  ],
+  "supersedes": null,
+  "status": "preproduction",
+  "selected_first": "第七次面试",
+  "other_scripts": [
+    "这份方案，谁都带不走",
+    "送给三年前的我"
+  ],
+  "scope": "先首推一部，另两部完成候选剧本；是否制作三部由新预算范围明确",
+  "duration_seconds": 120,
+  "resolution": "720p",
+  "proposed_provider": "volcengine",
+  "proposed_image_model": "doubao-seedream-4-5-251128",
+  "proposed_video_model": "doubao-seedance-2-5-260628",
+  "paid_authorized": false,
+  "paid_calls_this_turn": 0,
+  "pipeline": [
+    "文本结构检查",
+    "角色与场景图审核",
+    "静态分镜预演",
+    "8–16秒720p动作/声音小样",
+    "通过后分段生成",
+    "单段局部修正",
+    "原音与字幕终剪",
+    "完整播放验收"
+  ],
+  "budget_proposal": {
+    "one_film_cap_cny": 300,
+    "three_sequential_films_cap_cny": 900,
+    "is_price_quote": false,
+    "rule": "仅建议封顶额度，不是预测实付；首次720p任务用量核实后重算可完成范围，预算不足停止；单段最多一次付费修正"
+  }
+}

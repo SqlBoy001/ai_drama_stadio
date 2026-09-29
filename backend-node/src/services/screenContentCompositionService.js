@@ -1,5 +1,6 @@
 const SCREEN_DEVICE_RE = /手机|智能机|平板|电脑|显示器|屏幕|手表|腕表/i;
-const PLOT_SCREEN_INFO_RE = /弹幕|直播(?:间|界面)?|短信|消息|通知|来电|倒计时|警告|预警|屏幕(?:上|里|中|内容)|界面(?:上|里|中)|文字(?:显示|滚动|闪烁)|聊天记录|监控画面|导航路线|二维码/i;
+// A spoken warning or notification sound does not imply visible screen content.
+const PLOT_SCREEN_INFO_RE = /弹幕|直播界面|短信(?:内容|文字)|(?:屏幕|界面)(?:上|里|中|内容|显示|出现)|(?:显示|阅读|读到|看清)[^。；\n]{0,16}(?:短信|消息|通知|来电|倒计时|警告|预警)|文字(?:显示|滚动|闪烁)|聊天记录|监控画面|导航路线|二维码/i;
 const HUMAN_REACTION_RE = /脸|面部|表情|神情|眼|瞳孔|视线|抬头|低头|僵住|愣住|震惊|惊疑|惊恐|害怕|皱眉|流泪|哭|笑|反应/i;
 const CONTRACT_MARKER = '【手机信息双层构图最高优先级】';
 

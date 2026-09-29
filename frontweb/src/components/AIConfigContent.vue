@@ -260,6 +260,7 @@
               <el-tooltip placement="top" :show-arrow="true" popper-class="cfg-tip-popper">
                 <template #content>
                   <div class="cfg-tip-content">
+                    <b>视觉审核</b>：填写支持多图输入的 OpenAI 兼容 chat/completions 模型；每镜最多3次审核、2次重绘，整次任务最多30次附加调用；费用为估算，未配置时转人工<br>
                     <b>文本/对话</b>：用于 AI 生成故事剧本<br>
                     <b>文本生成图片</b>：角色、场景、道具的图片生成（不支持参考图）<br>
                     <b>分镜图片生成</b>：生成分镜图片，支持传入角色参考图<br>
@@ -274,6 +275,7 @@
           </template>
           <el-select v-model="form.service_type" placeholder="选择类型" style="width: 100%" @change="onServiceTypeChange">
             <el-option label="文本/对话" value="text" />
+            <el-option label="视觉审核（支持多图的对话模型）" value="vision_review" />
             <el-option label="文本生成图片" value="image" />
             <el-option label="分镜图片生成" value="storyboard_image" />
             <el-option label="视频生成" value="video" />
@@ -1496,7 +1498,7 @@ const endpointPreviewInfo = computed(() => {
 
   let submitPath = '', queryPath = ''
 
-  if (service_type === 'text') {
+  if (service_type === 'text' || service_type === 'vision_review') {
     submitPath = '/chat/completions'
   } else if (service_type === 'tts') {
     if (p === 'minimax') {
@@ -1708,6 +1710,7 @@ const AGNES_CONFIGS = [
 function serviceTypeLabel(t) {
   const map = {
     text: '文本',
+    vision_review: '视觉审核',
     image: '文本生成图片',
     storyboard_image: '分镜图片生成',
     video: '视频',

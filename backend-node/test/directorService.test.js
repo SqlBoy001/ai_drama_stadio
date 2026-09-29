@@ -40,3 +40,13 @@ test('budget and missing answers are enforced before production',async t=>{
  let s=director.create(db,{instruction:'故事',budget_limit:10});await assert.rejects(director.plan(db,log,s.id),/关键问题/);
  director.update(db,s.id,{use_defaults:true});s=await director.plan(db,log,s.id);assert.throws(()=>director.start(db,{},log,s.id,s.revision),/预算/);assert.equal(director.get(db,s.id).run_id,null);
 });
+test('120-second pilot retains duration, 720p and dense beats through plan/start',async t=>{
+ const db=setup(t);let s=ready(db,{episode_duration_seconds:120,budget_limit:300});s=await director.plan(db,log,s.id);
+ assert.equal(s.brief.episode_duration_seconds,120);assert.equal(s.plan.project.episode_duration_seconds,120);assert.equal(s.plan.project.resolution,'720p');assert.equal(s.plan.episodes[0].shots,15);assert.ok(s.plan.director.story.beats.length>=10);
+ const run=director.start(db,{},log,s.id,s.revision);assert.equal(run.plan.project.episode_duration_seconds,120);assert.equal(run.plan.project.resolution,'720p');
+ assert.throws(()=>ready(db,{episode_duration_seconds:125}),/时长请选择/);
+});
+test('long-form AI plan cannot silently accept three sparse template beats',async t=>{
+ const db=setup(t);const original=ai.generateText;let calls=0;ai.generateText=async(...args)=>{calls++;assert.match(args[4],/10到16/);return JSON.stringify({title:'面试',logline:'主角通过证据反击',beats:['开场','冲突','结尾'],characters:[{name:'主角',visual_anchor:'蓝外套'}]});};t.after(()=>{ai.generateText=original;});
+ const s=ready(db,{dry_run:false,episode_duration_seconds:120,budget_limit:300});await assert.rejects(director.plan(db,log,s.id),/叙事节拍/);assert.equal(calls,1);assert.equal(director.get(db,s.id).status,'DRAFT');
+});

@@ -1,0 +1,771 @@
+{
+  "production_version": "30s-v01",
+  "generated_at": "2026-09-21T12:57:23.121179+00:00",
+  "source_versions": [
+    "do-not-open-v01-v03",
+    "lock-v03",
+    "edit-plan-v02"
+  ],
+  "supersedes": null,
+  "status": "video_generating",
+  "schema_version": "1.0",
+  "episode_id": "EP01",
+  "title": "别开第二次门",
+  "target_duration_seconds": 30,
+  "aspect_ratio": "9:16",
+  "visual_style": {
+    "preset": "日系动画",
+    "medium": "二维赛璐璐动画",
+    "palette": "芥末黄/青蓝",
+    "lighting": "右侧暖壁灯/冷蓝环境",
+    "negative_constraints": [
+      "真人摄影",
+      "换装",
+      "第二人",
+      "手机界面浮层"
+    ]
+  },
+  "story_structure": {
+    "opening_conflict_end_seconds": 3,
+    "escalation_summary": "母亲不在门外→腕痕→门外自我声音",
+    "final_hook_start_seconds": 25,
+    "final_hook": "录音揭示她已开过一次门"
+  },
+  "shots": [
+    {
+      "shot_id": "EP01-S001",
+      "shot_version": 1,
+      "sequence": 1,
+      "start_seconds": 0,
+      "end_seconds": 5,
+      "duration_seconds": 5,
+      "beat_role": "hook",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "手机与人物反应",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "手机转门"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PHONE-001",
+          "state_start": "黑手机，首镜右转左，其余左手",
+          "state_end": "左手保留",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "MARK-001",
+          "state_start": "第四镜起左腕红色弧形压痕",
+          "state_end": "第四镜后持续，不流血",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "手机里自己的声音警告，左手接住手机",
+        "timed_beats": [
+          "旧第一镜裁切隐藏旧锁具；保留右转左手机交接"
+        ],
+        "end_pose": "手机里自己的声音警告，左手接住手机",
+        "emotion_change": "疑惧逐步升级"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "别开门，我是十分钟后的你。",
+          "emotion": "克制悬疑",
+          "estimated_seconds": 2.75,
+          "start_offset_seconds": 0.3,
+          "end_offset_seconds": 4.4
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。手机里自己的声音警告，左手接住手机",
+        "negative": "额外人物、换装、浮层",
+        "reference_assets": [
+          "do-not-open-v01 approved character"
+        ]
+      },
+      "video_prompt": {
+        "performance": "复用已生成素材或本地静图运动，不提交新视频请求",
+        "motion": "旧第一镜裁切隐藏旧锁具；保留右转左手机交接",
+        "camera": "固定或轻推近",
+        "continuity": "深青门关闭、芥末黄卫衣、黑短发、黑手机左手",
+        "negative": "开门、第二人物、左右手互换"
+      },
+      "first_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。手机里自己的声音警告，左手接住手机",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_e39ddbf7.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。手机里自己的声音警告，左手接住手机",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_final",
+        "costume": "pending_final",
+        "position_and_eye_line": "pending_final",
+        "prop_state": "pending_final",
+        "lighting_and_palette": "pending_final",
+        "previous_last_to_current_first": "pending_final"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "别开门，我是十分钟后的你。"
+        }
+      ],
+      "risk_flags": [
+        "旧锁具须在第一镜取景外",
+        "左手手机与第四镜后红痕不得跳变",
+        "声音采用后期，不以口型认证"
+      ],
+      "source_strategy": "旧第一镜裁切隐藏旧锁具；保留右转左手机交接"
+    },
+    {
+      "shot_id": "EP01-S002",
+      "shot_version": 1,
+      "sequence": 2,
+      "start_seconds": 5,
+      "end_seconds": 10,
+      "duration_seconds": 5,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "反锁旋钮与手",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "门锁"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PHONE-001",
+          "state_start": "黑手机，首镜右转左，其余左手",
+          "state_end": "左手保留",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "MARK-001",
+          "state_start": "第四镜起左腕红色弧形压痕",
+          "state_end": "第四镜后持续，不流血",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "门外母亲催促，手机揭穿母亲正在医院",
+        "timed_beats": [
+          "新锁具未锁首帧，静图轻推近"
+        ],
+        "end_pose": "门外母亲催促，手机揭穿母亲正在医院",
+        "emotion_change": "疑惧逐步升级"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "VOICE-MOTHER",
+          "text": "小夏，开门。",
+          "emotion": "克制悬疑",
+          "estimated_seconds": 1.0,
+          "start_offset_seconds": 0.15000000000000036,
+          "end_offset_seconds": 1.8499999999999996
+        },
+        {
+          "speaker_id": "CH-001",
+          "text": "你妈现在在医院。",
+          "emotion": "克制悬疑",
+          "estimated_seconds": 1.75,
+          "start_offset_seconds": 2.0,
+          "end_offset_seconds": 4.800000000000001
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [
+          "敲门两下",
+          "锁扣"
+        ],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。门外母亲催促，手机揭穿母亲正在医院",
+        "negative": "额外人物、换装、浮层",
+        "reference_assets": [
+          "do-not-open-v01 approved character"
+        ]
+      },
+      "video_prompt": {
+        "performance": "复用已生成素材或本地静图运动，不提交新视频请求",
+        "motion": "新锁具未锁首帧，静图轻推近",
+        "camera": "固定或轻推近",
+        "continuity": "深青门关闭、芥末黄卫衣、黑短发、黑手机左手",
+        "negative": "开门、第二人物、左右手互换"
+      },
+      "first_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。门外母亲催促，手机揭穿母亲正在医院",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_a9bdf424.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。门外母亲催促，手机揭穿母亲正在医院",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_final",
+        "costume": "pending_final",
+        "position_and_eye_line": "pending_final",
+        "prop_state": "pending_final",
+        "lighting_and_palette": "pending_final",
+        "previous_last_to_current_first": "pending_final"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "小夏，开门。"
+        },
+        {
+          "type": "subtitle",
+          "text": "你妈现在在医院。"
+        }
+      ],
+      "risk_flags": [
+        "旧锁具须在第一镜取景外",
+        "左手手机与第四镜后红痕不得跳变",
+        "声音采用后期，不以口型认证"
+      ],
+      "source_strategy": "新锁具未锁首帧，静图轻推近"
+    },
+    {
+      "shot_id": "EP01-S003",
+      "shot_version": 1,
+      "sequence": 3,
+      "start_seconds": 10,
+      "end_seconds": 15,
+      "duration_seconds": 5,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "人物眼神",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "稍向身后"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PHONE-001",
+          "state_start": "黑手机，首镜右转左，其余左手",
+          "state_end": "左手保留",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "MARK-001",
+          "state_start": "第四镜起左腕红色弧形压痕",
+          "state_end": "第四镜后持续，不流血",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "右手反锁，松手后拨片保持水平",
+        "timed_beats": [
+          "复用lock-v03完整动作"
+        ],
+        "end_pose": "右手反锁，松手后拨片保持水平",
+        "emotion_change": "疑惧逐步升级"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "锁好了。",
+          "emotion": "克制悬疑",
+          "estimated_seconds": 0.75,
+          "start_offset_seconds": 3.3499999999999996,
+          "end_offset_seconds": 4.949999999999999
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。右手反锁，松手后拨片保持水平",
+        "negative": "额外人物、换装、浮层",
+        "reference_assets": [
+          "do-not-open-v01 approved character"
+        ]
+      },
+      "video_prompt": {
+        "performance": "复用已生成素材或本地静图运动，不提交新视频请求",
+        "motion": "复用lock-v03完整动作",
+        "camera": "固定或轻推近",
+        "continuity": "深青门关闭、芥末黄卫衣、黑短发、黑手机左手",
+        "negative": "开门、第二人物、左右手互换"
+      },
+      "first_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。右手反锁，松手后拨片保持水平",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_f7949cd5.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。右手反锁，松手后拨片保持水平",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_final",
+        "costume": "pending_final",
+        "position_and_eye_line": "pending_final",
+        "prop_state": "pending_final",
+        "lighting_and_palette": "pending_final",
+        "previous_last_to_current_first": "pending_final"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "锁好了。"
+        }
+      ],
+      "risk_flags": [
+        "旧锁具须在第一镜取景外",
+        "左手手机与第四镜后红痕不得跳变",
+        "声音采用后期，不以口型认证"
+      ],
+      "source_strategy": "复用lock-v03完整动作"
+    },
+    {
+      "shot_id": "EP01-S004",
+      "shot_version": 1,
+      "sequence": 4,
+      "start_seconds": 15,
+      "end_seconds": 20,
+      "duration_seconds": 5,
+      "beat_role": "reveal",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "人物眼神",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "稍向身后"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PHONE-001",
+          "state_start": "黑手机，首镜右转左，其余左手",
+          "state_end": "左手保留",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "MARK-001",
+          "state_start": "第四镜起左腕红色弧形压痕",
+          "state_end": "第四镜后持续，不流血",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "低头发现左腕红痕，手机始终左手持握",
+        "timed_beats": [
+          "新红痕画面轻推近，不要求模型凭空长红痕"
+        ],
+        "end_pose": "低头发现左腕红痕，手机始终左手持握",
+        "emotion_change": "疑惧逐步升级"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "现在，看看你的左手。",
+          "emotion": "克制悬疑",
+          "estimated_seconds": 2.0,
+          "start_offset_seconds": 0.3000000000000007,
+          "end_offset_seconds": 3.3999999999999986
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。低头发现左腕红痕，手机始终左手持握",
+        "negative": "额外人物、换装、浮层",
+        "reference_assets": [
+          "do-not-open-v01 approved character"
+        ]
+      },
+      "video_prompt": {
+        "performance": "复用已生成素材或本地静图运动，不提交新视频请求",
+        "motion": "新红痕画面轻推近，不要求模型凭空长红痕",
+        "camera": "固定或轻推近",
+        "continuity": "深青门关闭、芥末黄卫衣、黑短发、黑手机左手",
+        "negative": "开门、第二人物、左右手互换"
+      },
+      "first_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。低头发现左腕红痕，手机始终左手持握",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_f7949cd5.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。低头发现左腕红痕，手机始终左手持握",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_final",
+        "costume": "pending_final",
+        "position_and_eye_line": "pending_final",
+        "prop_state": "pending_final",
+        "lighting_and_palette": "pending_final",
+        "previous_last_to_current_first": "pending_final"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "现在，看看你的左手。"
+        }
+      ],
+      "risk_flags": [
+        "旧锁具须在第一镜取景外",
+        "左手手机与第四镜后红痕不得跳变",
+        "声音采用后期，不以口型认证"
+      ],
+      "source_strategy": "新红痕画面轻推近，不要求模型凭空长红痕"
+    },
+    {
+      "shot_id": "EP01-S005",
+      "shot_version": 1,
+      "sequence": 5,
+      "start_seconds": 20,
+      "end_seconds": 25,
+      "duration_seconds": 5,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "人物眼神",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "稍向身后"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PHONE-001",
+          "state_start": "黑手机，首镜右转左，其余左手",
+          "state_end": "左手保留",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "MARK-001",
+          "state_start": "第四镜起左腕红色弧形压痕",
+          "state_end": "第四镜后持续，不流血",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "门外声音变成自己，抬眼僵住",
+        "timed_beats": [
+          "新Seedance2.5抬眼反应视频"
+        ],
+        "end_pose": "门外声音变成自己，抬眼僵住",
+        "emotion_change": "疑惧逐步升级"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "别信电话，我才是你。",
+          "emotion": "克制悬疑",
+          "estimated_seconds": 2.0,
+          "start_offset_seconds": 0.25,
+          "end_offset_seconds": 4.5
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。门外声音变成自己，抬眼僵住",
+        "negative": "额外人物、换装、浮层",
+        "reference_assets": [
+          "do-not-open-v01 approved character"
+        ]
+      },
+      "video_prompt": {
+        "performance": "二维赛璐璐动画，保持首帧同一个林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛、齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。保持左手握黑色手机，左腕红色弧形压痕从头到尾不变，不流血。右手在画外。固定中近景，缓慢极轻推近。0至2秒视线从左腕抬起看向画面左侧关闭的门，2至4秒眼睛微微睁大、眉头收紧、呼吸停止，4至5秒僵住。不是转身，头只轻微抬起，手机和手腕不移动、不换手、不消失。嘴唇保持闭合，不说话。门外有人模仿她的声音，但本视频不生成任何对白，所有声音后期添加。没有第二个人，没有开门，没有新人物倒影，没有文字字幕，没有背景音乐。青色门关闭，暖黄壁灯位置不变，门锁不入画，画面风格和线条与首帧一致。",
+        "motion": "新Seedance2.5抬眼反应视频",
+        "camera": "固定或轻推近",
+        "continuity": "深青门关闭、芥末黄卫衣、黑短发、黑手机左手",
+        "negative": "开门、第二人物、左右手互换"
+      },
+      "first_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。门外声音变成自己，抬眼僵住",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_f7949cd5.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。门外声音变成自己，抬眼僵住",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_final",
+        "costume": "pending_final",
+        "position_and_eye_line": "pending_final",
+        "prop_state": "pending_final",
+        "lighting_and_palette": "pending_final",
+        "previous_last_to_current_first": "pending_final"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "别信电话，我才是你。"
+        }
+      ],
+      "risk_flags": [
+        "旧锁具须在第一镜取景外",
+        "左手手机与第四镜后红痕不得跳变",
+        "声音采用后期，不以口型认证"
+      ],
+      "source_strategy": "新Seedance2.5抬眼反应视频"
+    },
+    {
+      "shot_id": "EP01-S006",
+      "shot_version": 1,
+      "sequence": 6,
+      "start_seconds": 25,
+      "end_seconds": 30,
+      "duration_seconds": 5,
+      "beat_role": "cliffhanger",
+      "scene_id": "SC-001",
+      "shot_size": "medium_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static_or_slow_push",
+      "composition": "角色右侧/门左后方/灯右侧",
+      "focal_point": "人物眼神",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "稍向身后"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PHONE-001",
+          "state_start": "黑手机，首镜右转左，其余左手",
+          "state_end": "左手保留",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "MARK-001",
+          "state_start": "第四镜起左腕红色弧形压痕",
+          "state_end": "第四镜后持续，不流血",
+          "held_by": "CH-001"
+        }
+      ],
+      "action": {
+        "start_pose": "录音揭示她曾经开门，表情凝固，留悬念",
+        "timed_beats": [
+          "新反应尾帧做眼部推近，录音后切黑"
+        ],
+        "end_pose": "录音揭示她曾经开门，表情凝固，留悬念",
+        "emotion_change": "疑惧逐步升级"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "我已经开过一次门了。",
+          "emotion": "克制悬疑",
+          "estimated_seconds": 2.25,
+          "start_offset_seconds": 0.1999999999999993,
+          "end_offset_seconds": 4.399999999999999
+        }
+      ],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。录音揭示她曾经开门，表情凝固，留悬念",
+        "negative": "额外人物、换装、浮层",
+        "reference_assets": [
+          "do-not-open-v01 approved character"
+        ]
+      },
+      "video_prompt": {
+        "performance": "复用已生成素材或本地静图运动，不提交新视频请求",
+        "motion": "新反应尾帧做眼部推近，录音后切黑",
+        "camera": "固定或轻推近",
+        "continuity": "深青门关闭、芥末黄卫衣、黑短发、黑手机左手",
+        "negative": "开门、第二人物、左右手互换"
+      },
+      "first_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。录音揭示她曾经开门，表情凝固，留悬念",
+        "required_state": [
+          "门关闭",
+          "手机持握",
+          "服装一致"
+        ],
+        "reference_assets": [
+          "projects/0001_20260921_别开第二次门/images/ig_f7949cd5.jpg"
+        ]
+      },
+      "last_frame": {
+        "description": "林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。录音揭示她曾经开门，表情凝固，留悬念",
+        "required_state": [
+          "门关闭",
+          "手机保留"
+        ],
+        "handoff_to_next_shot": "同一玄关与人物；用动作结果衔接"
+      },
+      "continuity_checks": {
+        "identity": "pending_final",
+        "costume": "pending_final",
+        "position_and_eye_line": "pending_final",
+        "prop_state": "pending_final",
+        "lighting_and_palette": "pending_final",
+        "previous_last_to_current_first": "pending_final"
+      },
+      "post_overlays": [
+        {
+          "type": "subtitle",
+          "text": "我已经开过一次门了。"
+        }
+      ],
+      "risk_flags": [
+        "旧锁具须在第一镜取景外",
+        "左手手机与第四镜后红痕不得跳变",
+        "声音采用后期，不以口型认证"
+      ],
+      "source_strategy": "新反应尾帧做眼部推近，录音后切黑"
+    }
+  ],
+  "timing_validation": {
+    "shot_count": 6,
+    "sum_duration_seconds": 30,
+    "all_shots_between_4_and_10_seconds": true,
+    "dialogue_timing_pass": true
+  }
+}

@@ -1,96 +1,21 @@
 <template>
   <div class="film-list">
-    <header class="header">
-      <div class="header-inner">
-        <h1 class="logo">
-          <span class="logo-main">本地短剧助手</span>
-          <span class="logo-sub">LocalMiniDrama</span>
-        </h1>
-        <!-- 公共资源库（左侧，靛紫调） -->
-        <div class="header-library">
-          <el-button class="btn-library" @click="showCharLibrary = true">
-            <el-icon><User /></el-icon>素材角色
-          </el-button>
-          <el-button class="btn-library" @click="showSceneLibrary = true">
-            <el-icon><PictureFilled /></el-icon>素材场景
-          </el-button>
-          <el-button class="btn-library" @click="showPropLibrary = true">
-            <el-icon><Box /></el-icon>素材道具
-          </el-button>
-        </div>
-        <!-- 右侧操作区 -->
-        <div class="header-actions">
-          <el-button class="btn-agent" type="primary" plain @click="$router.push('/create')">
-            <el-icon><MagicStick /></el-icon>AI 自动短剧
-          </el-button>
-          <!-- 暂时隐藏，功能待完善 -->
-          <!-- <el-button class="btn-library" title="自由创作" @click="$router.push('/free-create')">
-            <el-icon><MagicStick /></el-icon>自由创作
-          </el-button>
-          <el-button class="btn-library" title="媒体素材库" @click="$router.push('/media-library')">
-            <el-icon><Files /></el-icon>素材库
-          </el-button> -->
-          <el-button v-if="!vendorLockEnabled" class="btn-wechat" title="扫码联系作者" @click="showWechat = true">
-            <el-icon><ChatDotSquare /></el-icon>微信我
-          </el-button>
-          <el-button class="btn-theme" :title="isDark ? '切换到浅色模式' : '切换到暗色模式'" @click="toggleTheme">
-            <el-icon><Sunny v-if="isDark" /><Moon v-else /></el-icon>
-            {{ isDark ? '浅色' : '暗色' }}
-          </el-button>
-          <el-button class="btn-settings" @click="showAiConfigDialog = true">
-            <el-icon><Setting /></el-icon>AI配置
-          </el-button>
-          <el-button class="btn-import" :loading="importing" @click="triggerImport">
-            <el-icon><Upload /></el-icon>导入项目
-          </el-button>
-          <input ref="importFileInput" type="file" accept=".zip" style="display:none" @change="onImportFile" />
-          <el-button type="primary" class="btn-new" @click="goNewProject">
-            <el-icon><Plus /></el-icon>新建项目
-          </el-button>
-        </div>
-      </div>
-    </header>
-
     <main class="main">
+      <section class="catalog-heading">
+        <div><p class="studio-eyebrow">YOUR CREATIVE SPACE</p><h1>项目库<span>{{ dramas.length }} 个项目</span></h1><p>从一个想法开始，把每个故事打磨成作品。</p></div>
+        <div class="catalog-actions"><el-button :loading="importing" @click="triggerImport"><el-icon><Upload /></el-icon>导入项目</el-button><el-button @click="goNewProject">空白项目</el-button><el-button type="primary" @click="$router.push('/create')"><el-icon><Plus /></el-icon>AI 创作新项目</el-button></div>
+      </section>
+      <input ref="importFileInput" type="file" accept=".zip" hidden @change="onImportFile" />
+      <section class="catalog-toolbar" aria-label="项目筛选与素材库">
+        <div class="catalog-filters"><el-input v-model="projectQuery" clearable placeholder="搜索项目名称或故事简介" aria-label="搜索项目"/><select v-model="projectOrder" aria-label="项目排序"><option value="recent">最近更新</option><option value="name">项目名称</option></select></div>
+        <div class="catalog-libraries"><span>公共素材</span><el-button text @click="showCharLibrary = true">角色</el-button><el-button text @click="showSceneLibrary = true">场景</el-button><el-button text @click="showPropLibrary = true">道具</el-button></div>
+      </section>
+
       <div v-loading="loading" class="projects-wrap">
+        <div v-if="!loading && !visibleProjects.length" class="catalog-empty"><h2>{{ projectQuery ? '没有匹配的项目' : '你的第一部作品，从这里开始' }}</h2><p>{{ projectQuery ? '试试其他关键词，或清除搜索。' : '告诉 AI 你的故事方向，再逐步确认剧本与画面。' }}</p><el-button v-if="projectQuery" @click="projectQuery = ''">清除搜索</el-button><el-button v-else type="primary" @click="$router.push('/create')">开始创作</el-button></div>
         <div class="project-grid">
-          <!-- 操作卡片：始终作为第一个格子 -->
-          <div class="project-card action-card">
-            <div class="action-card-inner">
-              <h3 class="action-card-title">快速开始</h3>
-              <div class="action-card-buttons">
-                <el-button type="success" size="large" class="action-btn" @click="$router.push('/create')">
-                  <el-icon><MagicStick /></el-icon>AI 一句话创作
-                </el-button>
-                <el-button type="primary" size="large" class="action-btn action-btn-new" @click="goNewProject">
-                  <el-icon><Plus /></el-icon>新建短剧项目
-                </el-button>
-                <el-button size="large" class="action-btn action-btn-import" :loading="importing" @click="triggerImport">
-                  <el-icon><Upload /></el-icon>导入短剧项目
-                </el-button>
-              </div>
-              <div v-if="exampleList.length > 0" class="action-card-example">
-                <div class="example-hint">
-                  <el-icon class="example-hint-icon"><QuestionFilled /></el-icon>
-                  <span class="example-hint-text">新手？试试导入示例项目快速体验</span>
-                </div>
-                <div class="example-list">
-                  <el-button
-                    v-for="ex in exampleList"
-                    :key="ex.filename"
-                    size="small"
-                    class="example-btn"
-                    :loading="importingExample === ex.filename"
-                    @click="onImportExample(ex)"
-                  >
-                    <el-icon><FolderOpened /></el-icon>{{ ex.name }}
-                  </el-button>
-                </div>
-              </div>
-            </div>
-          </div>
           <div
-            v-for="d in dramas"
+            v-for="d in visibleProjects"
             :key="d.id"
             class="project-card"
             @click="openProject(d.id)"
@@ -101,7 +26,7 @@
               <el-button size="small" type="danger" plain circle :icon="Delete" title="删除" @click="onDelete(d)" />
             </div>
             <div class="project-card-body">
-              <h3 class="project-title">{{ d.title || '未命名项目' }}</h3>
+              <span class="project-index">PROJECT / {{ String(d.id).padStart(3, '0') }}</span><h3 class="project-title"><button class="project-open" @click.stop="openProject(d.id)">{{ d.title || '未命名项目' }}</button></h3>
               <p class="project-desc">{{ d.description || '暂无描述' }}</p>
               <div class="project-badges">
                 <span class="badge badge-status" :class="'badge-status--' + (d.status || 'draft')">{{ formatStatus(d.status) }}</span>
@@ -116,6 +41,8 @@
           </div>
         </div>
       </div>
+      <details v-if="exampleList.length" class="catalog-examples"><summary>新手体验 · 导入示例项目</summary><el-button v-for="ex in exampleList" :key="ex.filename" :loading="importingExample === ex.filename" @click="onImportExample(ex)">{{ ex.name }}</el-button></details>
+      <button v-if="!vendorLockEnabled" class="catalog-support" @click="showWechat = true">联系作者</button>
     </main>
 
     <!-- 新建项目：先填标题和描述 -->
@@ -359,7 +286,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { selectProjects } from '@/utils/projectCatalog'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Edit, Delete, Setting, Plus, User, PictureFilled, Box, Sunny, Moon, ChatDotSquare, Download, Upload, QuestionFilled, FolderOpened, MagicStick, Files } from '@element-plus/icons-vue'
@@ -436,6 +364,9 @@ async function doGenerateLibImg(form, prompt, api, reloadFn) {
 
 const loading = ref(false)
 const dramas = ref([])
+const projectQuery = ref('')
+const projectOrder = ref('recent')
+const visibleProjects = computed(() => selectProjects(dramas.value, projectQuery.value, projectOrder.value))
 const total = ref(0)
 
 const showAiConfigDialog = ref(false)
@@ -654,7 +585,7 @@ function formatDate(val) {
 }
 
 function formatStatus(status) {
-  const map = { draft: '草稿', published: '已发布', archived: '已归档', generating: '生成中' }
+  const map = { draft: '草稿', completed: '已完成', failed: '需处理', published: '已发布', archived: '已归档', generating: '生成中' }
   return map[status] || status || '草稿'
 }
 

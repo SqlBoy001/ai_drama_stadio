@@ -1042,16 +1042,10 @@ async function processStoryboardGeneration(db, log, cfg, taskId, episodeId, mode
     // 传入 streamSavedNums：已增量保存的项目直接从 DB 读取，跳过重复 INSERT
     const saved = saveStoryboards(db, log, episodeId, storyboards, cfg, style, streamSavedNums, deriveOpts);
 
-    // ── 分镜角色补全（字符串匹配，无 AI，极快）──────────────────────────────────
+    // 文字提及仅生成核对日志，不覆盖明确的出镜角色（含空镜名单）。
     taskService.updateTaskStatus(db, taskId, 'processing', 75, '正在校验分镜角色关联...');
-    let totalCharAdded = 0;
     for (const sb of saved) {
-      if (!sb?.id) continue;
-      const { added } = syncStoryboardCharacters(db, log, sb.id);
-      totalCharAdded += added.length;
-    }
-    if (totalCharAdded > 0) {
-      log.info('[分镜] 角色补全完成', { episode_id: episodeId, total_added: totalCharAdded });
+      if (sb?.id) syncStoryboardCharacters(db, log, sb.id);
     }
 
     taskService.updateTaskStatus(db, taskId, 'processing', 90, '正在更新剧集时长...');

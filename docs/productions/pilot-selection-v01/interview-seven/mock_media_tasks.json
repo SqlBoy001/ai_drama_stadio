@@ -1,0 +1,892 @@
+{
+  "production_version": "v01",
+  "generated_at": "2026-09-19T07:41:07.373067+00:00",
+  "source_versions": [
+    "three-scripts:v01"
+  ],
+  "supersedes": null,
+  "status": "preproduction",
+  "schema_version": "1.0",
+  "mode": "mock",
+  "real_api_calls_allowed": false,
+  "tasks": [
+    {
+      "task_id": "CHAR-1",
+      "type": "character_turnaround",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": null,
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [],
+      "reference_assets": [],
+      "prompt": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+      "output_placeholder": "EP01/media/CHAR-1",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "CHAR-2",
+      "type": "character_turnaround",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": null,
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [],
+      "reference_assets": [],
+      "prompt": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+      "output_placeholder": "EP01/media/CHAR-2",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "ROOM",
+      "type": "scene_ref",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": null,
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [],
+      "reference_assets": [],
+      "prompt": "封闭面试室，桌、门、红键、墙上对讲与白色开门键位置固定",
+      "output_placeholder": "EP01/media/ROOM",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S001-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S001",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄桌左低头伸手",
+      "output_placeholder": "EP01/media/EP01-S001-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S001-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S001",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S001-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "从桌下抽出黄纸，摊到桌面",
+      "output_placeholder": "EP01/media/EP01-S001-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S002-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S002",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。两人隔桌坐着",
+      "output_placeholder": "EP01/media/EP01-S002-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S002-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S002",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S002-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "面试官把红键推到桌中央，收手",
+      "output_placeholder": "EP01/media/EP01-S002-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S003-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S003",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官看着许澄",
+      "output_placeholder": "EP01/media/EP01-S003-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S003-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S003",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S003-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "面试官指红键后收手",
+      "output_placeholder": "EP01/media/EP01-S003-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S004-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S004",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄手指停在纸边",
+      "output_placeholder": "EP01/media/EP01-S004-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S004-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S004",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S004-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄将亮起的手机扣下",
+      "output_placeholder": "EP01/media/EP01-S004-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S005-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S005",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄拿着纸",
+      "output_placeholder": "EP01/media/EP01-S005-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S005-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S005",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S005-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "展开纸内侧，沿正字笔画移动视线",
+      "output_placeholder": "EP01/media/EP01-S005-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S006-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S006",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官低头看纸",
+      "output_placeholder": "EP01/media/EP01-S006-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S006-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S006",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S006-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "面试官避开许澄视线",
+      "output_placeholder": "EP01/media/EP01-S006-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S007-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S007",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄靠椅背",
+      "output_placeholder": "EP01/media/EP01-S007-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S007-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S007",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S007-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄抬眼坐直",
+      "output_placeholder": "EP01/media/EP01-S007-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S008-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S008",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。两人仍隔桌",
+      "output_placeholder": "EP01/media/EP01-S008-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S008-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S008",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S008-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "面试官拿走纸，指向许澄身后的门",
+      "output_placeholder": "EP01/media/EP01-S008-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S009-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S009",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄站在门旁",
+      "output_placeholder": "EP01/media/EP01-S009-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S009-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S009",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S009-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "墙上对讲机亮灯，许澄看向面试官",
+      "output_placeholder": "EP01/media/EP01-S009-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S010-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S010",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄手在对讲键旁",
+      "output_placeholder": "EP01/media/EP01-S010-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S010-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S010",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S010-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄按住对讲键，面试官从椅边起身",
+      "output_placeholder": "EP01/media/EP01-S010-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S011-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S011",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄按对讲，面试官在后",
+      "output_placeholder": "EP01/media/EP01-S011-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S011-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S011",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S011-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "面试官伸手靠近；许澄侧身护住对讲，手不接触",
+      "output_placeholder": "EP01/media/EP01-S011-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S012-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S012",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官停住手",
+      "output_placeholder": "EP01/media/EP01-S012-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S012-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S012",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S012-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "对讲传来录音提示声，面试官收回手",
+      "output_placeholder": "EP01/media/EP01-S012-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S013-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S013",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄保持按对讲",
+      "output_placeholder": "EP01/media/EP01-S013-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S013-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S013",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S013-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄松开对讲转向面试官",
+      "output_placeholder": "EP01/media/EP01-S013-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S014-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S014",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官站门旁持纸",
+      "output_placeholder": "EP01/media/EP01-S014-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S014-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S014",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S014-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "面试官按白色开门键；锁响后将纸递回许澄",
+      "output_placeholder": "EP01/media/EP01-S014-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S015-FIRST",
+      "type": "first_frame",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S015",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "CHAR-1",
+        "CHAR-2",
+        "ROOM"
+      ],
+      "reference_assets": [],
+      "prompt": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄持纸站门口",
+      "output_placeholder": "EP01/media/EP01-S015-FIRST",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S015-VIDEO",
+      "type": "shot_video",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": "EP01-S015",
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S015-FIRST"
+      ],
+      "reference_assets": [],
+      "prompt": "门外传来声音；许澄停步翻看纸背，切近景",
+      "output_placeholder": "EP01/media/EP01-S015-VIDEO",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 1,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "SUBTITLE",
+      "type": "subtitle",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": null,
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "EP01-S001-VIDEO",
+        "EP01-S002-VIDEO",
+        "EP01-S003-VIDEO",
+        "EP01-S004-VIDEO",
+        "EP01-S005-VIDEO",
+        "EP01-S006-VIDEO",
+        "EP01-S007-VIDEO",
+        "EP01-S008-VIDEO",
+        "EP01-S009-VIDEO",
+        "EP01-S010-VIDEO",
+        "EP01-S011-VIDEO",
+        "EP01-S012-VIDEO",
+        "EP01-S013-VIDEO",
+        "EP01-S014-VIDEO",
+        "EP01-S015-VIDEO"
+      ],
+      "reference_assets": [],
+      "prompt": "核对实际对白再排字幕",
+      "output_placeholder": "EP01/media/SUBTITLE",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 0,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "ASSEMBLY",
+      "type": "assembly_preflight",
+      "status": "mock",
+      "episode_id": "EP01",
+      "shot_id": null,
+      "input_versions": [
+        "v01"
+      ],
+      "dependencies": [
+        "SUBTITLE"
+      ],
+      "reference_assets": [],
+      "prompt": "先检查全片再720p合成",
+      "output_placeholder": "EP01/media/ASSEMBLY",
+      "provider": null,
+      "model": null,
+      "estimated_calls": 0,
+      "estimated_cost": null,
+      "stale_if": [
+        "upstream version changes"
+      ],
+      "manual_asset_policy": "reuse_locked_manual"
+    }
+  ]
+}

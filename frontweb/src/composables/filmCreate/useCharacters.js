@@ -54,6 +54,31 @@ export function useCharacters(deps) {
   const editCharacterForm = ref(null)
   const editCharacterSaving = ref(false)
   const editCharacterPromptGenerating = ref(false)
+  const characterDesignRequest = ref('')
+  const characterDesignLoading = ref(false)
+  const previousCharacterDraft = ref(null)
+  async function generateCharacterDraft() {
+    const form = editCharacterForm.value
+    if (!form?.id || characterDesignLoading.value || editCharacterPromptGenerating.value) return
+    characterDesignLoading.value = true
+    const before = { ...form }
+    try {
+      const draft = await characterAPI.draft(form.id, { instruction: characterDesignRequest.value, name: form.name, appearance: form.appearance, description: form.description })
+      if (editCharacterForm.value !== form || !showEditCharacter.value) return
+      if (form.appearance !== before.appearance || form.description !== before.description || form.polished_prompt !== before.polished_prompt) {
+        ElMessage.warning('生成期间资料已修改，本次结果未覆盖，请重试'); return
+      }
+      previousCharacterDraft.value = before
+      Object.assign(form, draft)
+      ElMessage.success('AI已同步填入外貌、简介和生图提示词；检查后点击保存。尚未生成图片。')
+    } catch (e) { ElMessage.error(e.message || 'AI生成失败，原资料保留') }
+    finally { characterDesignLoading.value = false }
+  }
+  function undoCharacterDraft() {
+    if (previousCharacterDraft.value?.id !== editCharacterForm.value?.id) return
+    Object.assign(editCharacterForm.value, previousCharacterDraft.value)
+    previousCharacterDraft.value = null
+  }
   const extractingCharAppearance = ref(false)
   const extractingAnchors = ref(false)
   const addCharRefImage = ref(null)   // { dataUrl, filename }
@@ -99,7 +124,7 @@ export function useCharacters(deps) {
 
 
   // ── 常量 ──────────────────────────────────────────────
-  const CHAR_ROLE_LABEL = { main: '主角', supporting: '配角', minor: '次要角色' }
+  const CHAR_ROLE_LABEL = { main: '主角', protagonist: '主角', antagonist: '反派', guest: '客串', supporting: '配角', minor: '次要角色' }
   function charRoleLabel(role) { return CHAR_ROLE_LABEL[role] || role || '' }
 
   // ── 核心函数 ──────────────────────────────────────────
@@ -153,6 +178,8 @@ export function useCharacters(deps) {
   }
 
   function editCharacter(char) {
+    characterDesignRequest.value = ''
+    previousCharacterDraft.value = null
     stopCharacterPromptPoll()
     editCharacterForm.value = {
       id: char.id,
@@ -221,6 +248,7 @@ export function useCharacters(deps) {
           personality: form.personality || undefined,
           description: form.description || undefined,
           polished_prompt: form.polished_prompt || undefined,
+          negative_prompt: form.negative_prompt,
           stages: form.stages ? form.stages.trim() || undefined : undefined
         })
         await saveCharRefImageIfAny(form.id)
@@ -262,16 +290,23 @@ export function useCharacters(deps) {
     }
   }
 
-  async function doGenerateCharacterPrompt() {
+  async function doGenerateCharacterPrompt(regenerateImage = false) {
     const form = editCharacterForm.value
-    if (!form?.id) return
+    if (!form?.id || editCharacterPromptGenerating.value) return
+    if (!form.appearance?.trim()) { ElMessage.warning('请先填写角色外貌描述'); return }
     editCharacterPromptGenerating.value = true
     try {
-      const res = await characterAPI.generatePrompt(form.id)
+      await characterAPI.update(form.id, {
+        name: form.name.trim(), role: form.role, appearance: form.appearance.trim(),
+        description: form.description || '', polished_prompt: ''
+      })
+      form.polished_prompt = ''
+      const res = await characterAPI.generatePrompt(form.id, undefined, getSelectedStyle())
       if (res?.polished_prompt) {
         form.polished_prompt = res.polished_prompt
-        ElMessage.success('提示词已生成')
+        ElMessage.success('已按最新描述更新并保存提示词；旧图片不会自动改变')
         await loadDrama()
+        if (regenerateImage === true) await onGenerateCharacterImage(form)
       }
     } catch (e) {
       ElMessage.error(e.message || '生成提示词失败')
@@ -333,6 +368,7 @@ export function useCharacters(deps) {
   }
 
   async function onGenerateCharacterImage(char) {
+    const previousImage = char.local_path || char.image_url || ''
     char.errorMsg = ''
     char.error_msg = ''
     const meta = buildCharImageMeta(char)
@@ -345,6 +381,7 @@ export function useCharacters(deps) {
         const pollRes = await pollTask(taskId, () => loadDrama(), meta)
         if (pollRes?.status === 'failed') {
           char.errorMsg = pollRes.error || '生成失败'
+          ElMessage.error(char.errorMsg)
         } else {
           ElMessage.success('角色图片已生成')
         }
@@ -353,7 +390,7 @@ export function useCharacters(deps) {
         await pollUntilResourceHasImage(() => {
           const list = store.drama?.characters ?? store.currentEpisode?.characters ?? []
           const c = list.find((x) => Number(x.id) === Number(char.id))
-          return !!(c && (c.image_url || c.local_path))
+          return !!(c && (c.local_path || c.image_url) && (c.local_path || c.image_url) !== previousImage)
         })
         ElMessage.success('角色图片已生成')
       }
@@ -838,6 +875,7 @@ export function useCharacters(deps) {
     editCharacter,
     saveCharRefImageIfAny,
     submitEditCharacter,
+    characterDesignRequest, characterDesignLoading, generateCharacterDraft, undoCharacterDraft,
     doGenerateCharacterPrompt,
     doExtractCharFromImage,
     extractIdentityAnchors,

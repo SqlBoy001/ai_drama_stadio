@@ -57,6 +57,15 @@ function setupRouter(cfg, db, log) {
   r.get('/agent/runs', agent.listRuns);
   r.post('/agent/runs', agent.createRun);
   r.get('/agent/runs/:id', agent.getRun);
+  r.get('/agent/runs/:id/editing-handoff', agent.editingHandoff);
+  r.get('/agent/runs/:id/chatcut-import-plan', agent.chatcutImportPlan);
+  r.get('/agent/chatcut/connection', agent.chatcutConnection);
+  r.post('/agent/runs/:id/chatcut/prepare', agent.chatcutPrepare);
+  r.post('/agent/runs/:id/chatcut/:jobId/export', agent.chatcutExport);
+  r.post('/agent/runs/:id/chatcut/:jobId/collect', agent.chatcutCollect);
+  r.post('/agent/runs/:id/chatcut/:jobId/approve', agent.chatcutApprove);
+  r.post('/agent/runs/:id/chatcut/:jobId/audio-review', agent.chatcutAudioReview);
+  r.post('/agent/runs/:id/chatcut/:jobId/adopt', agent.chatcutAdopt);
   r.post('/agent/runs/:id/pause', agent.control('pause'));
   r.post('/agent/runs/:id/resume', agent.control('resume'));
   r.post('/agent/runs/:id/cancel', agent.control('cancel'));
@@ -186,6 +195,7 @@ function setupRouter(cfg, db, log) {
   r.post('/characters/batch-generate-images', characters.batchGenerateImages);
   r.post('/characters/:id/generate-image', characters.generateImage);
   r.post('/characters/:id/generate-four-view-image', characters.generateFourViewImage);
+  r.post('/characters/:id/ai-draft', characters.draft);
   r.post('/characters/:id/generate-prompt', characters.generatePrompt);
   r.post('/characters/:id/upload-image', uploadModule.multerSingle, characters.uploadImage);
   r.put('/characters/:id/image', characters.putImage);

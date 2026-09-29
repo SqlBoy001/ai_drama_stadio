@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0",
+  "production_version": "v01",
+  "mode": "production_authorized",
+  "real_api_calls_allowed": true,
+  "tasks": [
+    {
+      "task_id": "EP01-S001",
+      "type": "shot_video",
+      "status": "reuse_or_local",
+      "dependencies": [
+        "approved first frame",
+        "storyboard-v01"
+      ],
+      "estimated_calls": 0,
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S002",
+      "type": "shot_video",
+      "status": "reuse_or_local",
+      "dependencies": [
+        "approved first frame",
+        "storyboard-v01"
+      ],
+      "estimated_calls": 0,
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S003",
+      "type": "shot_video",
+      "status": "reuse_or_local",
+      "dependencies": [
+        "approved first frame",
+        "storyboard-v01"
+      ],
+      "estimated_calls": 0,
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S004",
+      "type": "shot_video",
+      "status": "reuse_or_local",
+      "dependencies": [
+        "approved first frame",
+        "storyboard-v01"
+      ],
+      "estimated_calls": 0,
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S005",
+      "type": "shot_video",
+      "status": "submitted",
+      "dependencies": [
+        "approved first frame",
+        "storyboard-v01"
+      ],
+      "estimated_calls": 1,
+      "manual_asset_policy": "reuse_locked_manual"
+    },
+    {
+      "task_id": "EP01-S006",
+      "type": "shot_video",
+      "status": "reuse_or_local",
+      "dependencies": [
+        "approved first frame",
+        "storyboard-v01"
+      ],
+      "estimated_calls": 0,
+      "manual_asset_policy": "reuse_locked_manual"
+    }
+  ]
+}

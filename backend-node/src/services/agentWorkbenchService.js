@@ -7,6 +7,7 @@ const TERMINAL = new Set(['EXPORTED', 'CANCELLED']);
 const REVIEW_STATUS = {
   script: 'SCRIPT_REVIEW',
   assets: 'ASSET_REVIEW',
+  images: 'IMAGE_REVIEW',
   final_video: 'FINAL_REVIEW',
 };
 
@@ -36,10 +37,10 @@ function createPlan(input = {}) {
   const visualStyle = visualStyleAuto && suspenseStory ? SUSPENSE_REALISTIC_STYLE : requestedStyle;
   const visualPreset = resolveStylePreset(visualStyle);
   const episodeCount = clamp(input.episode_count || matchNumber(instruction, /(\d+)\s*集/) || 3, 1, 10);
-  const duration = clamp(input.episode_duration_seconds || matchNumber(instruction, /(\d+)\s*秒/) || 45, 30, 90);
+  const duration = clamp(input.episode_duration_seconds || matchNumber(instruction, /(\d+)\s*秒/) || 45, 30, 120);
   const budget = clamp(input.budget_limit || matchNumber(instruction, /预算[^\d]*(\d+(?:\.\d+)?)/) || 300, 10, 100000);
   const saveCost = input.save_cost !== false;
-  const shotsPerEpisode = clamp(Math.round(duration / 6), 6, 12);
+  const shotsPerEpisode = clamp(duration > 90 ? Math.ceil(duration / 8) : Math.round(duration / 6), 6, 15);
   const shots = shotsPerEpisode * episodeCount;
   const videos = shots;
   const images = shots + 4;
@@ -55,6 +56,7 @@ function createPlan(input = {}) {
       visual_style_prompt_zh: visualPreset?.zh || visualStyle,
       visual_style_prompt_en: visualPreset?.en || visualStyle,
       aspect_ratio: '9:16',
+      resolution: input.resolution === '1080p' ? '1080p' : '720p',
       episode_count: episodeCount,
       episode_duration_seconds: duration,
     },
@@ -83,7 +85,7 @@ function createPlan(input = {}) {
     providers: dryRun
       ? { text: 'mock-local', image: 'mock-local', video: 'mock-local', voice: 'mock-local' }
       : { text: '自动选择默认配置', image: '自动选择默认配置', video: '自动选择默认配置', voice: '可选，未配置时使用字幕' },
-    approval_gates: ['script', 'assets', 'final_video'],
+    approval_gates: ['script', 'assets', 'images', 'final_video'],
     dry_run: dryRun,
     cost_strategy: saveCost
       ? '全部镜头动态化；通过智能模型路由与资产复用节省费用，不牺牲叙事完整性'
@@ -118,6 +120,7 @@ function getRun(db, runId) {
     output: parseJson(row.output_json, null),
   }));
   run.approvals = db.prepare('SELECT * FROM approval_requests WHERE run_id = ? ORDER BY created_at DESC').all(runId).map((row) => ({ ...row, snapshot: parseJson(row.snapshot_json, {}) }));
+  run.review_cycles = require('./agentReviewService').list(db, runId);
   run.usage = db.prepare('SELECT * FROM generation_usage WHERE run_id = ? ORDER BY created_at DESC').all(runId);
   run.qc_reports = run.project_id ? db.prepare('SELECT * FROM qc_reports WHERE project_id = ? ORDER BY created_at DESC').all(run.project_id).map((row) => ({ ...row, checks: parseJson(row.checks_json, []) })) : [];
   return run;
@@ -162,6 +165,7 @@ function seedProject(db, log, plan, options = {}) {
     style: plan.project.visual_style,
     metadata: {
       aspect_ratio: '9:16',
+      resolution: plan.project.resolution || '720p',
       video_clip_duration: 5,
       agent_created: true,
       dry_run: dryRun,
@@ -203,7 +207,7 @@ function createRun(db, log, payload = {}) {
     insertStep(db, id, 'plan_confirmed', 'planning', 'COMPLETED', plan);
     if (dryRun) {
       insertStep(db, id, 'script_generated', 'script', 'COMPLETED', { episodes: plan.episodes });
-      createApproval(db, id, project.id, 'script', { title: project.title, episodes: plan.episodes });
+      createApproval(db, id, project.id, 'script', { title: project.title, episodes: plan.episodes, review_reason: 'Mock未执行语义审核，仅供流程演练' });
     }
   });
   create();
@@ -278,6 +282,14 @@ function approve(db, approvalId, decision, comment = '') {
   const now = new Date().toISOString();
   const run = getRun(db, approval.run_id);
   if (!run || TERMINAL.has(run.status)) throw new Error('运行已结束');
+  if (decision === 'approve' && run.status === 'PAUSED') throw new Error('运行已暂停，必须先恢复再审核');
+  if (decision === 'approve' && approval.approval_stage === 'images') require('./agentImageGate').assertReady(db, run, parseJson(approval.snapshot_json, {}));
+  if (decision === 'approve' && approval.approval_stage === 'final_video') require('./agentVideoInspection').assertReady(db, run, parseJson(approval.snapshot_json, {}));
+  if(decision === 'approve' && approval.approval_stage === 'final_video' && !run.dry_run && !String(comment).trim()) throw new Error('完整动作与音频必须填写人工核对依据');
+  const cycles = run.review_cycles.filter(x => x.stage === approval.approval_stage || (approval.approval_stage === 'images' && x.stage.startsWith('image:')) || (approval.approval_stage === 'final_video' && x.stage.startsWith('video:')));
+  const cycle = cycles.find(x => x.status === 'RUNNING') || cycles.find(x => x.status === 'HUMAN_REVIEW') || cycles[0];
+  if (cycle?.status === 'RUNNING') throw new Error('审核正在执行，必须等待完成');
+  if (decision === 'approve' && cycle?.status === 'HUMAN_REVIEW' && !String(comment).trim()) throw new Error('人工放行必须填写判断依据');
   if (decision === 'reject' && !String(comment).trim()) throw new Error('驳回时必须填写修改意见');
   if (decision === 'approve' && !run.dry_run) {
     const snapshot = parseJson(approval.snapshot_json, {});
@@ -295,6 +307,9 @@ function approve(db, approvalId, decision, comment = '') {
   const tx = db.transaction(() => {
     db.prepare('UPDATE approval_requests SET status = ?, reviewer_comment = ?, resolved_at = ? WHERE id = ?')
       .run(decision === 'approve' ? 'APPROVED' : 'REJECTED', comment, now, approvalId);
+    if (decision === 'approve' && cycle?.status === 'HUMAN_REVIEW') {
+      for (const item of cycles.filter(x => x.status === 'HUMAN_REVIEW')) db.prepare("UPDATE agent_review_cycles SET status='HUMAN_ACCEPTED', updated_at=? WHERE id=?").run(now, item.id);
+    }
     if (decision === 'reject') {
       db.prepare("UPDATE agent_runs SET status = 'PAUSED', current_step = ?, updated_at = ? WHERE id = ?").run(`revision_required:${approval.approval_stage}`, now, run.id);
       insertStep(db, run.id, `rejected_${approval.approval_stage}`, 'approval', 'COMPLETED', { decision, comment });
@@ -311,7 +326,15 @@ function approve(db, approvalId, decision, comment = '') {
       db.prepare("UPDATE agent_runs SET status = 'ASSET_REVIEW', current_step = 'asset_review', updated_at = ? WHERE id = ?").run(now, run.id);
     } else if (approval.approval_stage === 'assets') {
       if (!run.dry_run) {
-        db.prepare("UPDATE agent_runs SET status = 'MEDIA_GENERATING', current_step = 'generating:media', updated_at = ? WHERE id = ?").run(now, run.id);
+        db.prepare("UPDATE agent_runs SET status = 'IMAGE_GENERATING', current_step = 'generating:images', updated_at = ? WHERE id = ?").run(now, run.id);
+        return;
+      }
+      createApproval(db, run.id, run.project_id, 'images', { ...require('./agentImageGate').snapshot(db, run.project_id), mock: true });
+      insertStep(db, run.id, 'mock_images_generated', 'images', 'COMPLETED', { mock: true, semantic_review: 'NOT_PERFORMED' });
+      db.prepare("UPDATE agent_runs SET status='IMAGE_REVIEW', current_step='images_review', updated_at=? WHERE id=?").run(now,run.id);
+    } else if (approval.approval_stage === 'images') {
+      if (!run.dry_run) {
+        db.prepare("UPDATE agent_runs SET status='MEDIA_GENERATING', current_step='generating:media', updated_at=? WHERE id=?").run(now,run.id);
         return;
       }
       const result = generateMockMedia(db, run);
@@ -350,7 +373,12 @@ function controlRun(db, runId, action) {
       const stageFromStep = String(run.current_step || '').split(':')[1];
       const lastRejected = db.prepare("SELECT * FROM approval_requests WHERE run_id = ? AND status = 'REJECTED' ORDER BY resolved_at DESC LIMIT 1").get(runId);
       const stage = stageFromStep || lastRejected?.approval_stage || 'script';
-      if (!run.dry_run) {
+      if (stage === 'images') {
+        createApproval(db,runId,run.project_id,'images',require('./agentImageGate').snapshot(db,run.project_id));
+        db.prepare("UPDATE agent_runs SET status='IMAGE_REVIEW',current_step='images_review',updated_at=? WHERE id=?").run(now,runId);
+      } else if (stage === 'final_video' && !run.dry_run) {
+        db.prepare("UPDATE agent_runs SET status='MEDIA_REVIEWING',current_step='reviewing:media',updated_at=? WHERE id=?").run(now,runId);
+      } else if (!run.dry_run) {
         const realAction = ({ script: 'script', assets: 'assets', final_video: 'media' })[stage] || 'script';
         const realStatus = ({ script: 'SCRIPT_GENERATING', assets: 'ASSET_GENERATING', media: 'MEDIA_GENERATING' })[realAction];
         db.prepare('UPDATE agent_runs SET status = ?, current_step = ?, updated_at = ? WHERE id = ?')
@@ -362,8 +390,9 @@ function controlRun(db, runId, action) {
       }
     }
   } else if (action === 'retry' && run.status === 'FAILED' && !run.dry_run) {
-    const failedAction = String(run.current_step || '').split(':')[1] || 'script';
-    const status = ({ script: 'SCRIPT_GENERATING', assets: 'ASSET_GENERATING', media: 'MEDIA_GENERATING', export: 'EXPORTING' })[failedAction] || 'SCRIPT_GENERATING';
+    let failedAction = String(run.current_step || '').split(':')[1] || 'script';
+    if(failedAction==='media')failedAction='media_review';
+    const status = ({ script: 'SCRIPT_GENERATING', assets: 'ASSET_GENERATING', media: 'MEDIA_GENERATING', media_review: 'MEDIA_REVIEWING', images: 'IMAGE_GENERATING', export: 'EXPORTING' })[failedAction] || 'SCRIPT_GENERATING';
     db.prepare('UPDATE agent_runs SET status = ?, current_step = ?, updated_at = ? WHERE id = ?')
       .run(status, `generating:${failedAction}`, now, runId);
   }

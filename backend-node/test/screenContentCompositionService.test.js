@@ -83,3 +83,16 @@ test('episode audit updates stored prompts and marks old image/video generations
   assert.match(updated.video_prompt, /浮层固定在画面坐标/);
   db.close();
 });
+
+test('spoken phone warning never forces a visual UI overlay', () => {
+  for (const action of [
+    '林夏低头看手机，手机发出声音：别开门，我是十分钟后的你。',
+    '林夏收到手机通知声，听见录音警告，眼睛睁大。',
+    '手机来电铃响，她惊恐地接听，听到预警消息。',
+  ]) {
+    const shot = { action, result: '听到警告，转向关闭的门' };
+    assert.equal(detectScreenContentComposition(shot).required, false);
+    assert.equal(applyScreenContentComposition('单幅画面', shot), '单幅画面');
+  }
+  assert.equal(detectScreenContentComposition({ action: '她瞳孔收缩，手机屏幕显示警告：别开门。' }).required, true);
+});

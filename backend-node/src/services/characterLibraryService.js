@@ -180,7 +180,7 @@ function applyLibraryItemToCharacter(db, log, characterId, libraryItemId) {
   const item = getLibraryItem(db, libraryItemId);
   if (!item) return { ok: false, error: 'library item not found' };
   const charRow = db
-    .prepare('SELECT id, drama_id, local_path, image_url, seedance2_asset FROM characters WHERE id = ? AND deleted_at IS NULL')
+    .prepare('SELECT * FROM characters WHERE id = ? AND deleted_at IS NULL')
     .get(Number(characterId));
   if (!charRow) return { ok: false, error: 'character not found' };
   const drama = db.prepare('SELECT id FROM dramas WHERE id = ? AND deleted_at IS NULL').get(charRow.drama_id);
@@ -202,7 +202,7 @@ function applyLibraryItemToCharacter(db, log, characterId, libraryItemId) {
 
 function uploadCharacterImage(db, log, characterId, imageUrl, opts = {}) {
   const charRow = db
-    .prepare('SELECT id, drama_id, local_path, image_url, seedance2_asset FROM characters WHERE id = ? AND deleted_at IS NULL')
+    .prepare('SELECT * FROM characters WHERE id = ? AND deleted_at IS NULL')
     .get(Number(characterId));
   if (!charRow) return { ok: false, error: 'character not found' };
   const drama = db.prepare('SELECT id FROM dramas WHERE id = ? AND deleted_at IS NULL').get(charRow.drama_id);
@@ -296,13 +296,19 @@ function addCharacterToMaterialLibrary(db, log, characterId) {
 
 function updateCharacter(db, log, characterId, req) {
   const charRow = db
-    .prepare('SELECT id, drama_id, local_path, image_url, seedance2_asset FROM characters WHERE id = ? AND deleted_at IS NULL')
+    .prepare('SELECT * FROM characters WHERE id = ? AND deleted_at IS NULL')
     .get(Number(characterId));
   if (!charRow) return { ok: false, error: 'character not found' };
   const drama = db.prepare('SELECT id FROM dramas WHERE id = ? AND deleted_at IS NULL').get(charRow.drama_id);
   if (!drama) return { ok: false, error: 'unauthorized' };
   const updates = [];
   const params = [];
+  for (const key of ['tts_voice_id', 'tts_provider']) {
+    if (req[key] !== undefined) {
+      if (typeof req[key] !== 'string' || req[key].length > 200) return { ok: false, error: '音色配置必须为200字以内的字符串' };
+      updates.push(key + ' = ?'); params.push(req[key].trim());
+    }
+  }
   if (req.name != null) { updates.push('name = ?'); params.push(req.name); }
   if (req.role != null) { updates.push('role = ?'); params.push(req.role); }
   if (req.appearance != null) { updates.push('appearance = ?'); params.push(req.appearance); }
@@ -322,6 +328,8 @@ function updateCharacter(db, log, characterId, req) {
   }
   params.push(new Date().toISOString(), characterId);
   db.prepare('UPDATE characters SET ' + updates.join(', ') + ', updated_at = ? WHERE id = ?').run(...params);
+  const current = db.prepare('SELECT * FROM characters WHERE id=?').get(Number(characterId));
+  if (['appearance','name','local_path','image_url'].some(k => current[k] !== charRow[k])) require('./characterDependencyService').sync(db, charRow, current);
   log.info('Character updated', { character_id: characterId });
   return { ok: true };
 }
@@ -452,14 +460,14 @@ function buildFourViewImagePrompt(fourViewDescription, styleEn, styleZh) {
 
   const gender = detectGenderFromDescription(fourViewDescription);
   const genderEnforcement = gender === 'MALE'
-    ? 'GENDER: male only — masculine build and facial features; do not feminize.'
+    ? '保持设定的男性身份与面部特征。'
     : gender === 'FEMALE'
-      ? 'GENDER: female only — feminine build and facial features; do not masculinize.'
+      ? '保持设定的女性身份与面部特征。'
       : '';
 
   const tailParts = [];
   if (genderEnforcement) tailParts.push(genderEnforcement);
-  if (zh || en) tailParts.push(`Reiterate: same art style as above (${en || zh}).`);
+  if (zh || en) tailParts.push(`画风与上述要求一致（${zh || en}）。`);
   const tail = tailParts.length ? `\n\n---\n\n${tailParts.join(' ')}` : '';
 
   return `${styleHeader}${imageLayoutInstruction}\n\n---\n\n${fourViewDescription}${tail}`;
@@ -502,8 +510,8 @@ async function generateCharacterPromptOnly(db, log, cfg, characterId, modelName,
       max_tokens: 4000,
     });
   } catch (err) {
-    log.error('[四视图提示词] 文本AI失败，降级为外貌描述', { error: err.message });
-    fourViewDescription = appearanceText;
+    log.error('[四视图提示词] 文本AI失败，停止后续生成', { error: err.message });
+    throw err;
   }
 
   const styleEn = (mergedCfg.style.default_style_en || mergedCfg.style.default_style || '').trim();

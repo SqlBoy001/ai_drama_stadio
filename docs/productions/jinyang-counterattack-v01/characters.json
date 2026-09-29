@@ -1,0 +1,257 @@
+{
+  "production_version": "v01",
+  "generated_at": "2026-09-26T05:08:48.791496+00:00",
+  "source_versions": [
+    "用户授权章节",
+    "已确认60秒内容结构"
+  ],
+  "supersedes": null,
+  "status": "text_and_mock",
+  "characters": [
+    {
+      "character_id": "CH-001",
+      "name": "姜瑾",
+      "role": "protagonist",
+      "age_feel": "13岁少女",
+      "height_body_type": "13岁少女，清瘦、圆润少年面部",
+      "face_identity": "13岁少女，清瘦、圆润少年面部",
+      "hair": "黑发单髻",
+      "costume_id": "CST-001",
+      "costume_main_color": "灰蓝",
+      "costume_details": "灰蓝高领长袖粗布裙",
+      "accessories": "无首饰；拘束物由分镜道具定义",
+      "personality": "克制、先观察再反击",
+      "performance_style": "克制、先观察再反击",
+      "voice_direction": "清晰年轻女声，内心与对白同一声线",
+      "appearance_lock": "13岁少女，清瘦、圆润少年面部；黑发单髻；灰蓝高领长袖粗布裙，套装CST-001",
+      "forbidden_changes": [
+        "年龄漂移",
+        "换脸",
+        "换装",
+        "性化描绘"
+      ],
+      "allowed_costume_changes": [],
+      "reference_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "back"
+      ],
+      "voice_binding": {
+        "provider": null,
+        "voice_id": null,
+        "status": "pending_audition"
+      }
+    },
+    {
+      "character_id": "CH-002",
+      "name": "赵校尉",
+      "role": "antagonist",
+      "age_feel": "二十多岁男子",
+      "height_body_type": "二十多岁男子，壮实、方脸",
+      "face_identity": "二十多岁男子，壮实、方脸",
+      "hair": "黑发束髻",
+      "costume_id": "CST-002",
+      "costume_main_color": "暗褐",
+      "costume_details": "暗褐皮甲",
+      "accessories": "无首饰；拘束物由分镜道具定义",
+      "personality": "傲慢，近身后突然失措",
+      "performance_style": "傲慢，近身后突然失措",
+      "voice_direction": "低沉粗粝男声",
+      "appearance_lock": "二十多岁男子，壮实、方脸；黑发束髻；暗褐皮甲，套装CST-002",
+      "forbidden_changes": [
+        "年龄漂移",
+        "换脸",
+        "换装",
+        "性化描绘"
+      ],
+      "allowed_costume_changes": [],
+      "reference_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "back"
+      ],
+      "voice_binding": {
+        "provider": null,
+        "voice_id": null,
+        "status": "pending_audition"
+      }
+    },
+    {
+      "character_id": "CH-003",
+      "name": "周雎",
+      "role": "supporting",
+      "age_feel": "四十岁男子",
+      "height_body_type": "四十岁男子，宽肩、方脸有胡茬",
+      "face_identity": "四十岁男子，宽肩、方脸有胡茬",
+      "hair": "黑发散乱",
+      "costume_id": "CST-003",
+      "costume_main_color": "深灰",
+      "costume_details": "深灰囚衣",
+      "accessories": "无首饰；拘束物由分镜道具定义",
+      "personality": "虚弱但不退让",
+      "performance_style": "虚弱但不退让",
+      "voice_direction": "沙哑中年男声",
+      "appearance_lock": "四十岁男子，宽肩、方脸有胡茬；黑发散乱；深灰囚衣，套装CST-003",
+      "forbidden_changes": [
+        "年龄漂移",
+        "换脸",
+        "换装",
+        "性化描绘"
+      ],
+      "allowed_costume_changes": [],
+      "reference_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "back"
+      ],
+      "voice_binding": {
+        "provider": null,
+        "voice_id": null,
+        "status": "pending_audition"
+      }
+    },
+    {
+      "character_id": "CH-004",
+      "name": "出卖者",
+      "role": "supporting",
+      "age_feel": "十七岁少女",
+      "height_body_type": "十七岁少女，纤细、窄脸",
+      "face_identity": "十七岁少女，纤细、窄脸",
+      "hair": "黑发低髻",
+      "costume_id": "CST-004",
+      "costume_main_color": "土黄",
+      "costume_details": "土黄高领长袖衣裙",
+      "accessories": "无首饰；拘束物由分镜道具定义",
+      "personality": "惊恐，指人后躲避视线",
+      "performance_style": "惊恐，指人后躲避视线",
+      "voice_direction": "急促年轻女声",
+      "appearance_lock": "十七岁少女，纤细、窄脸；黑发低髻；土黄高领长袖衣裙，套装CST-004",
+      "forbidden_changes": [
+        "年龄漂移",
+        "换脸",
+        "换装",
+        "性化描绘"
+      ],
+      "allowed_costume_changes": [],
+      "reference_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "back"
+      ],
+      "voice_binding": {
+        "provider": null,
+        "voice_id": null,
+        "status": "pending_audition"
+      }
+    },
+    {
+      "character_id": "CH-005",
+      "name": "寺人监",
+      "role": "supporting",
+      "age_feel": "三十岁男子",
+      "height_body_type": "三十岁男子，瘦削、长脸",
+      "face_identity": "三十岁男子，瘦削、长脸",
+      "hair": "黑发束髻",
+      "costume_id": "CST-005",
+      "costume_main_color": "暗绿",
+      "costume_details": "暗绿长袍",
+      "accessories": "无首饰；拘束物由分镜道具定义",
+      "personality": "护主，恳求后倒地",
+      "performance_style": "护主，恳求后倒地",
+      "voice_direction": "细弱但清楚的成年男声",
+      "appearance_lock": "三十岁男子，瘦削、长脸；黑发束髻；暗绿长袍，套装CST-005",
+      "forbidden_changes": [
+        "年龄漂移",
+        "换脸",
+        "换装",
+        "性化描绘"
+      ],
+      "allowed_costume_changes": [],
+      "reference_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "back"
+      ],
+      "voice_binding": {
+        "provider": null,
+        "voice_id": null,
+        "status": "pending_audition"
+      }
+    },
+    {
+      "character_id": "CH-006",
+      "name": "胥郎",
+      "role": "guest",
+      "age_feel": "十八岁青年",
+      "height_body_type": "十八岁青年，单薄、长脸",
+      "face_identity": "十八岁青年，单薄、长脸",
+      "hair": "黑发束髻",
+      "costume_id": "CST-006",
+      "costume_main_color": "灰白",
+      "costume_details": "灰白完整长袖衣袍",
+      "accessories": "无首饰；拘束物由分镜道具定义",
+      "personality": "畏缩，低头",
+      "performance_style": "畏缩，低头",
+      "voice_direction": "本集无对白",
+      "appearance_lock": "十八岁青年，单薄、长脸；黑发束髻；灰白完整长袖衣袍，套装CST-006",
+      "forbidden_changes": [
+        "年龄漂移",
+        "换脸",
+        "换装",
+        "性化描绘"
+      ],
+      "allowed_costume_changes": [],
+      "reference_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "back"
+      ],
+      "voice_binding": {
+        "provider": null,
+        "voice_id": null,
+        "status": "pending_audition"
+      }
+    },
+    {
+      "character_id": "CH-007",
+      "name": "押送兵",
+      "role": "guest",
+      "age_feel": "三十岁男子",
+      "height_body_type": "三十岁男子，结实、宽脸",
+      "face_identity": "三十岁男子，结实、宽脸",
+      "hair": "黑发藏于布帽",
+      "costume_id": "CST-007",
+      "costume_main_color": "赭色",
+      "costume_details": "赭色军服",
+      "accessories": "无首饰；拘束物由分镜道具定义",
+      "personality": "站岗与压制，警觉",
+      "performance_style": "站岗与压制，警觉",
+      "voice_direction": "中低成年男声",
+      "appearance_lock": "三十岁男子，结实、宽脸；黑发藏于布帽；赭色军服，套装CST-007",
+      "forbidden_changes": [
+        "年龄漂移",
+        "换脸",
+        "换装",
+        "性化描绘"
+      ],
+      "allowed_costume_changes": [],
+      "reference_views": [
+        "front",
+        "three_quarter",
+        "profile",
+        "back"
+      ],
+      "voice_binding": {
+        "provider": null,
+        "voice_id": null,
+        "status": "pending_audition"
+      }
+    }
+  ]
+}

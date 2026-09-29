@@ -112,6 +112,13 @@ function updateStoryboard(db, log, id, req) {
     params.push(new Date().toISOString(), id);
     db.prepare('UPDATE storyboards SET ' + updates.join(', ') + ', updated_at = ? WHERE id = ?').run(...params);
   }
+  const dependencyRow = db.prepare('SELECT character_dependency_state FROM storyboards WHERE id=?').get(id);
+  if (dependencyRow?.character_dependency_state) {
+    const state = JSON.parse(dependencyRow.character_dependency_state);
+    state.conflicts = (state.conflicts || []).filter(k => req[k] === undefined);
+    if (!state.conflicts.length) state.notice = '角色已更新，旧媒体需重新生成并审核';
+    db.prepare('UPDATE storyboards SET character_dependency_state=? WHERE id=?').run(JSON.stringify(state),id);
+  }
   // 角色勾选变更：只同步 storyboard_characters，不删除 frame_prompts。
   // 用户手动保存的首/尾帧提示词应保留；图生时 framePromptSanitize 会按当前勾选剔除未出场角色名。
   if (parsedDramaCharIdsForSync !== null) {
@@ -196,6 +203,7 @@ function getStoryboardById(db, id) {
     video_url: r.video_url,
     audio_local_path: r.audio_local_path ?? null,
     narration_audio_local_path: r.narration_audio_local_path ?? null,
+    character_dependency_state: r.character_dependency_state || null,
     status: r.status || 'pending',
     created_at: r.created_at,
     updated_at: r.updated_at,

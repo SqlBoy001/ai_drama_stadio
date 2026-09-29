@@ -1,10 +1,12 @@
 <template>
   <div class="app">
+    <StudioNavigation v-if="$route.name !== 'film-canvas'" />
     <router-view />
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import StudioNavigation from './components/StudioNavigation.vue'
 </script>
 
 <style>

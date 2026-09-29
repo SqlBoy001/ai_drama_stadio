@@ -39,3 +39,13 @@ workbench*preview.png
 backend-node/tools/ffmpeg/ffmpeg
 backend-node/tools/ffmpeg/ffprobe
 backend-node/configs/*.local.*
+
+# Keep the explicit local integration runners; other historical scripts stay ignored.
+!backend-node/scripts/
+backend-node/scripts/*
+!backend-node/scripts/chatcut_registered_mcp.py
+!backend-node/scripts/chatcut-local-acceptance.cjs
+!backend-node/scripts/transcribe-local.py
+
+# SQLite test session artifact
+/:memory:.ses

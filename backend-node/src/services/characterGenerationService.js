@@ -7,6 +7,12 @@ const characterLibraryService = require('./characterLibraryService');
 const { mergeCfgStyleWithDrama } = require('../utils/dramaStyleMerge');
 const { stripRenderStyleFromAppearance } = require('../utils/characterStyle');
 
+function approvedAppearance(character, approved = []) {
+  const match = approved.find(item => String(item.name || '').trim() === String(character.name || '').trim());
+  // Structured, confirmed casting outranks details invented during extraction.
+  return String(match?.appearance_lock || match?.visual_anchor || '').trim() || character.appearance;
+}
+
 /**
  * 从角色外貌描述中提炼 6层视觉锚点，写入 characters.identity_anchors
  * 异步后台执行，不阻塞角色生成主流程
@@ -127,7 +133,7 @@ async function processCharacterGeneration(db, cfg, log, taskID, req) {
   for (const char of result) {
     const name = (char.name || '').trim();
     if (!name) continue;
-    const semanticAppearance = stripRenderStyleFromAppearance(char.appearance);
+    const semanticAppearance = stripRenderStyleFromAppearance(approvedAppearance(char, req.approved_characters));
     const existing = db.prepare('SELECT id, name FROM characters WHERE drama_id = ? AND name = ? AND deleted_at IS NULL').get(dramaId, name);
     if (existing) {
       characters.push({
@@ -202,6 +208,7 @@ function generateCharacters(db, cfg, log, req) {
       outline: req.outline,
       temperature: req.temperature,
       model: req.model,
+      approved_characters: req.approved_characters,
     }).catch((err) => {
       log.error('processCharacterGeneration fatal', { error: err.message, task_id: task.id });
     });
@@ -212,4 +219,5 @@ function generateCharacters(db, cfg, log, req) {
 module.exports = {
   generateCharacters,
   enrichIdentityAnchors,
+  approvedAppearance,
 };

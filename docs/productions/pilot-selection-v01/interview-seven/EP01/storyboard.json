@@ -1,0 +1,1830 @@
+{
+  "production_version": "v01",
+  "generated_at": "2026-09-19T07:41:07.373067+00:00",
+  "source_versions": [
+    "three-scripts:v01"
+  ],
+  "supersedes": null,
+  "status": "preproduction",
+  "schema_version": "1.0",
+  "episode_id": "EP01",
+  "title": "第七次面试",
+  "target_duration_seconds": 120,
+  "aspect_ratio": "9:16",
+  "target_resolution": "720x1280",
+  "visual_style": {
+    "preset": "原创2D赛璐璐",
+    "medium": "cel animation",
+    "palette": "青灰、米白、黄纸与红键",
+    "lighting": "冷青侧光暖白顶光",
+    "negative_constraints": [
+      "照片",
+      "3D",
+      "拼格"
+    ]
+  },
+  "story_structure": {
+    "opening_conflict_end_seconds": 3,
+    "escalation_summary": "伤害他人换工作，拒绝者被下一位清除记忆",
+    "final_hook_start_seconds": 115,
+    "final_hook": "两人共同留下纸条"
+  },
+  "shots": [
+    {
+      "shot_id": "EP01-S001",
+      "shot_version": 1,
+      "sequence": 1,
+      "start_seconds": 0,
+      "end_seconds": 8,
+      "duration_seconds": 8,
+      "beat_role": "hook",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "从桌下抽出黄纸，摊到桌面",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄桌左低头伸手",
+          "state_end": "许澄拿黄纸看向右侧",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄桌左低头伸手",
+        "timed_beats": [
+          "0–6秒：从桌下抽出黄纸，摊到桌面",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "许澄拿黄纸看向右侧",
+        "emotion_change": "hook"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "这字，是我写的。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.0,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 2.5
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄桌左低头伸手",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "从桌下抽出黄纸，摊到桌面",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄桌左低头伸手→许澄拿黄纸看向右侧",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄桌左低头伸手",
+        "required_state": [
+          "许澄桌左低头伸手",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄拿黄纸看向右侧",
+        "required_state": [
+          "许澄拿黄纸看向右侧",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "许澄拿黄纸看向右侧"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "纸条后期：你已来过六次。别按红键。"
+      ],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S002",
+      "shot_version": 1,
+      "sequence": 2,
+      "start_seconds": 8,
+      "end_seconds": 16,
+      "duration_seconds": 8,
+      "beat_role": "setup",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "面试官把红键推到桌中央，收手",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "两人隔桌坐着",
+          "state_end": "红键桌中央，许澄没有碰",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "两人隔桌坐着",
+        "timed_beats": [
+          "0–6秒：面试官把红键推到桌中央，收手",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "红键桌中央，许澄没有碰",
+        "emotion_change": "setup"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-002",
+          "text": "按下去，明天上班。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.25,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 2.75
+        },
+        {
+          "speaker_id": "CH-001",
+          "text": "它会做什么？",
+          "emotion": "克制但明确",
+          "estimated_seconds": 1.75,
+          "start_offset_seconds": 3.0,
+          "end_offset_seconds": 4.75
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。两人隔桌坐着",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "面试官把红键推到桌中央，收手",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "两人隔桌坐着→红键桌中央，许澄没有碰",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。两人隔桌坐着",
+        "required_state": [
+          "两人隔桌坐着",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。红键桌中央，许澄没有碰",
+        "required_state": [
+          "红键桌中央，许澄没有碰",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "红键桌中央，许澄没有碰"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S003",
+      "shot_version": 1,
+      "sequence": 3,
+      "start_seconds": 16,
+      "end_seconds": 24,
+      "duration_seconds": 8,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "面试官指红键后收手",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "面试官看着许澄",
+          "state_end": "红键仍未按",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "面试官看着许澄",
+        "timed_beats": [
+          "0–6秒：面试官指红键后收手",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "红键仍未按",
+        "emotion_change": "escalation"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-002",
+          "text": "删除上一位候选人的面试记忆。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 3.75,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 4.25
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官看着许澄",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "面试官指红键后收手",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "面试官看着许澄→红键仍未按",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官看着许澄",
+        "required_state": [
+          "面试官看着许澄",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。红键仍未按",
+        "required_state": [
+          "红键仍未按",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "红键仍未按"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S004",
+      "shot_version": 1,
+      "sequence": 4,
+      "start_seconds": 24,
+      "end_seconds": 32,
+      "duration_seconds": 8,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "许澄将亮起的手机扣下",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄手指停在纸边",
+          "state_end": "手机扣桌左，纸在主角手中",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄手指停在纸边",
+        "timed_beats": [
+          "0–6秒：许澄将亮起的手机扣下",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "手机扣桌左，纸在主角手中",
+        "emotion_change": "choice"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "他不同意呢？",
+          "emotion": "克制但明确",
+          "estimated_seconds": 1.75,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 2.25
+        },
+        {
+          "speaker_id": "CH-002",
+          "text": "他拒绝了。你也要拒绝？",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.75,
+          "start_offset_seconds": 2.5,
+          "end_offset_seconds": 5.25
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄手指停在纸边",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "许澄将亮起的手机扣下",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄手指停在纸边→手机扣桌左，纸在主角手中",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄手指停在纸边",
+        "required_state": [
+          "许澄手指停在纸边",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。手机扣桌左，纸在主角手中",
+        "required_state": [
+          "手机扣桌左，纸在主角手中",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "手机扣桌左，纸在主角手中"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "手机房租提醒后期叠加"
+      ],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S005",
+      "shot_version": 1,
+      "sequence": 5,
+      "start_seconds": 32,
+      "end_seconds": 40,
+      "duration_seconds": 8,
+      "beat_role": "reveal",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "展开纸内侧，沿正字笔画移动视线",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄拿着纸",
+          "state_end": "纸摊开，主角紧握纸角",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄拿着纸",
+        "timed_beats": [
+          "0–6秒：展开纸内侧，沿正字笔画移动视线",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "纸摊开，主角紧握纸角",
+        "emotion_change": "reveal"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "前六次，我都没按？",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.25,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 2.75
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄拿着纸",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "展开纸内侧，沿正字笔画移动视线",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄拿着纸→纸摊开，主角紧握纸角",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄拿着纸",
+        "required_state": [
+          "许澄拿着纸",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。纸摊开，主角紧握纸角",
+        "required_state": [
+          "纸摊开，主角紧握纸角",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "纸摊开，主角紧握纸角"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "纸内后期：拒绝以后，下一个被删的是你。"
+      ],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S006",
+      "shot_version": 1,
+      "sequence": 6,
+      "start_seconds": 40,
+      "end_seconds": 48,
+      "duration_seconds": 8,
+      "beat_role": "reveal",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "面试官避开许澄视线",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "面试官低头看纸",
+          "state_end": "面试官垂眼、手离红键",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "面试官低头看纸",
+        "timed_beats": [
+          "0–6秒：面试官避开许澄视线",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "面试官垂眼、手离红键",
+        "emotion_change": "reveal"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-002",
+          "text": "不然，你不会还坐在这里。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 3.0,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 3.5
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官低头看纸",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "面试官避开许澄视线",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "面试官低头看纸→面试官垂眼、手离红键",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官低头看纸",
+        "required_state": [
+          "面试官低头看纸",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官垂眼、手离红键",
+        "required_state": [
+          "面试官垂眼、手离红键",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "面试官垂眼、手离红键"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S007",
+      "shot_version": 1,
+      "sequence": 7,
+      "start_seconds": 48,
+      "end_seconds": 56,
+      "duration_seconds": 8,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "许澄抬眼坐直",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄靠椅背",
+          "state_end": "许澄直视面试官",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄靠椅背",
+        "timed_beats": [
+          "0–6秒：许澄抬眼坐直",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "许澄直视面试官",
+        "emotion_change": "choice"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "你们挑的不是能力。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.5,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 3.0
+        },
+        {
+          "speaker_id": "CH-002",
+          "text": "是服从。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 1.25,
+          "start_offset_seconds": 3.25,
+          "end_offset_seconds": 4.5
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄靠椅背",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "许澄抬眼坐直",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄靠椅背→许澄直视面试官",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄靠椅背",
+        "required_state": [
+          "许澄靠椅背",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄直视面试官",
+        "required_state": [
+          "许澄直视面试官",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "许澄直视面试官"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S008",
+      "shot_version": 1,
+      "sequence": 8,
+      "start_seconds": 56,
+      "end_seconds": 64,
+      "duration_seconds": 8,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "面试官拿走纸，指向许澄身后的门",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "两人仍隔桌",
+          "state_end": "面试官持纸，许澄起身",
+          "held_by": "CH-002"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "两人仍隔桌",
+        "timed_beats": [
+          "0–6秒：面试官拿走纸，指向许澄身后的门",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "面试官持纸，许澄起身",
+        "emotion_change": "escalation"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-002",
+          "text": "拒绝就出去。下一位到了。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 3.0,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 3.5
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。两人仍隔桌",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "面试官拿走纸，指向许澄身后的门",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "两人仍隔桌→面试官持纸，许澄起身",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。两人仍隔桌",
+        "required_state": [
+          "两人仍隔桌",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官持纸，许澄起身",
+        "required_state": [
+          "面试官持纸，许澄起身",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "面试官持纸，许澄起身"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S009",
+      "shot_version": 1,
+      "sequence": 9,
+      "start_seconds": 64,
+      "end_seconds": 72,
+      "duration_seconds": 8,
+      "beat_role": "setup",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "墙上对讲机亮灯，许澄看向面试官",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄站在门旁",
+          "state_end": "许澄左手抬到对讲机旁",
+          "held_by": "CH-002"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄站在门旁",
+        "timed_beats": [
+          "0–6秒：墙上对讲机亮灯，许澄看向面试官",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "许澄左手抬到对讲机旁",
+        "emotion_change": "setup"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-003",
+          "text": "您好，我来面试。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.0,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 2.5
+        },
+        {
+          "speaker_id": "CH-001",
+          "text": "能让我问他一句吗？",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.5,
+          "start_offset_seconds": 2.75,
+          "end_offset_seconds": 5.25
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄站在门旁",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "墙上对讲机亮灯，许澄看向面试官",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄站在门旁→许澄左手抬到对讲机旁",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄站在门旁",
+        "required_state": [
+          "许澄站在门旁",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄左手抬到对讲机旁",
+        "required_state": [
+          "许澄左手抬到对讲机旁",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "许澄左手抬到对讲机旁"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S010",
+      "shot_version": 1,
+      "sequence": 10,
+      "start_seconds": 72,
+      "end_seconds": 80,
+      "duration_seconds": 8,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "许澄按住对讲键，面试官从椅边起身",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄手在对讲键旁",
+          "state_end": "许澄持续按对讲，不触桌上红键",
+          "held_by": "CH-002"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄手在对讲键旁",
+        "timed_beats": [
+          "0–6秒：许澄按住对讲键，面试官从椅边起身",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "许澄持续按对讲，不触桌上红键",
+        "emotion_change": "choice"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "桌上有个红按钮。别碰它。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 3.0,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 3.5
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄手在对讲键旁",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "许澄按住对讲键，面试官从椅边起身",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄手在对讲键旁→许澄持续按对讲，不触桌上红键",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄手在对讲键旁",
+        "required_state": [
+          "许澄手在对讲键旁",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄持续按对讲，不触桌上红键",
+        "required_state": [
+          "许澄持续按对讲，不触桌上红键",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "许澄持续按对讲，不触桌上红键"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S011",
+      "shot_version": 1,
+      "sequence": 11,
+      "start_seconds": 80,
+      "end_seconds": 88,
+      "duration_seconds": 8,
+      "beat_role": "escalation",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "面试官伸手靠近；许澄侧身护住对讲，手不接触",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄按对讲，面试官在后",
+          "state_end": "面试官停在一步外",
+          "held_by": "CH-002"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄按对讲，面试官在后",
+        "timed_beats": [
+          "0–6秒：面试官伸手靠近；许澄侧身护住对讲，手不接触",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "面试官停在一步外",
+        "emotion_change": "escalation"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "把这句话录下来。忘了也能听见。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 3.75,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 4.25
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄按对讲，面试官在后",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "面试官伸手靠近；许澄侧身护住对讲，手不接触",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄按对讲，面试官在后→面试官停在一步外",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄按对讲，面试官在后",
+        "required_state": [
+          "许澄按对讲，面试官在后",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官停在一步外",
+        "required_state": [
+          "面试官停在一步外",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "面试官停在一步外"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S012",
+      "shot_version": 1,
+      "sequence": 12,
+      "start_seconds": 88,
+      "end_seconds": 96,
+      "duration_seconds": 8,
+      "beat_role": "reveal",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "对讲传来录音提示声，面试官收回手",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "面试官停住手",
+          "state_end": "面试官双手垂下看许澄",
+          "held_by": "CH-002"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "面试官停住手",
+        "timed_beats": [
+          "0–6秒：对讲传来录音提示声，面试官收回手",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "面试官双手垂下看许澄",
+        "emotion_change": "reveal"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-002",
+          "text": "我第一次，也说过这句话。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 3.0,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 3.5
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [
+          "录音提示声"
+        ],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官停住手",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "对讲传来录音提示声，面试官收回手",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "面试官停住手→面试官双手垂下看许澄",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官停住手",
+        "required_state": [
+          "面试官停住手",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官双手垂下看许澄",
+        "required_state": [
+          "面试官双手垂下看许澄",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "面试官双手垂下看许澄"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S013",
+      "shot_version": 1,
+      "sequence": 13,
+      "start_seconds": 96,
+      "end_seconds": 104,
+      "duration_seconds": 8,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "许澄松开对讲转向面试官",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄保持按对讲",
+          "state_end": "许澄与面试官在门边对视",
+          "held_by": "CH-002"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄保持按对讲",
+        "timed_beats": [
+          "0–6秒：许澄松开对讲转向面试官",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "许澄与面试官在门边对视",
+        "emotion_change": "choice"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-001",
+          "text": "那这次，别替他们关门。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 2.75,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 3.25
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄保持按对讲",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "许澄松开对讲转向面试官",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄保持按对讲→许澄与面试官在门边对视",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄保持按对讲",
+        "required_state": [
+          "许澄保持按对讲",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄与面试官在门边对视",
+        "required_state": [
+          "许澄与面试官在门边对视",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "许澄与面试官在门边对视"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S014",
+      "shot_version": 1,
+      "sequence": 14,
+      "start_seconds": 104,
+      "end_seconds": 112,
+      "duration_seconds": 8,
+      "beat_role": "payoff",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "面试官按白色开门键；锁响后将纸递回许澄",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "面试官站门旁持纸",
+          "state_end": "门打开，许澄接过纸，桌上红键未按",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "面试官站门旁持纸",
+        "timed_beats": [
+          "0–6秒：面试官按白色开门键；锁响后将纸递回许澄",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "门打开，许澄接过纸，桌上红键未按",
+        "emotion_change": "payoff"
+      },
+      "dialogue": [],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [
+          "开锁声"
+        ],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官站门旁持纸",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "面试官按白色开门键；锁响后将纸递回许澄",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "面试官站门旁持纸→门打开，许澄接过纸，桌上红键未按",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。面试官站门旁持纸",
+        "required_state": [
+          "面试官站门旁持纸",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。门打开，许澄接过纸，桌上红键未按",
+        "required_state": [
+          "门打开，许澄接过纸，桌上红键未按",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "门打开，许澄接过纸，桌上红键未按"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    },
+    {
+      "shot_id": "EP01-S015",
+      "shot_version": 1,
+      "sequence": 15,
+      "start_seconds": 112,
+      "end_seconds": 120,
+      "duration_seconds": 8,
+      "beat_role": "cliffhanger",
+      "scene_id": "SC-001",
+      "shot_size": "medium",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "主角左、面试官右，门在主角后方，不越轴",
+      "focal_point": "门外传来声音；许澄停步翻看纸背，切近景",
+      "depth_of_field": "moderate",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "许澄",
+          "costume_id": "CST-001",
+          "appearance_lock": "24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜",
+          "screen_position_start": "左侧或门边",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        },
+        {
+          "character_id": "CH-002",
+          "name": "面试官",
+          "costume_id": "CST-002",
+          "appearance_lock": "45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜",
+          "screen_position_start": "右侧或门边后方",
+          "screen_position_end": "保持左右轴线",
+          "eye_line": "对方或明确的道具"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-PAPER",
+          "state_start": "许澄持纸站门口",
+          "state_end": "门保持打开，纸背两种笔迹清晰",
+          "held_by": "CH-001"
+        },
+        {
+          "prop_id": "PROP-RED",
+          "state_start": "桌中央或面试官手边",
+          "state_end": "桌中央，从未按下",
+          "held_by": null
+        }
+      ],
+      "action": {
+        "start_pose": "许澄持纸站门口",
+        "timed_beats": [
+          "0–6秒：门外传来声音；许澄停步翻看纸背，切近景",
+          "6–8秒：保留反应与稳定动作结果"
+        ],
+        "end_pose": "门保持打开，纸背两种笔迹清晰",
+        "emotion_change": "cliffhanger"
+      },
+      "dialogue": [
+        {
+          "speaker_id": "CH-003",
+          "text": "这张纸，是我上次塞给你的。",
+          "emotion": "克制但明确",
+          "estimated_seconds": 3.25,
+          "start_offset_seconds": 0.5,
+          "end_offset_seconds": 3.75
+        }
+      ],
+      "sound": {
+        "ambience": "低室内底噪",
+        "sfx": [],
+        "music_cue": "预演不加音乐，终剪再配低音量合法音乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄持纸站门口",
+        "negative": "换装、怪手、照片、拼格、生成文字",
+        "reference_assets": []
+      },
+      "video_prompt": {
+        "performance": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。",
+        "motion": "门外传来声音；许澄停步翻看纸背，切近景",
+        "camera": "固定机位，近景插入需在预演确定",
+        "continuity": "许澄持纸站门口→门保持打开，纸背两种笔迹清晰",
+        "negative": "串角色、旁白代替动作、红键与开门键混用"
+      },
+      "first_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。许澄持纸站门口",
+        "required_state": [
+          "许澄持纸站门口",
+          "红键未按"
+        ],
+        "reference_assets": []
+      },
+      "last_frame": {
+        "description": "许澄：24岁清瘦窄脸青年，黑色微乱短发，蓝灰工装外套配白T恤，无眼镜；左侧，克制表情，按动作描述交互，冷青侧光暖白顶光；面试官：45岁瘦长脸男性，银灰整齐短发，米白西装配炭灰衬衫，细圆眼镜；右侧，克制表情，按动作描述交互，冷青侧光暖白顶光；封闭面试室，二维赛璐璐青灰色调，无字幕无第三人。门保持打开，纸背两种笔迹清晰",
+        "required_state": [
+          "门保持打开，纸背两种笔迹清晰",
+          "红键未按"
+        ],
+        "handoff_to_next_shot": "门保持打开，纸背两种笔迹清晰"
+      },
+      "continuity_checks": {
+        "identity": "pending_media",
+        "costume": "pending_media",
+        "position_and_eye_line": "pending_media",
+        "prop_state": "pending_media",
+        "lighting_and_palette": "pending_media",
+        "previous_last_to_current_first": "pending_media"
+      },
+      "post_overlays": [
+        "纸背两种笔迹用后期，末秒黑场"
+      ],
+      "risk_flags": [
+        "双人身份/手部/说话者",
+        "台词与实际口型待查"
+      ]
+    }
+  ],
+  "timing_validation": {
+    "shot_count": 15,
+    "sum_duration_seconds": 120,
+    "all_shots_between_4_and_10_seconds": true,
+    "dialogue_timing_pass": true
+  }
+}

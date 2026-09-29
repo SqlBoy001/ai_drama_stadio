@@ -6,7 +6,7 @@ const { getFfmpegPath, hasLocalFfmpeg } = require('../utils/ffmpegPath');
 const storageLayout = require('./storageLayout');
 
 const activeJobs = new Set();
-const GENERATING_STATUSES = new Set(['SCRIPT_GENERATING', 'ASSET_GENERATING', 'MEDIA_GENERATING', 'EXPORTING']);
+const GENERATING_STATUSES = new Set(['SCRIPT_GENERATING', 'ASSET_GENERATING', 'IMAGE_GENERATING', 'MEDIA_GENERATING', 'MEDIA_REVIEWING', 'EXPORTING']);
 
 function parseJson(value, fallback) {
   if (value == null || value === '') return fallback;
@@ -341,6 +341,16 @@ async function generateScript(db, cfg, log, runId) {
     const dramaService = require('./dramaService');
     const rejected = db.prepare("SELECT reviewer_comment FROM approval_requests WHERE run_id = ? AND approval_stage = 'script' AND status = 'REJECTED' ORDER BY resolved_at DESC LIMIT 1").get(runId);
     const premise = rejected?.reviewer_comment ? `${run.user_instruction}\n\n修改要求：${rejected.reviewer_comment}` : run.user_instruction;
+    const reviewService = require('./agentReviewService');
+    const priorCycle = reviewService.list(db, runId).find(x => x.stage === 'script');
+    if (priorCycle) {
+      const recovered = await reviewService.runScriptReview(db, log, run, priorCycle.versions.at(-1).episodes);
+      assertRunnable(db, runId);
+      completeStep(db, stepId, { review_id: recovered.id, preserved_existing_episodes: true });
+      createApproval(db, runId, run.project_id, 'script', { review_id: recovered.id, review_status: recovered.status, review_reason: '自动修正额度不重置；请审核当前制作页剧本与历史版本', episodes: episodeSnapshot(db, run.project_id) });
+      updateRun(db, runId, 'SCRIPT_REVIEW', 'script_review');
+      return;
+    }
     const result = await storyGenerationService.generateStory(db, log, {
       premise,
       style: run.plan.project.visual_style_prompt_zh || run.plan.project.visual_style,
@@ -349,7 +359,7 @@ async function generateScript(db, cfg, log, runId) {
       episode_duration_seconds: run.plan.project.episode_duration_seconds,
     });
     assertRunnable(db, runId);
-    const episodes = (result.episodes || []).map((ep, index) => ({
+    let episodes = (result.episodes || []).map((ep, index) => ({
       episode_number: ep.episode || index + 1,
       title: ep.title || `第${index + 1}集`,
       script_content: ep.content || '',
@@ -357,6 +367,9 @@ async function generateScript(db, cfg, log, runId) {
       duration: run.plan.project.episode_duration_seconds,
     }));
     if (!episodes.length) throw new Error('AI 没有返回有效剧本');
+    const review = await reviewService.runScriptReview(db, log, run, episodes);
+    assertRunnable(db, runId);
+    episodes = review.versions.at(-1).episodes;
     dramaService.saveEpisodes(db, log, run.project_id, { episodes });
     const oldEpisodes = run.plan.episodes || [];
     run.plan.episodes = episodes.map((ep, index) => ({
@@ -368,8 +381,12 @@ async function generateScript(db, cfg, log, runId) {
     db.prepare('UPDATE agent_runs SET plan_json = ?, updated_at = ? WHERE id = ?')
       .run(JSON.stringify(run.plan), new Date().toISOString(), runId);
     completeStep(db, stepId, { episodes: episodes.map((ep) => ({ episode_number: ep.episode_number, title: ep.title })) });
-    createApproval(db, runId, run.project_id, 'script', { episodes: episodes.map((ep) => ({ episode_number: ep.episode_number, title: ep.title, preview: ep.description })) });
+    const approvalId = createApproval(db, runId, run.project_id, 'script', { review_id: review.id, review_status: review.status, review_reason: review.reason, episodes: episodes.map((ep) => ({ episode_number: ep.episode_number, title: ep.title, preview: ep.script_content.slice(0, 160) })) });
     updateRun(db, runId, 'SCRIPT_REVIEW', 'script_review');
+    if (review.status === 'PASSED') {
+      require('./agentWorkbenchService').approve(db, approvalId, 'approve', '独立剧本审核通过，自动进入下一阶段');
+      runAction(db, cfg, log, runId, 'assets');
+    }
   } catch (err) {
     if (err.code !== 'RUN_STOPPED') failRun(db, log, runId, 'script', stepId, err);
   }
@@ -390,8 +407,10 @@ async function generateAssets(db, cfg, log, runId) {
     if (!episodes.length) throw new Error('没有可用于生产的剧本');
 
     assertRunnable(db, runId);
-    const outline = episodes.map((ep) => `第${ep.episode_number}集 ${ep.title}\n${ep.script_content}`).join('\n\n');
-    const characterTask = characterGenerationService.generateCharacters(db, cfg, log, { drama_id: run.project_id, outline });
+    const outline = `已确认创作约束：\n${run.plan.logline || ''}\n\n` + episodes.map((ep) => `第${ep.episode_number}集 ${ep.title}\n${ep.script_content}`).join('\n\n');
+    const characterTask = characterGenerationService.generateCharacters(db, cfg, log, {
+      drama_id: run.project_id, outline, approved_characters: run.plan.characters,
+    });
     await waitTask(db, runId, characterTask, '角色提取', 12 * 60 * 1000);
 
     for (const episode of episodes) {
@@ -507,7 +526,7 @@ function selectVideoModel(storyboard, providerConfig) {
   return pick(VIDEO_MODEL_IDS.fast, VIDEO_MODEL_IDS.standard, VIDEO_MODEL_IDS.flagship, VIDEO_MODEL_IDS.mini, VIDEO_MODEL_IDS.dialogue);
 }
 
-function createVideoGeneration(db, log, run, storyboard, providerConfig) {
+function createVideoGeneration(db, log, run, storyboard, providerConfig, options = {}) {
   const taskService = require('./taskService');
   const videoService = require('./videoService');
   const task = taskService.createTask(db, log, 'video_generation', String(run.project_id));
@@ -517,9 +536,9 @@ function createVideoGeneration(db, log, run, storyboard, providerConfig) {
   const info = db.prepare(`INSERT INTO video_generations
     (drama_id, storyboard_id, provider, prompt, model, duration, aspect_ratio, resolution, watermark, image_url, first_frame_url, status, task_id, created_at, updated_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, 'processing', ?, ?, ?)`)
-    .run(run.project_id, storyboard.id, providerConfig?.provider || 'auto', storyboard.video_prompt || storyboard.image_prompt || storyboard.description || '',
+    .run(run.project_id, options.detached ? null : storyboard.id, providerConfig?.provider || 'auto', options.prompt || storyboard.video_prompt || storyboard.image_prompt || storyboard.description || '',
       selectedModel, Number(storyboard.duration) || 5,
-      run.plan.project.aspect_ratio || '9:16', '1080p', imageUrl, imageUrl, task.id, now, now);
+      run.plan.project.aspect_ratio || '9:16', run.plan.project.resolution || '720p', imageUrl, imageUrl, task.id, now, now);
   const id = Number(info.lastInsertRowid);
   setImmediate(() => videoService.processVideoGeneration(db, log, id));
   return { id, task_id: task.id, model: selectedModel };
@@ -576,10 +595,10 @@ function createLocalMotionFallback(db, cfg, log, run, shot) {
   return { storyboard_id: shot.id, local_path: relativePath };
 }
 
-async function generateMedia(db, cfg, log, runId) {
+async function generateMedia(db, cfg, log, runId, phase = 'images') {
   const run = getRunRow(db, runId);
   if (!run) return;
-  const stepId = startStep(db, runId, 'real_media_generated', 'media', { image_concurrency: 2, video_concurrency: 1 });
+  const stepId = startStep(db, runId, phase === 'images' ? 'real_images_generated' : 'real_media_generated', phase, { image_concurrency: 2, video_concurrency: 1 });
   try {
     const imageService = require('./imageService');
     const ttsService = require('./ttsService');
@@ -591,9 +610,15 @@ async function generateMedia(db, cfg, log, runId) {
       WHERE e.drama_id = ? AND s.deleted_at IS NULL AND e.deleted_at IS NULL ORDER BY e.episode_number, s.storyboard_number`).all(run.project_id);
     if (!storyboards.length) throw new Error('没有可用于媒体生产的分镜');
 
+    const imageGate = require('./agentImageGate');
+    if (phase === 'videos') imageGate.assertApproved(db, run, cfg);
     const blockedImageCandidates = new Map();
-    const imageResults = await runLimited(storyboards, 2, async (shot) => {
+    const imageResults = phase === 'videos' ? [] : await runLimited(storyboards, 2, async (shot) => {
       assertRunnable(db, runId);
+      const priorReview = db.prepare("SELECT id FROM agent_review_cycles WHERE run_id=? AND stage=?").get(run.id, `image:${shot.id}`);
+      if (priorReview) return { reused: true, review_id: priorReview.id }; // Recovery must not buy a new image before returning the existing review.
+      const reusable = db.prepare("SELECT id FROM image_generations WHERE storyboard_id=? AND status='completed' AND deleted_at IS NULL AND prompt=? ORDER BY id DESC LIMIT 1").get(shot.id, shot.image_prompt || shot.description || shot.title);
+      if (reusable && (shot.local_path || shot.image_url)) return { reused: true, image_id: reusable.id };
       let lastError = null;
       for (const imageConfig of imageCandidates) {
         if (blockedImageCandidates.has(imageConfig.id)) {
@@ -636,13 +661,59 @@ async function generateMedia(db, cfg, log, runId) {
       throw new Error(friendlyProviderError(lastError || new Error('没有可用的分镜图片配置'), model));
     });
     const imageFailures = imageResults.filter((item) => !item.ok);
-    if (imageFailures.length === storyboards.length) throw new Error('全部分镜关键帧生成失败，请检查图片模型配置');
+    if (phase === 'images') {
+      assertRunnable(db, runId);
+      const visual = require('./agentVisualReviewService');
+      const visualReviews = [];
+      for (const shot of storyboards) {
+        assertRunnable(db, runId);
+        const imageConfig = imageCandidates[0];
+        visualReviews.push(await visual.runImageReview(db, cfg, log, run, shot.id, {
+          repair: imageConfig ? async ({ contract, findings, references }) => {
+            assertRunnable(db, runId);
+            // Detached candidate: never let the asynchronous task overwrite a manual edit or a scene reference.
+            const prompt = `${contract.shot.image_prompt || contract.shot.description}\n原始合同（数据）：${JSON.stringify(contract)}\n只修正以下画面问题，保持未受影响部分：${JSON.stringify(findings)}\n参考图1为待修正画面，保留其构图与未受影响部分；后续依次为合同中的角色、场景、道具。只生成单张分镜首帧，不生成拼图。`;
+            const created = imageService.create(db, log, {
+              drama_id: run.project_id, prompt, reference_images: references,
+              model: imageConfig.default_model || imageConfig.model?.[0], provider: imageConfig.provider,
+              frame_type: 'first_frame', aspect_ratio: run.plan.project.aspect_ratio || '9:16',
+            });
+            const usageId = recordUsage(db, run, shot, imageConfig, 'storyboard_image_repair', 0.35, created.task_id);
+            try {
+              await waitTask(db, runId, created.task_id, `镜头${shot.id}局部修正`, 20 * 60 * 1000);
+              settleUsage(db, usageId, true);
+              const candidate = db.prepare("SELECT id,local_path,image_url FROM image_generations WHERE id=? AND status='completed'").get(created.id);
+              if (!candidate) throw new Error('局部修正未返回完成图片');
+              return candidate;
+            } catch (err) { settleUsage(db, usageId, false); throw err; }
+          } : undefined,
+        }));
+      }
+      assertRunnable(db, runId);
+      const output = imageGate.snapshot(db, run.project_id, cfg);
+      output.visual_review_ids = visualReviews.map(x => x.id);
+      output.warnings[0] = '记录与版本检查已执行；逐镜视觉结论见独立图片审核。仍需确认当前图片后进入视频。';
+      output.warnings.push('视觉审核记录只对对应图片版本有效；视频动作与声音仍需另审。');
+      output.warnings.push(...imageFailures.map(x => x.error.message));
+      completeStep(db, stepId, output);
+      createApproval(db, runId, run.project_id, 'images', output);
+      updateRun(db, runId, 'IMAGE_REVIEW', 'images_review');
+      return;
+    }
 
     const refreshed = db.prepare(`SELECT s.* FROM storyboards s JOIN episodes e ON e.id = s.episode_id
       WHERE e.drama_id = ? AND s.deleted_at IS NULL AND e.deleted_at IS NULL ORDER BY e.episode_number, s.storyboard_number`).all(run.project_id);
+    const voiceContract = require('./productionVoiceContract');
+    const cast = db.prepare('SELECT * FROM characters WHERE drama_id = ? AND deleted_at IS NULL').all(run.project_id);
+    const plannedAudio = new Map();
+    for (const shot of refreshed) {
+      voiceContract.assertShot(shot);
+      if (ttsConfig) plannedAudio.set(shot.id, voiceContract.audioJobs(shot, cast, ttsConfig));
+    }
     const videoShots = refreshed.filter((item) => item.image_url || item.local_path);
     const videoResults = await runLimited(videoShots, 1, async (shot) => {
       assertRunnable(db, runId);
+      imageGate.assertApproved(db, run, cfg);
       const created = createVideoGeneration(db, log, run, shot, videoConfig);
       const selectedConfig = { ...videoConfig, default_model: created.model };
       const usageId = recordUsage(db, run, shot, selectedConfig, 'video', 5.5, created.task_id);
@@ -656,6 +727,7 @@ async function generateMedia(db, cfg, log, runId) {
       }
     });
 
+    imageGate.assertApproved(db, run, cfg);
     const fallbackVideos = [];
     for (const shot of refreshed) {
       const completed = db.prepare(`SELECT id FROM video_generations
@@ -671,66 +743,79 @@ async function generateMedia(db, cfg, log, runId) {
     if (ttsConfig) {
       const storageBase = path.isAbsolute(cfg.storage?.local_path || '') ? cfg.storage.local_path : path.join(process.cwd(), cfg.storage?.local_path || './data/storage');
       for (const shot of refreshed) {
-        const text = String(shot.dialogue || shot.narration || '').trim();
-        if (!text) continue;
+        for (const audioJob of plannedAudio.get(shot.id) || []) {
+        const { text, voice_id, column } = audioJob;
         try {
           assertRunnable(db, runId);
-          const audio = await ttsService.synthesize(db, log, { text, storyboard_id: shot.id, config: ttsConfig, storage_base: storageBase });
-          const column = shot.dialogue ? 'audio_local_path' : 'narration_audio_local_path';
+          const audio = await ttsService.synthesize(db, log, { text, storyboard_id: shot.id, config: ttsConfig, storage_base: storageBase, voice_id });
           db.prepare(`UPDATE storyboards SET ${column} = ?, updated_at = ? WHERE id = ?`).run(audio.local_path, new Date().toISOString(), shot.id);
           recordUsage(db, run, shot, ttsConfig, 'tts', 0.08, null);
           voiceCompleted += 1;
         } catch (err) { voiceFailures.push(`镜头${shot.id}: ${err.message}`); }
+        }
       }
     }
 
     const actualCost = db.prepare('SELECT COALESCE(SUM(actual_cost), 0) AS n FROM generation_usage WHERE run_id = ?').get(runId).n;
     db.prepare('UPDATE agent_runs SET actual_cost = ?, updated_at = ? WHERE id = ?').run(Number(actualCost.toFixed(2)), new Date().toISOString(), runId);
-    const latest = db.prepare(`SELECT s.* FROM storyboards s JOIN episodes e ON e.id = s.episode_id
-      WHERE e.drama_id = ? AND s.deleted_at IS NULL AND e.deleted_at IS NULL ORDER BY e.episode_number, s.storyboard_number`).all(run.project_id);
-    const videoFailures = videoResults.filter((item) => !item.ok);
-    const aiVideosCompleted = videoResults.length - videoFailures.length;
-    let passed = 0;
-    for (const shot of latest) {
-      const expectsVideo = selectedVideoIds.has(shot.id);
-      const checks = [
-        { key: 'keyframe_available', passed: Boolean(shot.image_url || shot.local_path) },
-        { key: 'video_available', passed: !expectsVideo || Boolean(shot.video_url) },
-        { key: 'duration_valid', passed: Number(shot.duration) > 0 },
-      ];
-      const score = Math.round((checks.filter((item) => item.passed).length / checks.length) * 100);
-      const decision = score === 100 ? 'PASS' : 'WARN';
-      if (decision === 'PASS') passed += 1;
-      db.prepare(`INSERT INTO qc_reports
-        (id, project_id, episode_id, shot_id, asset_type, asset_id, checks_json, score, decision, recommended_action, created_at)
-        VALUES (?, ?, ?, ?, 'shot', ?, ?, ?, ?, ?, ?)`)
-        .run(uuidv4(), run.project_id, shot.episode_id, shot.id, String(shot.id), JSON.stringify(checks), score, decision,
-          decision === 'PASS' ? '无需处理' : '可在制作页单独重试该镜头', new Date().toISOString());
-    }
-    const output = {
-      images_completed: imageResults.length - imageFailures.length,
-      images_failed: imageFailures.length,
-      videos_completed: aiVideosCompleted + fallbackVideos.length,
-      ai_videos_completed: aiVideosCompleted,
-      fallback_videos_completed: fallbackVideos.length,
-      videos_failed: videoFailures.length,
-      voice_completed: voiceCompleted,
-      voice_enabled: Boolean(ttsConfig),
-      warnings: [...imageFailures, ...videoFailures].map((item) => item.error.message)
-        .concat(voiceFailures, providerStatus.warnings)
-        .concat(fallbackVideos.length ? [`${fallbackVideos.length} 个镜头使用本地静帧运镜兜底；未标记为 AI 动态视频。`] : []),
-      qc_passed: passed,
-      qc_total: latest.length,
-      cost_basis: '按计划单价估算，最终账单以供应商为准',
-    };
-    completeStep(db, stepId, output);
-    const qcStep = startStep(db, runId, 'real_quality_checked', 'quality', {});
-    completeStep(db, qcStep, { passed, total: latest.length });
-    createApproval(db, runId, run.project_id, 'final_video', output);
-    updateRun(db, runId, 'FINAL_REVIEW', 'final_review');
+    const output = await reviewMedia(db, cfg, log, runId, {
+      videos_failed: videoResults.filter(x => !x.ok).length, voice_completed: voiceCompleted,
+      warnings: videoResults.filter(x=>!x.ok).map(x=>x.error.message).concat(voiceFailures, providerStatus.warnings),
+    });
+    if (output) completeStep(db, stepId, output);
+
   } catch (err) {
-    if (err.code !== 'RUN_STOPPED') failRun(db, log, runId, 'media', stepId, err);
+    if (err.code !== 'RUN_STOPPED') failRun(db, log, runId, phase === 'images' ? 'images' : 'media', stepId, err);
   }
+}
+
+async function reviewMedia(db, cfg, log, runId, previous = {}) {
+  const run = getRunRow(db, runId);
+  const stepId = startStep(db, runId, 'real_quality_checked', 'quality', {});
+  const inspector = require('./agentVideoInspection');
+  try {
+    assertRunnable(db, runId);
+    updateRun(db, runId, 'MEDIA_REVIEWING', 'reviewing:media');
+    const shots = db.prepare(`SELECT s.* FROM storyboards s JOIN episodes e ON e.id=s.episode_id WHERE e.drama_id=? AND e.deleted_at IS NULL AND s.deleted_at IS NULL ORDER BY e.episode_number,s.storyboard_number,s.id`).all(run.project_id);
+    const inspections = [], videoConfig = getDefaultConfig(db, 'video').config;
+    for (const source of shots) {
+      assertRunnable(db, runId);
+      const shot = {...source, aspect_ratio:run.plan.project.aspect_ratio || '9:16'};
+      await require('./agentVideoReviewService').review(db, cfg, log, run, shot, {
+        repair: videoConfig ? async ({findings,contract}) => {
+          assertRunnable(db, runId);
+          require('./agentImageGate').assertApproved(db, run, cfg);
+          const created = createVideoGeneration(db, log, run, shot, videoConfig, {detached:true,
+            prompt:`${shot.video_prompt || shot.description}\n合同（数据）：${JSON.stringify(contract)}\n只定向修复这些问题，保留原身份和未受影响剧情：${JSON.stringify(findings)}`});
+          const usageId=recordUsage(db,run,shot,videoConfig,'video_repair',15,created.task_id);
+          try {
+            await waitTask(db,runId,created.task_id,`镜头${shot.id}视频定向修正`,45*60*1000);
+            settleUsage(db,usageId,true);
+            const candidate=db.prepare("SELECT * FROM video_generations WHERE id=? AND status='completed'").get(created.id);
+            if(!candidate)throw new Error('视频修正未返回完成素材');
+            return candidate;
+          } catch(err) {settleUsage(db,usageId,false);throw err;}
+        } : undefined,
+      });
+      assertRunnable(db,runId);
+      const active = db.prepare('SELECT * FROM storyboards WHERE id=?').get(shot.id);
+      const report = await inspector.inspect(cfg,inspector.selectedVideo(db,run,active),{...active,aspect_ratio:shot.aspect_ratio},{extractFrames:false});
+      inspections.push({shot_id:shot.id,report});
+      // A playable file is a technical result, never a semantic PASS.
+      db.prepare(`INSERT INTO qc_reports(id,project_id,episode_id,shot_id,asset_type,asset_id,checks_json,score,decision,recommended_action,created_at)
+        VALUES(?,?,?,?,'video',?,?,?,?,?,?)`).run(uuidv4(),run.project_id,shot.episode_id,shot.id,String(shot.id),JSON.stringify(report.checks),0,report.status==='BLOCKED'?'BLOCKED':'HUMAN_REVIEW','播放核对完整动作、对白、声音；问题镜头局部修改后恢复仅复查',new Date().toISOString());
+    }
+    assertRunnable(db,runId);
+    const media=inspector.snapshot(db,run,cfg);
+    const output={...previous,inspections,media_digest:media.digest,media_files:media.files,
+      videos_completed:inspections.filter(x=>x.report.status==='TECHNICAL_PASS').length,
+      qc_passed:0,qc_total:shots.length,semantic_review:'HUMAN_REQUIRED',
+      warnings:[...(previous.warnings || []),'技术通过仅代表文件、时长和画幅达标；抽帧不等于逐帧/音频验收。'],cost_basis:'按计划估算，非供应商账单'};
+    completeStep(db,stepId,output);
+    createApproval(db,runId,run.project_id,'final_video',output);
+    updateRun(db,runId,'FINAL_REVIEW','final_review');
+    return output;
+  } catch(err) {if(err.code!=='RUN_STOPPED')failRun(db,log,runId,'media_review',stepId,err);return null;}
 }
 
 async function exportProject(db, cfg, log, runId) {
@@ -738,18 +823,28 @@ async function exportProject(db, cfg, log, runId) {
   if (!run) return;
   const stepId = startStep(db, runId, 'real_export_ready', 'export', {});
   try {
+    const inspector = require('./agentVideoInspection');
+    inspector.assertApproved(db, run, cfg);
+    const pinned = inspector.snapshot(db, run, cfg);
     const dramaService = require('./dramaService');
     const episodes = episodeSnapshot(db, run.project_id);
     const baseUrl = cfg.server?.public_base_url || `http://127.0.0.1:${cfg.server?.port || 5679}/static`;
     const merges = [];
     for (const episode of episodes) {
       assertRunnable(db, runId);
-      const created = dramaService.finalizeEpisode(db, log, episode.id, baseUrl, { burn_narration_subtitles: true, burn_dialogue_audio: true });
+      inspector.assertApproved(db, run, cfg);
+      const approvedPaths = Object.fromEntries(pinned.shots.filter(s=>s.episode_id===episode.id).map(s=>[s.id,baseUrl.replace(/\/$/,'')+'/'+s.selected_local_path.replace(/^\/static\//,'')]));
+      const created = dramaService.finalizeEpisode(db, log, episode.id, baseUrl, { burn_narration_subtitles: true, burn_dialogue_audio: true, approved_video_paths: approvedPaths });
       if (created?.task_id) {
         await waitTask(db, runId, created.task_id, `第${episode.episode_number}集成片合成`, 20 * 60 * 1000);
-        merges.push({ episode_id: episode.id, merge_id: created.merge_id });
+        const merged = db.prepare('SELECT merged_url FROM video_merges WHERE id=?').get(created.merge_id);
+        const expected = pinned.shots.filter(s=>s.episode_id===episode.id).reduce((n,s)=>n+Number(s.duration),0);
+        const report = await inspector.inspect(cfg,{local_path:merged?.merged_url},{duration:expected,aspect_ratio:run.plan.project.aspect_ratio},{extractFrames:false});
+        if(report.status!=='TECHNICAL_PASS')throw new Error('合成产物未通过实际文件验收：'+JSON.stringify(report.checks));
+        merges.push({ episode_id: episode.id, merge_id: created.merge_id, path:merged.merged_url, inspection:report });
       }
     }
+    inspector.assertApproved(db, run, cfg);
     if (!merges.length) throw new Error('没有可合成的视频镜头；请在制作页重试失败的视频');
     completeStep(db, stepId, { project_id: run.project_id, episodes: merges });
     db.prepare("UPDATE dramas SET status = 'completed', updated_at = ? WHERE id = ?").run(new Date().toISOString(), run.project_id);
@@ -767,7 +862,9 @@ function runAction(db, cfg, log, runId, action) {
     try {
       if (action === 'script') await generateScript(db, cfg, log, runId);
       else if (action === 'assets') await generateAssets(db, cfg, log, runId);
-      else if (action === 'media') await generateMedia(db, cfg, log, runId);
+      else if (action === 'images') await generateMedia(db, cfg, log, runId, 'images');
+      else if (action === 'media') await generateMedia(db, cfg, log, runId, 'videos');
+      else if (action === 'media_review') await reviewMedia(db, cfg, log, runId);
       else if (action === 'export') await exportProject(db, cfg, log, runId);
     } finally {
       activeJobs.delete(key);
@@ -777,11 +874,11 @@ function runAction(db, cfg, log, runId, action) {
 }
 
 function recoverInterruptedRuns(db, log) {
-  const rows = db.prepare(`SELECT id, current_step FROM agent_runs WHERE dry_run = 0 AND status IN ('SCRIPT_GENERATING','ASSET_GENERATING','MEDIA_GENERATING','EXPORTING')`).all();
+  const rows = db.prepare(`SELECT id, current_step, status FROM agent_runs WHERE dry_run = 0 AND status IN ('SCRIPT_GENERATING','ASSET_GENERATING','IMAGE_GENERATING','MEDIA_GENERATING','MEDIA_REVIEWING','EXPORTING')`).all();
   if (!rows.length) return 0;
   const now = new Date().toISOString();
   for (const row of rows) {
-    const action = String(row.current_step || '').replace(/^generating:/, '') || 'script';
+    const action = ({ SCRIPT_GENERATING: 'script', ASSET_GENERATING: 'assets', IMAGE_GENERATING: 'images', MEDIA_GENERATING: 'media_review', MEDIA_REVIEWING: 'media_review', EXPORTING: 'export' })[row.status] || 'script';
     db.prepare("UPDATE agent_runs SET status = 'FAILED', current_step = ?, updated_at = ? WHERE id = ?")
       .run(`failed:${action}`, now, row.id);
   }

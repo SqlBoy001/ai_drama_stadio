@@ -7,6 +7,12 @@ const seedance2AssetGuards = require('../utils/seedance2AssetGuards');
 
 function routes(db, cfg, log, uploadService) {
   return {
+    draft: async (req, res) => {
+      try {
+        const draft = await require('../services/characterDraftService').generate(db, log, req.params.id, req.body || {});
+        response.success(res, draft);
+      } catch (err) { response.badRequest(res, err.message); }
+    },
     bindOfficialAvatar: (req,res) => {
       try { response.success(res, require('../services/officialAvatarService').bind(db,req.params.id,req.body||{})); }
       catch(e) { response.badRequest(res,e.message); }
@@ -18,7 +24,7 @@ function routes(db, cfg, log, uploadService) {
     getOne: (req, res) => {
       try {
         const row = db.prepare(
-          'SELECT id, drama_id, name, role, appearance, description, personality, voice_style, image_url, local_path, polished_prompt, four_view_image_url, identity_anchors, seedance2_asset, seedance2_voice_asset, official_avatar, negative_prompt, updated_at FROM characters WHERE id = ? AND deleted_at IS NULL'
+          'SELECT id, drama_id, name, role, appearance, description, personality, voice_style, tts_voice_id, tts_provider, image_url, local_path, polished_prompt, four_view_image_url, identity_anchors, seedance2_asset, seedance2_voice_asset, official_avatar, negative_prompt, updated_at FROM characters WHERE id = ? AND deleted_at IS NULL'
         ).get(Number(req.params.id));
         if (!row) return response.notFound(res, '角色不存在');
         if (row.seedance2_asset) {

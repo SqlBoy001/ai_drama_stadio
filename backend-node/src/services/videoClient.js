@@ -511,6 +511,11 @@ function normalizeVolcengineDuration(modelName, durationNum) {
   const d = Number(durationNum);
   const safe = Number.isFinite(d) && d > 0 ? Math.round(d) : 5;
 
+  // Seedance 2.5 supports 4–30s; the 2.0 family remains limited to 15s.
+  if (/seedance[-_]?2[-_.]?5/.test(m)) {
+    return Math.min(30, Math.max(4, safe));
+  }
+
   if (isSeedance2FamilyModel(m)) {
     return Math.min(15, Math.max(4, safe));
   }
@@ -3849,24 +3854,9 @@ async function callVideoApi(db, log, opts) {
   if (isSeedance2 && db && opts.drama_id && !opts.voice_reference_url) {
     const voiceMap = collectActiveCharacterVoiceRefs(db, opts.drama_id);
     if (voiceMap.size > 0) {
-      // 优先使用分镜显式指定的角色（如果有），否则取第一个
-      let chosen = null;
-      if (opts.storyboard_id) {
-        try {
-          const sbRow = db.prepare('SELECT characters FROM storyboards WHERE id = ?').get(opts.storyboard_id);
-          if (sbRow && sbRow.characters) {
-            const charList = typeof sbRow.characters === 'string' ? JSON.parse(sbRow.characters) : sbRow.characters;
-            const ids = Array.isArray(charList) ? charList.map(c => Number(c?.id || c)).filter(Boolean) : [];
-            for (const cid of ids) {
-              if (voiceMap.has(cid)) { chosen = voiceMap.get(cid); break; }
-            }
-          }
-        } catch (_) {}
-      }
-      if (!chosen) {
-        // 取 Map 中的第一个
-        chosen = voiceMap.values().next().value;
-      }
+      const shot = opts.storyboard_id ? db.prepare('SELECT * FROM storyboards WHERE id = ?').get(opts.storyboard_id) : null;
+      const cast = db.prepare('SELECT id, name FROM characters WHERE drama_id = ? AND deleted_at IS NULL').all(opts.drama_id);
+      const chosen = shot ? require('./productionVoiceContract').referenceVoice(shot, cast, voiceMap) : null;
       if (chosen) {
         opts.voice_reference_url = chosen;
         log.info('[视频][SD2][全能] 自动为 Seedance 2.0 注入角色音色参考（来自角色 seedance2_voice_asset）', {
@@ -4145,6 +4135,10 @@ async function callVideoApi(db, log, opts) {
   if (isVolc && hasAnyFrame) {
     delete body.ratio;
     delete body.aspect_ratio;
+  }
+  // Official Seedance 2.5 rejects camera_fixed in first/last-frame mode.
+  if (isVolc && firstForApi && lastForApi && /seedance[-_]?2[-_.]?5/i.test(finalModel || '')) {
+    delete body.camera_fixed;
   }
 
   // 按官方要求：first_frame 必须在 last_frame 之前；role 严格区分

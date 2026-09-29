@@ -4,8 +4,8 @@
     <header class="header">
       <div class="header-inner">
         <h1 class="logo" @click="goList">
-          <span class="logo-main">本地短剧助手</span>
-          <span class="logo-sub">LocalMiniDrama</span>
+          <span class="logo-main">分集制作</span>
+          <span class="logo-sub">EPISODE STUDIO</span>
         </h1>
         <span class="breadcrumb-sep">›</span>
         <span class="page-title">{{ dramaId ? (store.drama?.title || '项目') : '新建故事' }}</span>
@@ -50,7 +50,7 @@
     <nav class="quick-nav" :class="{ collapsed: navCollapsed }" aria-label="快捷导航">
       <div class="nav-sidebar-header">
         <span v-if="!navCollapsed" class="nav-sidebar-title">导航</span>
-        <div class="nav-toggle" :title="navCollapsed ? '展开导航' : '收起导航'" @click="toggleNav()">
+        <div class="nav-toggle" role="button" tabindex="0" @keydown.enter="toggleNav()" @keydown.space.prevent="toggleNav()" :aria-expanded="!navCollapsed" :aria-label="navCollapsed ? '展开导航' : '收起导航'" :title="navCollapsed ? '展开导航' : '收起导航'" @click="toggleNav()">
           <el-icon><Expand v-if="navCollapsed" /><Fold v-else /></el-icon>
         </div>
       </div>
@@ -61,6 +61,9 @@
           v-for="(step, idx) in navSteps"
           :key="step.key"
           class="nav-step"
+          role="button" tabindex="0"
+          @keydown.enter="scrollToAnchor(step.anchor)"
+          @keydown.space.prevent="scrollToAnchor(step.anchor)"
           :class="['status-' + step.status]"
           @click="scrollToAnchor(step.anchor)"
         >
@@ -515,7 +518,13 @@
                       </el-button>
                     </div>
 
-                    <!-- Seedance 2.0 音色参考（仅该模型有效，其他模型不生效） -->
+                    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+                      <el-select v-model="char.tts_provider" placeholder="配音供应商" style="width:140px"><el-option label="MiniMax" value="minimax" /><el-option label="OpenAI兼容" value="openai" /></el-select>
+                      <el-input v-model="char.tts_voice_id" placeholder="角色配音音色 ID" style="width:220px" />
+                      <el-button size="small" @click="saveCharacterVoice(char)">保存配音音色</el-button>
+                    </div>
+                    <div style="font-size:12px;color:#909399">独立配音使用此音色；视频原生声音使用下方音频参考。多人对白请按说话者拆镜。</div>
+                    <!-- 视频音色参考 -->
                     <div class="sd2-voice-row" style="margin-top:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
                       <template v-if="char.seedance2_voice_asset?.status === 'active'">
                         <!-- 音色参考已设置：显示试听 + 更换 -->
@@ -1006,6 +1015,7 @@
           <div class="sb-ctrl-bar">
             <span class="sb-ctrl-num">{{ i + 1 }}</span>
             <span class="sb-ctrl-title">{{ sb.title || '未命名分镜' }}</span>
+            <el-tag v-if="sb.character_dependency_state" type="warning">角色已更新：请核对提示词与新素材</el-tag>
             <el-tag v-if="sb.movement" size="small" effect="plain" type="info" class="sb-movement-tag">{{ getMovementLabel(sb.movement) }}</el-tag>
             <el-button size="small" plain class="sb-ctrl-btn sb-ctrl-config-btn" @click="onOpenVideoParamsDialog(sb)">⚙ 分镜配置</el-button>
             <el-button
@@ -1759,10 +1769,20 @@
         </el-form-item>
         <el-form-item label="身份/定位">
           <el-select v-model="editCharacterForm.role" placeholder="请选择角色类型" style="width:200px">
-            <el-option value="main" label="主角" />
+            <el-option value="main" label="主角" /><el-option value="protagonist" label="主角（导入）" /><el-option value="antagonist" label="反派" /><el-option value="guest" label="客串" />
             <el-option value="supporting" label="配角" />
             <el-option value="minor" label="次要角色" />
           </el-select>
+        </el-form-item>
+        <el-form-item v-if="editCharacterForm.id" label="AI 设计角色">
+          <div style="width:100%">
+            <el-input v-model="characterDesignRequest" type="textarea" :rows="2" placeholder="用一句话描述要求，例如：保留古代反派身份，让赵校尉更粗犷、有压迫感，统一完善外貌、简介和生图提示词" />
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+              <el-button type="primary" :loading="characterDesignLoading" :disabled="editCharacterPromptGenerating || !characterDesignRequest.trim()" @click="generateCharacterDraft">AI 生成并填充全部角色资料</el-button>
+              <el-button :disabled="characterDesignLoading" @click="undoCharacterDraft">撤回本次 AI 填充</el-button>
+            </div>
+            <div style="font-size:12px;color:#909399;margin-top:6px">结合本剧剧本与当前角色生成，消耗文字模型额度；自动填写下方外貌、简介和生图提示词，检查后保存。不会自动买图或改动其他角色。</div>
+          </div>
         </el-form-item>
         <el-form-item label="外貌描述">
           <el-input v-model="editCharacterForm.appearance" type="textarea" :autosize="{ minRows: 4, maxRows: 10 }" placeholder="用于 AI 生成图像的外貌描述，尽量详细" />
@@ -1780,8 +1800,9 @@
               <el-button
                 size="small"
                 :loading="editCharacterPromptGenerating"
-                @click="doGenerateCharacterPrompt"
-              >重新生成提示词</el-button>
+                @click="doGenerateCharacterPrompt(false)"
+              >保存描述并更新提示词</el-button>
+              <el-button size="small" type="primary" :loading="editCharacterPromptGenerating" @click="doGenerateCharacterPrompt(true)">更新提示词并重新生图（消耗额度）</el-button>
             </div>
             <el-input
               v-model="editCharacterForm.polished_prompt"
@@ -2665,6 +2686,13 @@ import { createPipelineReview } from '@/utils/pipelineReview'
 import { generationAPI } from '@/api/generation'
 import { aiAPI } from '@/api/ai'
 import { characterAPI } from '@/api/characters'
+async function saveCharacterVoice(char) {
+  try {
+    await characterAPI.update(char.id, { tts_provider: char.tts_provider || '', tts_voice_id: char.tts_voice_id || '' })
+    ElMessage.success('角色配音音色已保存；已有音频保持不变，新生成时使用')
+  } catch (error) { ElMessage.error(error.message || '音色保存失败') }
+}
+
 import { propAPI } from '@/api/props'
 import { sceneAPI } from '@/api/scenes'
 import { taskAPI } from '@/api/task'
@@ -3022,6 +3050,7 @@ async function runConcurrently(items, concurrency, fn, options = {}) {
 // ── Composable: Characters ────────────────────────────
 const {
   showEditCharacter, editCharacterForm, editCharacterSaving, editCharacterPromptGenerating,
+  characterDesignRequest, characterDesignLoading, generateCharacterDraft, undoCharacterDraft,
   extractingCharAppearance, extractingAnchors, addCharRefImage, addCharRefFileInput,
   charactersGenerating, generatingCharIds, sd2CertifyingId, showCharSd2Cert, charSd2CertPayload,
   sd2VoiceUploadingId,

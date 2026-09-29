@@ -1,0 +1,131 @@
+{
+  "production_version": "v03",
+  "generated_at": "2026-09-21T12:49:40.303637+00:00",
+  "source_versions": [
+    "plan:v01"
+  ],
+  "supersedes": "edit-plan.v02.json",
+  "title": "别开第二次门",
+  "copyright": "本会话原创",
+  "status": "rendered_technical_checks_passed",
+  "duration": 30,
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "shots": [
+    {
+      "id": "S001",
+      "start": 0,
+      "end": 5,
+      "description": "手机里自己的声音警告，左手接住手机"
+    },
+    {
+      "id": "S002",
+      "start": 5,
+      "end": 10,
+      "description": "门外母亲催促，手机揭穿母亲正在医院"
+    },
+    {
+      "id": "S003",
+      "start": 10,
+      "end": 15,
+      "description": "右手反锁，松手后拨片保持水平"
+    },
+    {
+      "id": "S004",
+      "start": 15,
+      "end": 20,
+      "description": "低头发现左腕红痕，手机始终左手持握"
+    },
+    {
+      "id": "S005",
+      "start": 20,
+      "end": 25,
+      "description": "门外声音变成自己，抬眼僵住"
+    },
+    {
+      "id": "S006",
+      "start": 25,
+      "end": 30,
+      "description": "录音揭示她曾经开门，表情凝固，留悬念"
+    }
+  ],
+  "lines": [
+    {
+      "id": "warning",
+      "at": 0.3,
+      "end": 4.4,
+      "text": "别开门，我是十分钟后的你。",
+      "voice": "Chinese (Mandarin)_Soft_Girl",
+      "channel": "phone"
+    },
+    {
+      "id": "mother",
+      "at": 5.15,
+      "end": 6.85,
+      "text": "小夏，开门。",
+      "voice": "Chinese (Mandarin)_Warm-HeartedAunt",
+      "channel": "door"
+    },
+    {
+      "id": "hospital",
+      "at": 7.0,
+      "end": 9.8,
+      "text": "你妈现在在医院。",
+      "voice": "Chinese (Mandarin)_Soft_Girl",
+      "channel": "phone"
+    },
+    {
+      "id": "locked",
+      "at": 13.35,
+      "end": 14.95,
+      "text": "锁好了。",
+      "voice": "Chinese (Mandarin)_Soft_Girl",
+      "channel": "self"
+    },
+    {
+      "id": "wrist",
+      "at": 15.3,
+      "end": 18.4,
+      "text": "现在，看看你的左手。",
+      "voice": "Chinese (Mandarin)_Soft_Girl",
+      "channel": "phone"
+    },
+    {
+      "id": "double",
+      "at": 20.25,
+      "end": 24.5,
+      "text": "别信电话，我才是你。",
+      "voice": "Chinese (Mandarin)_Soft_Girl",
+      "channel": "door"
+    },
+    {
+      "id": "reveal",
+      "at": 25.2,
+      "end": 29.4,
+      "text": "我已经开过一次门了。",
+      "voice": "Chinese (Mandarin)_Soft_Girl",
+      "channel": "recording"
+    }
+  ],
+  "budget_limit_cny": 60,
+  "limits": {
+    "video_candidates_per_shot": 2,
+    "video_reservation_per_5s_cny": 8,
+    "tts_reservation_per_call_cny": 1,
+    "image_tool_billing": "tool cost unavailable; recorded separately; not represented as zero"
+  },
+  "providers": [
+    "existing Volcengine Seedance2.5",
+    "existing MiniMax speech-2.8-hd",
+    "imagegen"
+  ],
+  "reuse_cost": "historical sunk cost separately reported",
+  "shot_source_plan": [
+    "旧第一镜裁切隐藏旧锁具；保留右转左手机交接",
+    "复用人物反应图裁去旧锁具，静图轻推近，听门外母亲与手机回应",
+    "复用lock-v03完整动作",
+    "新红痕画面轻推近，不要求模型凭空长红痕",
+    "新Seedance2.5抬眼反应视频",
+    "新反应尾帧做面部推近，28至30秒叠加片名，不切黑"
+  ]
+}

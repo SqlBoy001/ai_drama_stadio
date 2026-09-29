@@ -1,0 +1,145 @@
+{
+  "production_version": "lock-insert-v04",
+  "generated_at": "2026-09-21T11:44:29.093009+00:00",
+  "source_versions": [
+    "storyboard:v03"
+  ],
+  "supersedes": null,
+  "status": "video_generating",
+  "schema_version": "1.0",
+  "episode_id": "EP01",
+  "title": "别开第二次门",
+  "target_duration_seconds": 5,
+  "aspect_ratio": "9:16",
+  "visual_style": {
+    "preset": "日系动画",
+    "medium": "二维赛璐璐动画",
+    "palette": "芥末黄/青蓝",
+    "lighting": "右侧暖壁灯/冷蓝环境",
+    "negative_constraints": [
+      "真人摄影",
+      "换装",
+      "第二人",
+      "手机界面浮层"
+    ]
+  },
+  "story_structure": {
+    "opening_conflict_end_seconds": null,
+    "escalation_summary": "单镜实验不评整集剧情",
+    "final_hook_start_seconds": null,
+    "final_hook": "不适用"
+  },
+  "shots": [
+    {
+      "shot_id": "EP01-S002-INSERT",
+      "shot_version": 4,
+      "sequence": 2,
+      "start_seconds": 0,
+      "end_seconds": 5,
+      "duration_seconds": 5,
+      "beat_role": "choice",
+      "scene_id": "SC-001",
+      "shot_size": "extreme_close_up",
+      "camera_angle": "eye_level",
+      "camera_movement": "static",
+      "composition": "上方拨片锁和下方门把手，右侧留右手进入空间",
+      "focal_point": "上方窄拨片的旋转与稳定结果",
+      "depth_of_field": "deep",
+      "characters": [
+        {
+          "character_id": "CH-001",
+          "name": "林夏",
+          "costume_id": "CST-001",
+          "appearance_lock": "二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰",
+          "screen_position_start": "画面右侧",
+          "screen_position_end": "画面右侧",
+          "eye_line": "门锁"
+        }
+      ],
+      "props": [
+        {
+          "prop_id": "PROP-LOCK-V02",
+          "state_start": "上方拨片竖直，底座固定，下方把手水平",
+          "state_end": "上方拨片水平，底座和下方把手不动",
+          "held_by": "CH-001 right hand during rotation only"
+        }
+      ],
+      "action": {
+        "start_pose": "拨片竖直，无手",
+        "timed_beats": [
+          "0-1秒右手接触拨片",
+          "1-3秒保持接触旋转90度",
+          "3-4秒松手退出",
+          "4-5秒水平保持"
+        ],
+        "end_pose": "拨片水平，无手",
+        "emotion_change": "以动作表现主动防御"
+      },
+      "dialogue": [],
+      "sound": {
+        "ambience": "安静室内",
+        "sfx": [
+          "敲门两下",
+          "锁扣"
+        ],
+        "music_cue": "无强配乐"
+      },
+      "transition_in": "cut",
+      "transition_out": "cut",
+      "image_prompt": {
+        "positive": "无人，关闭青色门，窄拨片竖直",
+        "negative": "文字，浮层，多余人",
+        "reference_assets": [
+          "backend-node/data/production/do-not-open-lock-v02/first.png"
+        ]
+      },
+      "video_prompt": {
+        "performance": "二维赛璐璐动画，固定机位的门锁特写，首尾图片定义同一扇关闭的深青色门。只完成一次真实手动反锁动作。上方圆形固定底座中心的窄银色拨片初始竖直，最终水平；下方大门把手始终不动。林夏：二十四岁年轻女性，瘦削鹅蛋脸、深棕眼睛，齐下巴黑色短发，固定芥末黄连帽卫衣和深灰长裤，无首饰。本镜只看见其右手和芥末黄袖口，脸和身体在画外；左手持手机在画外，不出现手机。0至1秒右手从画面右侧平稳进入，拇指和食指捏住上方窄拨片两侧。1至3秒手指保持接触，只让窄拨片绕中心固定轴顺时针转动90度，从竖直经过斜45度转为水平；底座和下方大把手不转动。3至4秒松开拨片，右手沿原路退出画面。4至5秒静止展示已经水平的拨片，与尾帧一致。所有动作在一个连续镜头内完成，禁止跳切、溶解或变形过渡，不能先自动转动再伸手，不能用遮挡代替旋转。门保持关闭，只有上方窄拨片旋转，不推拉下方把手，无字幕，无对白，无音乐，仅轻微衣料声和锁定时一声短促咔哒。",
+        "motion": "一次持续接触的顺时针90度旋转",
+        "camera": "固定",
+        "continuity": "门关闭，固定部件不变，袖口芥末黄",
+        "negative": "跳切、变形、自动旋转、额外手、对白"
+      },
+      "first_frame": {
+        "description": "无人，关闭青色门，窄拨片竖直",
+        "required_state": [
+          "拨片竖直",
+          "下方把手水平",
+          "无手"
+        ],
+        "reference_assets": [
+          "backend-node/data/production/do-not-open-lock-v02/first.png"
+        ]
+      },
+      "last_frame": {
+        "description": "无人，关闭青色门，窄拨片水平",
+        "required_state": [
+          "拨片水平",
+          "下方把手水平",
+          "无手"
+        ],
+        "handoff_to_next_shot": "另切人物反应，不在本镜说话/后退"
+      },
+      "continuity_checks": {
+        "identity": "pending_video",
+        "costume": "pending_video",
+        "position_and_eye_line": "pending_video",
+        "prop_state": "pending_video",
+        "lighting_and_palette": "pending_video",
+        "previous_last_to_current_first": "pending_video"
+      },
+      "post_overlays": [],
+      "risk_flags": [
+        "新道具设计与旧广角不一致，禁止直接替换整片",
+        "首尾一致不证明中间动作通过"
+      ]
+    }
+  ],
+  "timing_validation": {
+    "shot_count": 1,
+    "sum_duration_seconds": 5,
+    "all_shots_between_4_and_10_seconds": true,
+    "dialogue_timing_pass": true
+  },
+  "scope": "isolated action validation only; not full episode"
+}

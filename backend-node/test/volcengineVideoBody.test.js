@@ -117,3 +117,39 @@ test('official preset-only references use reference_image content, never empty t
  global.fetch=async(_url,opts)=>{body=JSON.parse(opts.body);return {ok:true,status:200,text:async()=>'{"id":"test-only","status":"queued"}'};};
  try{await callVideoApi(db,silentLog,{prompt:'参考图片1为主角',model:'doubao-seedance-2-5-260628',reference_urls:['asset://asset-test-official'],duration:5});assert.equal(body.content.find(x=>x.role==='reference_image').image_url.url,'asset://asset-test-official');assert.equal(body.task_type,'i2v');}finally{global.fetch=originalFetch;db.close();}
 });
+
+
+test('Seedance 2.5 preserves 20-second requests on the wire and retains family limits', async () => {
+  const { normalizeVolcengineDuration } = require('../src/services/videoClient');
+  assert.equal(normalizeVolcengineDuration('doubao-seedance-2-5-260628', 20), 20);
+  assert.equal(normalizeVolcengineDuration('doubao-seedance-2-5-260628', 40), 30);
+  assert.equal(normalizeVolcengineDuration('doubao-seedance-2-5-260628', 2), 4);
+  assert.equal(normalizeVolcengineDuration('doubao-seedance-2-0-260128', 20), 15);
+  assert.equal(normalizeVolcengineDuration('doubao-seedance-1-5-pro-251215', 20), 12);
+  const db = new Database(':memory:'); runMigrationsAndEnsure(db);
+  aiConfigService.createConfig(db, silentLog, {
+    service_type: 'video', provider: 'volces', name: 'duration regression',
+    base_url: 'https://example.invalid/api/v3', api_key: 'test-key',
+    api_protocol: 'volcengine', endpoint: '/contents/generations/tasks',
+    model: ['doubao-seedance-2-5-260628'], is_default: true,
+  });
+  const originalFetch = global.fetch; let body;
+  global.fetch = async (_url, opts) => {
+    body = JSON.parse(opts.body);
+    return {ok: true, status: 200, text: async () => '{"id":"test-only","status":"queued"}'};
+  };
+  try {
+    await callVideoApi(db, silentLog, {prompt: 'two people speaking', model: 'doubao-seedance-2-5-260628', duration: 20, first_frame_url: 'data:image/jpeg;base64,/9j/2Q=='});
+    assert.equal(body.duration, 20);
+    assert.equal(body.task_type, 'i2v');
+  } finally { global.fetch = originalFetch; db.close(); }
+});
+
+test('Seedance 2.5 first-last mode omits unsupported camera_fixed but preserves other modes', async()=>{
+ const db=new Database(':memory:');runMigrationsAndEnsure(db);
+ aiConfigService.createConfig(db,silentLog,{service_type:'video',provider:'volces',name:'camera regression',base_url:'https://example.invalid/api/v3',api_key:'test-key',api_protocol:'volcengine',model:['doubao-seedance-2-5-260628','doubao-seedance-1-5-pro-251215'],is_default:true});
+ const originalFetch=global.fetch;let body;global.fetch=async(_url,opts)=>{body=JSON.parse(opts.body);return {ok:true,status:200,text:async()=>'{"id":"mock-camera","status":"queued"}'};};
+ try{for(const [model,last,expected] of [['doubao-seedance-2-5-260628',true,false],['doubao-seedance-2-5-260628',false,true],['doubao-seedance-1-5-pro-251215',true,true]]){
+ await callVideoApi(db,silentLog,{prompt:'固定机位',model,duration:6,camera_fixed:true,first_frame_url:'data:image/jpeg;base64,/9j/2Q==',last_frame_url:last?'data:image/png;base64,aGVsbG8=':null});assert.equal(Object.hasOwn(body,'camera_fixed'),expected);assert.equal(body.content.filter(x=>x.type==='image_url').length,last?2:1);assert.equal(body.model,model);
+ }}finally{global.fetch=originalFetch;db.close();}
+});

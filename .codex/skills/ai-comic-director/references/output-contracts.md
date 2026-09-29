@@ -292,3 +292,7 @@ Do not run FFmpeg merely to claim a check passed. If actual media exists and loc
 - output path is writable and input ordering follows shot sequence.
 
 If files do not exist, mark this gate `PENDING`, not `PASS`.
+
+## 时代与服制补充契约
+
+系列视觉规范需明确 `era_context`（时代/架空技术水平）、`costume_rules`（结构/材质/头饰/鞋履）、`forbidden_anachronisms`（与本项目冲突的元素）。不得仅以 visual_style 代替这三项。参考图QC须分开记录时代、服制、装备的结果和证据。任何文本提示词通过都不代表实际图像通过。更新角色锁时报告旧提示词是否已刷新、旧主参考是否已取消以及需要重审的镜头ID。

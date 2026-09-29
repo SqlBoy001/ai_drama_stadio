@@ -23,7 +23,7 @@ test('createPlan parses core constraints and remains dry-run', () => {
   assert.equal(plan.project.episode_duration_seconds, 45);
   assert.equal(plan.estimated.budget_limit, 300);
   assert.equal(plan.dry_run, true);
-  assert.deepEqual(plan.approval_gates, ['script', 'assets', 'final_video']);
+  assert.deepEqual(plan.approval_gates, ['script', 'assets', 'images', 'final_video']);
 });
 
 test('createPlan clamps V1 scope and estimates a consistent shot count', () => {
@@ -286,6 +286,9 @@ test('dry-run production advances through all three approval gates', () => {
     assert.equal(run.status, 'SCRIPT_REVIEW');
     run = service.approve(db, run.approvals.find((a) => a.status === 'PENDING').id, 'approve');
     assert.equal(run.status, 'ASSET_REVIEW');
+    run = service.approve(db, run.approvals.find((a) => a.status === 'PENDING').id, 'approve');
+    assert.equal(run.status, 'IMAGE_REVIEW');
+    assert.equal(run.usage.length, 0);
     run = service.approve(db, run.approvals.find((a) => a.status === 'PENDING').id, 'approve');
     assert.equal(run.status, 'FINAL_REVIEW');
     assert.equal(run.usage.length, 6);

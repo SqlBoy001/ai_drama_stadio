@@ -382,6 +382,7 @@ function rowToStoryboard(r) {
     image_prompt: r.image_prompt,
     polished_prompt: r.polished_prompt ?? null,
     continuity_snapshot: r.continuity_snapshot ?? null,
+    character_dependency_state: r.character_dependency_state ?? null,
     video_prompt: r.video_prompt,
       shot_type: r.shot_type ?? null,
       angle: r.angle ?? null,
@@ -888,7 +889,7 @@ function finalizeEpisode(db, log, episodeId, baseUrl, body = {}) {
   const scenes = [];
   for (let i = 0; i < storyboards.length; i++) {
     const sb = storyboards[i];
-    const videoUrl = getVideoUrlForStoryboard(db, sb.id, baseUrl);
+    const videoUrl = body.approved_video_paths ? body.approved_video_paths[sb.id] : getVideoUrlForStoryboard(db, sb.id, baseUrl);
     if (!videoUrl) {
       log.warn('Finalize skip storyboard (no video)', { storyboard_id: sb.id, storyboard_number: sb.storyboard_number });
       continue;

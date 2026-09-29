@@ -455,6 +455,7 @@ async function processVideoGeneration(db, log, videoGenId) {
   }
   const now = new Date().toISOString();
   try {
+    require('./characterDependencyService').assertCurrent(db, row.storyboard_id, true);
     db.prepare('UPDATE video_generations SET status = ?, updated_at = ? WHERE id = ?').run('processing', now, videoGenId);
     const loadConfig = require('../config').loadConfig;
     const cfg = loadConfig();

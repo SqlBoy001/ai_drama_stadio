@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
 export const characterAPI = {
+  draft(id, data) { return request.post(`/characters/${id}/ai-draft`, data) },
   get(characterId) {
     return request.get(`/characters/${characterId}`)
   },

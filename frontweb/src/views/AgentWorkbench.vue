@@ -3,7 +3,7 @@
     <header class="topbar">
       <button class="brand" @click="router.push('/projects')">
         <span class="brand-mark"><el-icon><VideoCameraFilled /></el-icon></span>
-        <span><b>DramaFlow</b><small>AI production studio</small></span>
+        <span><b>制作总控</b><small>审核 · 进度 · 成本</small></span>
       </button>
       <div class="topbar-center">
         <span class="live-dot"></span>
@@ -14,7 +14,7 @@
       <div class="topbar-actions">
         <el-button text @click="router.push('/projects')"><el-icon><House /></el-icon>项目库</el-button>
         <el-button text :aria-label="isDark ? '切换到亮色模式' : '切换到暗色模式'" @click="toggleTheme"><el-icon><Sunny v-if="isDark" /><Moon v-else /></el-icon></el-button>
-        <span class="avatar">创</span>
+
       </div>
     </header>
 
@@ -75,7 +75,7 @@
             <label>类型<el-select v-model="form.genre" @change="onGenreChange"><el-option v-for="item in genres" :key="item" :label="item" :value="item" /></el-select></label>
             <label>画风<el-select v-model="form.visual_style" @change="onStyleChange"><el-option v-for="item in styles" :key="item.value" :label="item.label" :value="item.value" /></el-select></label>
             <label>集数<el-input-number v-model="form.episode_count" :min="1" :max="10" /></label>
-            <label>单集时长<el-select v-model="form.episode_duration_seconds"><el-option label="30 秒" :value="30"/><el-option label="45 秒" :value="45"/><el-option label="60 秒" :value="60"/><el-option label="90 秒" :value="90"/></el-select></label>
+            <label>单集时长<el-select v-model="form.episode_duration_seconds"><el-option label="30 秒" :value="30"/><el-option label="45 秒" :value="45"/><el-option label="60 秒" :value="60"/><el-option label="90 秒" :value="90"/><el-option label="2 分钟（120 秒）" :value="120"/></el-select></label>
             <label>预算上限<el-input-number v-model="form.budget_limit" :min="10" :max="100000" :step="50" /></label>
           </div>
           <div class="prompt-footer">
@@ -130,6 +130,121 @@
               </div>
             </article>
 
+            <article class="panel review-cycle-panel">
+              <div class="panel-title"><b>独立剧本审核</b><small>初审 → 最多两次修正 → 人工接管</small></div>
+              <p>检查开头、事件密度、主动选择、爽点和伏笔。图片、视频仍需分别审核。</p>
+              <p v-if="!activeRun.review_cycles?.some(c => c.stage === 'script')">{{ activeRun.dry_run ? 'Mock演练不代表内容审核通过。' : '生成剧本后执行；历史任务不会自动追加付费审核。' }}</p>
+              <section v-for="cycle in activeRun.review_cycles?.filter(c => c.stage === 'script')" :key="cycle.id">
+                <b>{{ cycle.status === 'HUMAN_ACCEPTED' ? '人工已放行（保留原审核意见）' : cycle.status === 'PASSED' ? '文本审核通过' : cycle.status === 'HUMAN_REVIEW' ? '需要人工判断' : '审核进行中' }}</b>
+                <p>{{ cycle.reason }} · 已修正 {{ cycle.versions.length - 1 }}/2 次 · 文本调用 {{ cycle.calls }}/5 次</p>
+                <details><summary>创作目标</summary><p>{{ cycle.contract.direction }}</p><p>{{ cycle.contract.criteria.join('、') }}</p></details>
+                <details v-for="version in cycle.versions" :key="version.number">
+                  <summary>{{ version.number === 0 ? '初稿' : `修正版 ${version.number}` }} · 查看剧本与审核证据</summary>
+                  <div v-for="ep in version.episodes" :key="ep.episode_number"><b>{{ ep.title }}</b><pre>{{ ep.script_content }}</pre></div>
+                  <div v-for="review in cycle.reviews.filter(r => r.version === version.number)" :key="review.version">
+                    <b>{{ review.decision }}</b>
+                    <p v-for="check in review.checks" :key="check.criterion">{{ check.criterion }}：{{ check.status }} — {{ check.evidence }}</p>
+                    <p v-for="(issue, index) in review.findings" :key="index">位置：{{ issue.location }}；证据：{{ issue.evidence }}；目标：{{ issue.requirement }}；修正要求：{{ issue.fix }}</p>
+                  </div>
+                </details>
+                <p v-if="cycle.status === 'HUMAN_REVIEW'">可查看以上各版后填写人工放行依据，或驳回并手动修改制作页剧本；重试不会重置自动修正额度。</p>
+              </section>
+            </article>
+
+            <article v-if="activeRun.review_cycles?.some(c => c.stage.startsWith('image:'))" class="panel">
+              <h3>独立图片审核</h3>
+              <p>只对列出的图片版本有效；审核依据为实际图片与参考图。视频动作、声音另行验收。</p>
+              <section v-for="cycle in activeRun.review_cycles.filter(c => c.stage.startsWith('image:'))" :key="cycle.id">
+                <b>分镜 {{ cycle.contract.shot_id }} · {{ cycle.status === 'PASSED' ? '该版本视觉通过' : cycle.status === 'HUMAN_ACCEPTED' ? '人工已放行' : cycle.status === 'RUNNING' ? '审核中' : '需要人工判断' }}</b>
+                <p>{{ cycle.reason }} · 修正 {{ Math.max(0, cycle.versions.length - 1) }}/2 次 · 调用 {{ cycle.calls }}/5 次</p>
+                <details v-for="version in cycle.versions" :key="version.number">
+                  <summary>{{ version.number === 0 ? '原图' : `候选修正版 ${version.number}` }} · 查看画面与证据</summary>
+                  <img v-if="version.image.local_path || version.image.image_url" :src="version.image.local_path ? '/static/' + version.image.local_path : version.image.image_url" style="max-width: 280px; max-height: 320px; object-fit: contain" alt="待审版本" />
+                  <p v-for="e in version.evidence" :key="e.label">{{ e.label }} · 图片指纹 {{ e.sha256.slice(0, 12) }}</p>
+                  <div v-for="review in cycle.reviews.filter(r => r.version === version.number)" :key="review.version">
+                    <p v-for="check in review.checks" :key="check.criterion">{{ check.criterion }}：{{ check.status }} — {{ check.evidence }}</p>
+                    <p v-for="(issue, i) in review.findings" :key="i">{{ issue.location }}：{{ issue.evidence }}；目标：{{ issue.requirement }}；修正：{{ issue.fix }}</p>
+                  </div>
+                </details>
+              </section>
+            </article>
+
+            <article v-if="activeRun.review_cycles?.some(c => c.stage.startsWith('video:'))" class="panel">
+              <h3>独立视频审核</h3>
+              <p>抽帧只检查可见画面。请播放当前视频核对完整动作、对白、声音与口型；旧版意见不代表修改后的版本。</p>
+              <section v-for="cycle in activeRun.review_cycles.filter(c => c.stage.startsWith('video:'))" :key="cycle.id">
+                <b>分镜 {{ cycle.contract.shot_id }} · {{ cycle.status === 'HUMAN_ACCEPTED' ? '人工已放行' : '等待人工核对' }}</b>
+                <p>{{ cycle.reason }} · 定向修正 {{ Math.max(0, cycle.versions.length - 1) }}/2 · 调用 {{ cycle.calls }}/5</p>
+                <details v-for="version in cycle.versions" :key="version.number">
+                  <summary>{{ version.number === 0 ? '原视频' : `候选修正版 ${version.number}` }} · {{ version.inspection.status }}</summary>
+                  <video v-if="version.video.local_path || version.video.video_url" controls preload="metadata" :src="version.video.local_path ? '/static/' + version.video.local_path : mediaUrl(version.video.video_url)" style="max-width:100%;max-height:380px" />
+                  <p v-for="check in version.inspection.checks" :key="check.key">{{ check.passed ? '技术通过' : '未通过' }}：{{ check.evidence }}</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px"><figure v-for="frame in version.inspection.frames" :key="frame.path" style="margin:0"><img :src="'/static/'+frame.path" style="width:100px" :alt="`${frame.time}秒抽帧`" /><figcaption>{{ frame.time }} 秒</figcaption></figure></div>
+                  <div v-for="review in cycle.reviews.filter(r=>r.version===version.number)" :key="review.version">
+                    <p v-for="check in review.checks" :key="check.criterion">{{ check.criterion }}：{{ check.status }} — {{ check.evidence }}</p>
+                    <p v-for="(issue,i) in review.findings" :key="i">{{ issue.location }}：{{ issue.evidence }}；修正：{{ issue.fix }}</p>
+                  </div>
+                </details>
+              </section>
+            </article>
+
+            <article v-if="!activeRun.dry_run && activeRun.approvals?.some(a => a.approval_stage === 'final_video' && a.status === 'APPROVED')" class="panel">
+              <h3>ChatCut 剪辑稿</h3>
+              <p>用已审核镜头创建独立时间线，保留原工程。只做本地剪辑，不重新生成素材；配音对齐与最终观感仍需审核。</p>
+              <el-button v-if="!chatcutConnection" :loading="chatcutBusy" @click="connectChatcut">连接已打开的 ChatCut</el-button>
+              <template v-else><p>目标工程：{{ chatcutConnection.name }}</p><el-button :loading="chatcutBusy" @click="prepareChatcut">创建剪辑稿并导出</el-button></template>
+              <p v-if="chatcutError" role="alert">{{ chatcutError }}</p>
+              <section v-for="job in activeRun.editing_jobs || []" :key="job.id">
+                <b>剧集 {{ job.episode_id }} · {{ chatcutLabel(job.status) }}</b>
+                <p v-if="job.error">{{ job.error }}</p>
+                <details v-if="job.timeline_id && job.status !== 'EXPORT_QUEUED'"><summary>在 ChatCut 中调整过镜头？</summary>
+                  <p>可采用镜头裁切、顺序、音量及字幕图层修改。修改后重新导出、重新审核，旧文件保留；图层源码缺失不影响审核这份导出视频，重新导出后仍须重新审核。</p>
+                  <el-button :disabled="chatcutBusy" @click="adoptChatcut(job)">核对并采用当前剪辑版本</el-button>
+                </details>
+                <el-button v-if="job.status === 'READY'" :disabled="chatcutBusy" @click="exportChatcut(job)">导出这版剪辑稿</el-button>
+                <p v-if="job.status === 'EXPORT_QUEUED'">ChatCut 正在本机渲染；文件通过检查后自动显示。</p>
+                <template v-if="['REVIEW_REQUIRED','APPROVED'].includes(job.status) && job.output">
+                  <p>{{ job.status === 'APPROVED' ? '这版文件已有人工审核记录。' : '文件检查通过，等待完整动作、声音和剧情审核。' }}</p>
+                  <p v-if="job.output.layer_evidence?.gaps?.length">工程源码证据缺口（不等于视频有错）：{{ job.output.layer_evidence.gaps.map(g => g.reason).join("；") }}</p>
+                  <p v-if="job.output.signal_review">全片扫描完成；冻结 {{ job.output.signal_review.signals.freeze.length }} 段、黑场 {{ job.output.signal_review.signals.black.length }} 段、静音 {{ job.output.signal_review.signals.silence.length }} 段，需结合剧情复核。</p>
+                  <video controls preload="metadata" :src="job.output.url" style="max-width:100%;max-height:480px" />
+                  <div>
+                    <b>本地音频核对 · {{ audioReviewLabel(job.audio_review?.status) }}</b>
+                    <p v-if="!activeRun.local_audio_review_available">本机尚未安装语音模型，不会自动调用付费 API。</p>
+                    <el-button v-if="!job.audio_review || ['FAILED','INTERRUPTED'].includes(job.audio_review.status)" :disabled="chatcutBusy || !activeRun.local_audio_review_available" @click="startAudioReview(job)">{{ job.audio_review ? '重试本地核对' : '核对这版音频' }}</el-button>
+                    <p v-if="job.audio_review?.error" role="alert">{{ job.audio_review.error }}</p>
+                    <template v-if="job.audio_review?.result">
+                      <p>转写用于核对台词，不自动认定声音质量或成片通过。</p>
+                      <p v-if="job.audio_review.result.unmatched_segments?.length">{{ job.audio_review.result.unmatched_segments.length }} 段识别语音未匹配预期台词，请在整轨转写中复核。</p>
+                      <p v-for="gap in job.audio_review.result.alignment_gaps" :key="gap">{{ gap }}</p>
+                      <details><summary>查看逐句核对与转写</summary>
+                        <article v-for="row in job.audio_review.result.rows" :key="row.item_id">
+                          <button type="button" @click="seekAudioReview($event, row.start)">{{ row.start.toFixed(1) }} 秒 · 定位播放</button>
+                          <p>预期：{{ row.text }}</p><p>识别：{{ row.recognized || '未识别到' }}</p>
+                          <small>{{ row.status === 'TEXT_MATCH' ? '文本匹配' : '差异待复核' }}{{ row.low_confidence ? ' · 识别置信度低' : '' }}</small>
+                        </article>
+                        <p v-for="(segment, index) in job.audio_review.result.transcript.segments" :key="index">{{ segment.start.toFixed(1) }}–{{ segment.end.toFixed(1) }} 秒：{{ segment.text }}</p>
+                      </details>
+                    </template>
+                  </div>
+                  <a :href="job.output.url" download>{{ job.status === 'APPROVED' ? '下载人工验收版' : '下载待审剪辑稿' }}</a>
+                  <el-button v-if="job.status === 'REVIEW_REQUIRED'" :disabled="chatcutBusy" @click="approveChatcut(job)">记录成片审核</el-button>
+                  <p v-if="job.output.review?.scope === 'EXPORTED_FILE_ONLY'">验收范围：这份导出视频。工程后续导出不继承本次验收。</p>
+                  <p v-if="job.output.review">审核依据：{{ job.output.review.comment }}</p>
+                </template>
+              </section>
+              <details><summary>高级交接</summary><a :href="`/api/v1/agent/runs/${activeRun.id}/editing-handoff`" download>下载剪辑交接清单</a></details>
+            </article>
+
+            <article v-if="exportedEpisodes.length" class="panel">
+              <h3>合成结果</h3><p>以下为自动合成稿，已完成解码、时长和画幅检查。合成后的音画、字幕和剧情仍需审核。</p>
+              <section v-for="ep in exportedEpisodes" :key="ep.episode_id">
+                <b>剧集 {{ ep.episode_id }} · {{ ep.inspection.duration.toFixed(2) }} 秒 · {{ ep.inspection.width }}×{{ ep.inspection.height }}</b>
+                <video controls preload="metadata" :src="mediaUrl(ep.path)" style="max-width:100%;max-height:480px" />
+                <a :href="mediaUrl(ep.path)" download>下载待审合成稿</a>
+              </section>
+            </article>
+
             <article class="panel episode-panel">
               <div class="panel-title"><div><span class="title-icon"><el-icon><Tickets /></el-icon></span><span><b>分集计划</b><small>结构、节奏和镜头规模</small></span></div></div>
               <div class="episode-grid">
@@ -152,6 +267,14 @@
                   <div><b>{{ approvalPreviewTitle }}</b><small>{{ approvalPreviewMeta }}</small></div>
                   <el-icon class="preview-arrow"><Right /></el-icon>
                 </button>
+                <div v-if="pendingApproval.approval_stage === 'images'" class="image-gate-grid">
+                  <p v-if="activeRun.dry_run">Mock无真实图片，仅验证审核门，不代表画面通过。</p>
+                  <figure v-for="shot in pendingApproval.snapshot?.shots || []" :key="shot.id">
+                    <img v-if="shot.local_path || shot.image_url" :src="shot.local_path ? '/static/' + shot.local_path : shot.image_url" :alt="shot.title || '分镜图片'" loading="lazy" />
+                    <span v-else>图片尚未生成</span>
+                    <figcaption>镜头 {{ shot.storyboard_number }} · {{ shot.title }}<br />{{ shot.action || shot.description }}</figcaption>
+                  </figure>
+                </div>
                 <el-alert v-if="approvalBlockingMessage" type="error" :closable="false" :title="approvalBlockingMessage" />
                 <el-alert v-else-if="approvalWarnings.length" type="warning" :closable="false" :title="approvalWarnings[0]" />
                 <el-button type="primary" size="large" :disabled="Boolean(approvalBlockingMessage)" :loading="acting" @click="resolveApproval('approve')"><el-icon><Check /></el-icon>通过并继续</el-button>
@@ -159,7 +282,7 @@
                 <small class="approval-note"><el-icon><Lock /></el-icon>未通过前不会进入下一阶段</small>
               </template>
               <div v-else class="approval-empty">
-                <span><el-icon><CircleCheckFilled /></el-icon></span><b>{{ isTerminal ? '全部审核完成' : '暂无待审核项' }}</b><p>{{ isTerminal ? '项目已经准备好导出。' : 'AI 正在准备下一阶段内容。' }}</p>
+                <span><el-icon><CircleCheckFilled /></el-icon></span><b>{{ activeRun.status === 'CANCELLED' ? '任务已取消' : isTerminal ? (activeRun.dry_run ? '流程演练结束' : exportedEpisodes.length ? '合成文件检查通过' : '历史任务已结束') : '暂无待审核项' }}</b><p>{{ activeRun.status === 'CANCELLED' ? '已停止后续任务。' : isTerminal ? (activeRun.dry_run ? 'Mock只演练状态，不生成视频文件。' : exportedEpisodes.length ? '可查看已合成的文件与实测结果。' : '该历史任务没有本轮文件检查记录。') : 'AI 正在准备下一阶段内容。' }}</p>
               </div>
             </article>
 
@@ -176,7 +299,7 @@
                 <button v-for="suggestion in chatSuggestions" :key="suggestion" @click="chatInput = suggestion">{{ suggestion }}</button>
               </div>
               <el-input v-model="chatInput" type="textarea" :rows="3" resize="none" :disabled="!pendingApproval || acting" placeholder="例如：人物服装改成暖黄色，保留夜景氛围；第三个镜头节奏再快一些……" @keydown.meta.enter.prevent="sendRevision" @keydown.ctrl.enter.prevent="sendRevision" />
-              <div class="chat-actions"><small>{{ pendingApproval ? '⌘/Ctrl + Enter 发送' : '下一审核节点出现后即可继续沟通' }}</small><el-button type="primary" :loading="acting" :disabled="!pendingApproval || !chatInput.trim()" @click="sendRevision">发送并重新生成</el-button></div>
+              <div class="chat-actions"><small>{{ pendingApproval ? '⌘/Ctrl + Enter 发送' : '下一审核节点出现后即可继续沟通' }}</small><el-button type="primary" :loading="acting" :disabled="!pendingApproval || !chatInput.trim()" @click="sendRevision">{{ scriptHandoff || pendingApproval?.approval_stage === 'images' ? '记录人工修改意见' : pendingApproval?.approval_stage === 'final_video' ? '记录意见并复查当前视频' : '发送并重新生成' }}</el-button></div>
             </article>
 
             <article id="cost-panel" class="panel budget-panel" :class="{ focused: focusPanel === 'cost' }">
@@ -189,7 +312,7 @@
 
             <article v-if="activeRun.qc_reports?.length" class="panel qc-panel">
               <div class="panel-title compact"><div><span class="title-icon"><el-icon><Aim /></el-icon></span><span><b>自动质检</b><small>{{ qc.total }} 个素材检查记录</small></span></div></div>
-              <div class="qc-score"><strong>{{ qc.passed }}/{{ qc.total }}</strong><span><b>{{ qc.label }}</b></span></div>
+              <div class="qc-score"><strong>{{ qc.displayPassed }}/{{ qc.total }}</strong><span><b>{{ qc.label }}</b></span></div>
               <div class="qc-tags"><span v-if="qc.issues">{{ qc.issues }} 项需处理</span><span>{{ qc.note }}</span></div>
             </article>
           </aside>
@@ -254,6 +377,68 @@ const exampleSettings = {
 const form = reactive({ instruction: examples['逆袭'], genre: '都市轻喜剧', visual_style: '2.5D国漫', visual_style_auto: true, episode_count: 1, episode_duration_seconds: 30, budget_limit: 100, save_cost: true, dry_run: true })
 const runs = ref([])
 const activeRun = ref(null)
+const chatcutConnection = ref(null)
+const chatcutBusy = ref(false)
+const chatcutError = ref('')
+let chatcutCollecting = false
+function chatcutLabel(status) { return ({BUILDING:'正在创建时间线',READY:'剪辑稿已就绪',EXPORT_QUEUED:'正在导出',REVIEW_REQUIRED:'待内容审核',APPROVED:'人工已验收此版本',BLOCKED:'需要核对后恢复'})[status] || status }
+async function adoptChatcut(job) {
+  const id = activeRun.value?.id
+  let comment
+  try { const answer = await ElMessageBox.prompt('说明你调整了哪些镜头、顺序或音量。采用后本版需要重新导出和审核。', '采用剪辑修改', { inputValidator: v => v?.trim().length >= 5 || '请填写至少5字的修改说明' }); comment = answer.value } catch { return }
+  if (activeRun.value?.id !== id) return
+  chatcutBusy.value = true
+  try { await agentAPI.chatcutAdopt(id, job.id, comment); await refreshActive() }
+  catch(e) { chatcutError.value = e.message || '剪辑版本无法采用' }
+  finally { chatcutBusy.value = false }
+}
+function audioReviewLabel(status) {
+  return ({ QUEUED:'排队中', RUNNING:'转写中', DONE:'核对完成，待内容复核', FAILED:'失败', INTERRUPTED:'已中断', STALE:'版本已失效' })[status] || '尚未开始'
+}
+function seekAudioReview(event, time) {
+  const video = event.currentTarget.closest('section')?.querySelector('video')
+  if (video) { video.currentTime = time; video.play().catch(() => {}) }
+}
+async function startAudioReview(job) {
+  chatcutBusy.value = true; chatcutError.value = ''
+  try { await agentAPI.chatcutAudioReview(activeRun.value.id, job.id, true); await refreshActive() }
+  catch (e) { chatcutError.value = e.message || '音频审核未启动' }
+  finally { chatcutBusy.value = false }
+}
+async function approveChatcut(job) {
+  const id = activeRun.value?.id
+  let comment
+  try { const answer = await ElMessageBox.prompt('请完整播放后记录人物动作、声音、台词与剧情的审核依据；此记录仅验收当前导出文件，不证明工程源码已核验；重新导出必须重新审核。', '成片内容审核', { inputValidator: v => v?.trim().length >= 5 || '请填写至少5字的审核依据' }); comment = answer.value }
+  catch { return }
+  if (activeRun.value?.id !== id) return
+  chatcutBusy.value = true
+  try { await agentAPI.chatcutApprove(id, job.id, comment); await refreshActive() }
+  catch(e) { chatcutError.value = e.message || '审核未通过版本核验' }
+  finally { chatcutBusy.value = false }
+}
+async function connectChatcut() {
+  chatcutBusy.value = true; chatcutError.value = ''
+  try { chatcutConnection.value = await agentAPI.chatcutConnection() }
+  catch (e) { chatcutError.value = e.message || '请打开 ChatCut 并选择目标工程' }
+  finally { chatcutBusy.value = false }
+}
+async function prepareChatcut() {
+  const id = activeRun.value?.id
+  if (!id || !chatcutConnection.value || chatcutBusy.value) return
+  chatcutBusy.value = true; chatcutError.value = ''
+  try {
+    const jobs = await agentAPI.chatcutPrepare(id, chatcutConnection.value.project_id)
+    for (const job of jobs.filter(j => j.status === 'READY' && j.project_id === chatcutConnection.value.project_id)) await agentAPI.chatcutExport(id, job.id)
+    await refreshActive()
+  } catch (e) { chatcutError.value = e.message || '剪辑未完成，请检查任务记录'; await refreshActive() }
+  finally { chatcutBusy.value = false }
+}
+async function exportChatcut(job) {
+  chatcutBusy.value = true
+  try { await agentAPI.chatcutExport(activeRun.value.id, job.id); await refreshActive() }
+  catch(e) { chatcutError.value = e.message || '导出未完成' }
+  finally { chatcutBusy.value = false }
+}
 const qc = computed(() => summarizeQc(activeRun.value?.qc_reports, activeRun.value?.dry_run))
 const providerStatus = ref(null)
 const plan = ref(null)
@@ -270,11 +455,12 @@ let pollTimer = null
 const pendingApproval = computed(() => activeRun.value?.approvals?.find((item) => item.status === 'PENDING'))
 const providerOperationalReady = computed(() => providerStatus.value?.operational_ready ?? providerStatus.value?.ready ?? false)
 const totalDuration = computed(() => (activeRun.value?.plan?.estimated?.episodes || 0) * (activeRun.value?.plan?.project?.episode_duration_seconds || 0))
+const exportedEpisodes = computed(() => activeRun.value?.steps?.filter(s=>s.step_key==='real_export_ready' && s.status==='COMPLETED').at(-1)?.output?.episodes?.filter(e=>e.path && e.inspection) || [])
 const isTerminal = computed(() => ['EXPORTED', 'CANCELLED'].includes(activeRun.value?.status))
 const canPause = computed(() => activeRun.value && !isTerminal.value && !['PAUSED', 'FAILED'].includes(activeRun.value.status))
 const budgetPercent = computed(() => Math.min(100, Math.round(((activeRun.value?.estimated_cost || 0) / Math.max(1, activeRun.value?.budget_limit || 1)) * 100)))
 const progressPercent = computed(() => {
-  const map = { SCRIPT_GENERATING: 16, SCRIPT_REVIEW: 28, ASSET_GENERATING: 40, ASSET_REVIEW: 55, MEDIA_GENERATING: 72, FINAL_REVIEW: 88, EXPORTING: 95, EXPORTED: 100, PAUSED: 40, FAILED: 40, CANCELLED: 0 }
+  const map = { SCRIPT_GENERATING: 16, SCRIPT_REVIEW: 28, ASSET_GENERATING: 40, ASSET_REVIEW: 55, IMAGE_GENERATING: 62, IMAGE_REVIEW: 68, MEDIA_GENERATING: 76, MEDIA_REVIEWING: 82, FINAL_REVIEW: 88, EXPORTING: 95, EXPORTED: 100, PAUSED: 40, FAILED: 40, CANCELLED: 0 }
   return map[activeRun.value?.status] ?? 10
 })
 const stages = computed(() => {
@@ -284,13 +470,15 @@ const stages = computed(() => {
     { key: 'plan', title: '创意解析与制作计划', description: '结构化目标、镜头规模与成本', meta: `${activeRun.value?.plan?.estimated?.shots || 0} 镜`, state: done.has('plan_confirmed') ? 'done' : 'active' },
     { key: 'script', title: '故事圣经与分集剧本', description: '分集梗概、对白与结尾钩子', meta: `${activeRun.value?.plan?.estimated?.episodes || 0} 集`, state: done.has('script_generated') || done.has('real_script_generated') ? (status === 'SCRIPT_REVIEW' ? 'active' : 'done') : status === 'SCRIPT_GENERATING' ? 'active' : 'pending' },
     { key: 'assets', title: '视觉资产与结构化分镜', description: '角色锚点、场景与镜头提示词', meta: '角色一致性', state: done.has('assets_generated') || done.has('real_assets_generated') ? (status === 'ASSET_REVIEW' ? 'active' : 'done') : status === 'ASSET_GENERATING' ? 'active' : 'pending' },
-    { key: 'media', title: '图片、视频与配音', description: activeRun.value?.dry_run ? 'Mock 素材生成与逐镜费用记录' : '真实关键帧、动态镜头与可选配音', meta: '托管生产', state: done.has('mock_media_generated') || done.has('real_media_generated') ? 'done' : status === 'MEDIA_GENERATING' ? 'active' : 'pending' },
-    { key: 'qc', title: '自动质检与成片', description: '素材记录检查；内容质量需人工确认', meta: qc.value.label, state: status === 'EXPORTED' ? 'done' : status === 'FINAL_REVIEW' ? 'active' : 'pending' },
+    { key: 'images', title: '分镜图片生成与审核', description: '先检查实际图片，通过后才生成视频', meta: '独立审核门', state: ['IMAGE_GENERATING', 'IMAGE_REVIEW'].includes(status) ? 'active' : done.has('real_images_generated') || done.has('mock_images_generated') ? 'done' : 'pending' },
+    { key: 'media', title: '视频与配音', description: activeRun.value?.dry_run ? 'Mock 素材生成与逐镜费用记录' : '真实关键帧、动态镜头与可选配音', meta: '托管生产', state: done.has('mock_media_generated') || done.has('real_media_generated') ? 'done' : status === 'MEDIA_GENERATING' ? 'active' : 'pending' },
+    { key: 'qc', title: '自动质检与成片', description: '文件实测与抽帧证据；完整动作/声音需人工确认', meta: qc.value.label, state: status === 'EXPORTED' ? 'done' : ['FINAL_REVIEW','MEDIA_REVIEWING'].includes(status) ? 'active' : 'pending' },
   ]
 })
-const approvalPreviewTitle = computed(() => pendingApproval.value?.approval_stage === 'script' ? `${activeRun.value?.plan?.estimated?.episodes} 集剧本提案` : pendingApproval.value?.approval_stage === 'assets' ? `角色定妆 · 场景 · ${activeRun.value?.plan?.estimated?.shots} 个分镜` : (activeRun.value?.dry_run ? 'Mock 成片与质检报告' : '真实镜头与自动质检报告'))
+const approvalPreviewTitle = computed(() => pendingApproval.value?.approval_stage === 'images' ? '逐张查看分镜图片与动作要求' : pendingApproval.value?.approval_stage === 'script' ? `${activeRun.value?.plan?.estimated?.episodes} 集剧本提案` : pendingApproval.value?.approval_stage === 'assets' ? `角色定妆 · 场景 · ${activeRun.value?.plan?.estimated?.shots} 个分镜` : (activeRun.value?.dry_run ? 'Mock 成片与质检报告' : '真实镜头与自动质检报告'))
 const approvalPreviewMeta = computed(() => pendingApproval.value?.approval_stage === 'final_video' ? qc.value.label : '点击进入现有制作页可查看完整内容')
 const approvalWarnings = computed(() => pendingApproval.value?.snapshot?.warnings || [])
+const scriptHandoff = computed(() => pendingApproval.value?.approval_stage === 'script' && activeRun.value?.review_cycles?.some(c => c.stage === 'script' && c.status === 'HUMAN_REVIEW'))
 const revisionMessages = computed(() => (activeRun.value?.approvals || [])
   .filter((item) => item.status === 'REJECTED' && item.reviewer_comment)
   .slice()
@@ -298,19 +486,24 @@ const revisionMessages = computed(() => (activeRun.value?.approvals || [])
 const agentGuidance = computed(() => {
   if (!activeRun.value) return '先告诉我你想拍什么，我会整理成可确认的生产计划。'
   if (pendingApproval.value?.approval_stage === 'script') return '剧本已经准备好。你可以直接告诉我人物、节奏、对白或结尾需要怎么改。'
+  if (pendingApproval.value?.approval_stage === 'images') return '请对照动作要求逐张检查图片；问题镜头可在制作页局部修改，恢复后重新审核，不会自动批量重生。'
   if (pendingApproval.value?.approval_stage === 'assets') return '角色、场景和分镜已经准备好。你可以修改造型、色调、构图或镜头节奏。'
-  if (pendingApproval.value?.approval_stage === 'final_video') return '成片初稿已经准备好。你可以指出需要重做的镜头、配音或画面问题。'
+  if (pendingApproval.value?.approval_stage === 'final_video') return '镜头检查已完成。请查看实际视频与未通过项；局部修改后恢复只复查，不批量重新生成。'
   return 'AI 正在执行当前任务；到达下一个审核节点后，我会在这里等待你的修改意见。'
 })
 const chatSuggestions = computed(() => pendingApproval.value?.approval_stage === 'script'
   ? ['开头冲突更强', '对白更口语化', '结尾增加反转']
+  : pendingApproval.value?.approval_stage === 'images'
+    ? ['人物身份与定妆不一致', '关键动作没有表达清楚', '道具或构图需要局部修改']
   : pendingApproval.value?.approval_stage === 'assets'
     ? ['人物更有辨识度', '整体改为暖色调', '镜头节奏更紧凑']
     : ['重做问题镜头', '配音更自然', '字幕更易读'])
 const approvalBlockingMessage = computed(() => {
   if (activeRun.value?.dry_run !== false || !pendingApproval.value) return ''
   const snapshot = pendingApproval.value.snapshot || {}
+  if (pendingApproval.value.approval_stage === 'images' && (!snapshot.total || snapshot.images_completed !== snapshot.total)) return '分镜图片尚未齐全。请在制作页补齐问题镜头，驳回后恢复审核以刷新图片版本。'
   if (pendingApproval.value.approval_stage === 'assets' && Number(snapshot.reference_images_completed || 0) < 1) return '参考图全部生成失败：请先检查图片模型配置，然后驳回并重新生成。'
+  if (pendingApproval.value.approval_stage === 'final_video' && snapshot.inspections?.some(i=>i.report.status === 'BLOCKED')) return '存在未通过文件、时长或画幅检查的镜头，请局部修复后驳回并恢复复查。'
   if (pendingApproval.value.approval_stage === 'final_video' && Number(snapshot.videos_completed || 0) < 1) return '没有可合成的视频片段，请先修复失败镜头。'
   return ''
 })
@@ -327,11 +520,12 @@ function useExample(key) {
   form.visual_style_auto = true
   applyRecommendedStyle()
 }
-function statusLabel(status) { return ({ SCRIPT_GENERATING: 'AI 正在写剧本', SCRIPT_REVIEW: '等待剧本审核', ASSET_GENERATING: '正在生成角色与分镜', ASSET_REVIEW: '等待定妆审核', MEDIA_GENERATING: '正在生成图片与视频', FINAL_REVIEW: '等待成片审核', EXPORTING: '正在合成成片', EXPORTED: '已完成', PAUSED: '已暂停', CANCELLED: '已取消', FAILED: '执行失败，可重试' })[status] || status || '准备中' }
+function statusLabel(status) { return ({ SCRIPT_GENERATING: 'AI 正在写剧本', SCRIPT_REVIEW: '等待剧本审核', ASSET_GENERATING: '正在生成角色与分镜', ASSET_REVIEW: '等待定妆审核', IMAGE_GENERATING: '正在生成分镜图片', IMAGE_REVIEW: '等待分镜图片审核', MEDIA_GENERATING: '正在生成视频与配音', MEDIA_REVIEWING: '正在检查实际视频', FINAL_REVIEW: '等待成片审核', EXPORTING: '正在合成成片', EXPORTED: '已合成，内容待审', PAUSED: '已暂停', CANCELLED: '已取消', FAILED: '执行失败，可重试' })[status] || status || '准备中' }
 function statusTone(status) { return status === 'EXPORTED' ? 'success' : status === 'PAUSED' || status === 'CANCELLED' ? 'muted' : 'active' }
 function stageStateLabel(state) { return ({ done: '已完成', active: '进行中', pending: '待开始' })[state] }
-function approvalTitle(stage) { return ({ script: '剧本审核', assets: '角色定妆与关键帧审核', final_video: '最终成片审核' })[stage] || stage }
-function approvalDescription(stage) { return ({ script: '确认人物动机、剧情节奏与分集钩子。通过后才会创建视觉资产。', assets: '确认角色定妆、场景方向和全部镜头提示词。通过后会开始付费较高的图片与视频生成。', final_video: activeRun.value?.dry_run ? '检查演练结果与质检报告，确认后即可导出项目包。' : '检查真实镜头与质检警告，确认后自动合成各集成片。' })[stage] || '' }
+function mediaUrl(value) { return !value || /^(https?:|\/static\/)/.test(value) ? value : '/static/' + value }
+function approvalTitle(stage) { return ({ script: '剧本审核', assets: '角色定妆与分镜方案审核', images: '分镜图片审核', final_video: '镜头视频与配音审核' })[stage] || stage }
+function approvalDescription(stage) { return ({ script: '确认人物动机、剧情节奏与分集钩子。通过后才会创建视觉资产。', assets: '确认角色定妆、场景方向和全部镜头提示词。通过后只生成分镜图片，视频需再次审核。', images: '逐张检查人物身份、动作、道具和构图。全部图片审核通过后才生成视频；修改上游后必须重新审核。', final_video: activeRun.value?.dry_run ? '确认后完成流程演练；Mock不会生成视频或导出包。' : '检查真实镜头与质检警告，确认后自动合成各集成片。' })[stage] || '' }
 
 async function makePlan() {
   planning.value = true
@@ -354,16 +548,33 @@ async function confirmPlan() {
 }
 async function loadRuns() { runs.value = await agentAPI.listRuns() }
 async function selectRun(id) { activeRun.value = await agentAPI.getRun(id); focusPanel.value = 'dashboard' }
-async function refreshActive() { if (activeRun.value?.id) activeRun.value = await agentAPI.getRun(activeRun.value.id) }
+async function refreshActive() {
+  const id = activeRun.value?.id
+  if (!id) return
+  const updated = await agentAPI.getRun(id)
+  if (activeRun.value?.id !== id) return
+  activeRun.value = updated
+  runs.value = runs.value.map(run => run.id === id ? { ...run, status: updated.status } : run)
+  if (!chatcutBusy.value && !chatcutCollecting && updated.editing_jobs?.some(j => j.status === 'EXPORT_QUEUED')) {
+    chatcutCollecting = true
+    try { for (const job of updated.editing_jobs.filter(j => j.status === 'EXPORT_QUEUED')) await agentAPI.chatcutCollect(id, job.id) }
+    catch(e) { if (activeRun.value?.id === id) chatcutError.value = e.message || '导出回传需核对' }
+    finally { chatcutCollecting = false }
+  }
+}
 async function resolveApproval(decision) {
   if (!pendingApproval.value) return
   acting.value = true
   try {
-    activeRun.value = decision === 'approve' ? await agentAPI.approve(pendingApproval.value.id) : await agentAPI.reject(pendingApproval.value.id, rejectComment.value)
+    let reason = ''
+    if (decision === 'approve' && ((pendingApproval.value.approval_stage === 'final_video' && !activeRun.value.dry_run) || activeRun.value.review_cycles?.some(c => (c.stage === pendingApproval.value.approval_stage || (pendingApproval.value.approval_stage === 'images' && c.stage.startsWith('image:')) || (pendingApproval.value.approval_stage === 'final_video' && c.stage.startsWith('video:'))) && c.status === 'HUMAN_REVIEW'))) {
+      try { const answer = await ElMessageBox.prompt('请填写人工放行依据；未解决问题将保留在审核记录中。', '人工审核', { inputValidator: v => Boolean(v?.trim()) || '请输入判断依据' }); reason = answer.value } catch { return }
+    }
+    activeRun.value = decision === 'approve' ? await agentAPI.approve(pendingApproval.value.id, reason) : await agentAPI.reject(pendingApproval.value.id, rejectComment.value)
     rejectVisible.value = false
     rejectComment.value = ''
     await loadRuns()
-    ElMessage.success(decision === 'approve' ? '已通过，下一阶段完成' : '已驳回，任务已暂停')
+    ElMessage.success(decision === 'approve' ? '已通过，下一阶段已启动' : '已驳回，任务已暂停')
   } finally { acting.value = false }
 }
 async function control(action) {
@@ -389,11 +600,12 @@ async function sendRevision() {
   acting.value = true
   const instruction = chatInput.value.trim()
   try {
+    const manual = scriptHandoff.value || pendingApproval.value.approval_stage === 'images'
     const paused = await agentAPI.reject(pendingApproval.value.id, instruction)
-    activeRun.value = paused.dry_run ? paused : await agentAPI.resume(paused.id)
+    activeRun.value = paused.dry_run || manual ? paused : await agentAPI.resume(paused.id)
     chatInput.value = ''
     await loadRuns()
-    ElMessage.success(paused.dry_run ? '修改要求已记录' : '修改要求已发送，AI 正在重新生成当前阶段')
+    ElMessage.success(paused.dry_run || manual ? '修改要求已记录；请在制作页修改后恢复审核' : '修改要求已发送，AI 正在重新生成当前阶段')
   } finally { acting.value = false }
 }
 function newCreation() { router.push('/create') }
@@ -464,3 +676,9 @@ html.light .workbench-shell { background: #f5f6fa; color: #202331; --panel:#fff;
 @media (max-width: 1120px) { .sidebar { width: 76px; }.brand { width: 76px; padding: 0 20px; }.brand>span:last-child,.nav-item span,.nav-badge,.sidebar-section,.safe-card { display: none; }.topbar-center { justify-content: flex-start; padding-left: 16px; }.workspace { padding-left: 76px; }.form-grid { grid-template-columns: repeat(3,1fr); }.metrics-grid { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 820px) { .topbar-center { display: none; }.topbar-actions { min-width: 0; flex: 1; }.sidebar { display: none; }.workspace { padding-left: 0; }.creation-view,.run-view { padding-left: 18px; padding-right: 18px; }.form-grid { grid-template-columns: 1fr 1fr; }.run-layout { grid-template-columns: 1fr; }.episode-grid { grid-template-columns: 1fr; }.run-heading { display: block; }.run-actions { margin-top: 16px; }.promise-row { display: none; } }
 </style>
+
+<style scoped>
+.review-cycle-panel { padding:16px; } .review-cycle-panel p { font-size:13px; line-height:1.7; } .review-cycle-panel details { padding:10px 0; border-top:1px solid #8884; } .review-cycle-panel pre { white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; }
+</style>
+
+<style scoped>.image-gate-grid{padding:16px;max-height:480px;overflow:auto}.image-gate-grid figure{margin:0 0 16px}.image-gate-grid img{width:100%;max-height:320px;object-fit:contain}.image-gate-grid figcaption{font-size:12px;line-height:1.6}</style>
